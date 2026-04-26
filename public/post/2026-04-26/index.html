@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260313总结 | D-Sketon
+  20260426总结 | D-Sketon
 </title>
-<meta name="description" content="20260313"/><script>
+<meta name="description" content="20260426"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260313总结 | D-Sketon" />
+  <meta property="og:title" content="20260426总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260313"
+    content="20260426"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-03-13-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-04-26/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-03-13T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-03-13T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-04-26T12:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-04-26T12:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260313总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260426总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260313总结</h1>
+            <h1 data-aos="slide-up">20260426总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -137,58 +137,68 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#1树的定义">(1)树的定义</a>
+    <li><a href="#服务和服务访问点sap">服务和服务访问点(SAP)</a>
       <ul>
-        <li><a href="#1结点">1.结点：</a></li>
-        <li><a href="#2结点的度">2.结点的度：</a></li>
-        <li><a href="#3树的度">3.树的度：</a></li>
-        <li><a href="#4叶子">4.叶子：</a></li>
-        <li><a href="#5非终端结点">5.非终端结点：</a></li>
-        <li><a href="#双亲和孩子">双亲和孩子：</a></li>
-        <li><a href="#层次">层次：</a></li>
+        <li><a href="#服务">服务</a></li>
+        <li><a href="#原语">原语</a></li>
+        <li><a href="#服务访问点">服务访问点</a></li>
+        <li><a href="#套接字">套接字</a></li>
+        <li><a href="#sap-vs-端口">SAP VS 端口</a></li>
+        <li><a href="#面向连接的服务">面向连接的服务</a></li>
+        <li><a href="#无连接的服务">无连接的服务</a></li>
       </ul>
     </li>
-    <li><a href="#2树的性质">(2)树的性质</a></li>
-    <li><a href="#3二叉树">(3)二叉树：</a>
+    <li><a href="#协议">协议</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#headerbodysdupdu">Header+Body(SDU)+=PDU</a></li>
+    <li><a href="#拆包">拆包</a></li>
+    <li><a href="#粘包">粘包</a></li>
+    <li><a href="#结构化">结构化</a>
       <ul>
-        <li><a href="#1性质">1.性质</a></li>
-      </ul>
-    </li>
-    <li><a href="#4特殊的二叉树">(4)特殊的二叉树</a>
-      <ul>
-        <li><a href="#1满二叉树">1.满二叉树</a></li>
-        <li><a href="#2完全的二叉树">2.完全的二叉树</a></li>
-      </ul>
-    </li>
-    <li><a href="#5二叉树存储">(5)二叉树存储</a>
-      <ul>
-        <li><a href="#顺序结构">顺序结构</a></li>
-        <li><a href="#链式结构">链式结构</a></li>
-        <li><a href="#前序遍历">前序遍历</a></li>
+        <li><a href="#优点">优点</a></li>
+        <li><a href="#缺点">缺点</a></li>
       </ul>
     </li>
   </ul>
 
   <ul>
-    <li><a href="#1class-vs-struct">1.class VS struct</a></li>
-    <li><a href="#2map-vs-pair">2.map VS pair</a></li>
+    <li><a href="#应用层报文message">应用层(报文(message))</a></li>
+    <li><a href="#传输层报文段segment">传输层(报文段(segment))</a></li>
+    <li><a href="#网络层分组packet">网络层(分组packet)</a>
+      <ul>
+        <li><a href="#作用">作用</a></li>
+      </ul>
+    </li>
+    <li><a href="#链路层帧frame">链路层(帧(frame))</a></li>
+    <li><a href="#物理层位bit">物理层(位(bit))</a>
+      <ul>
+        <li><a href="#发送端">发送端</a></li>
+        <li><a href="#接收端">接收端</a></li>
+      </ul>
+    </li>
+    <li><a href="#p2p---e2e">P2P - E2E</a></li>
+    <li><a href="#链路层和物理层一起封装在网卡">链路层和物理层一起封装在网卡</a></li>
   </ul>
 
   <ul>
-    <li><a href="#1参数模版化">(1)参数模版化</a>
+    <li><a href="#应用层">应用层</a></li>
+    <li><a href="#表示层">表示层</a></li>
+    <li><a href="#会话层">会话层</a>
       <ul>
-        <li><a href="#1时机">1.时机</a></li>
-        <li><a href="#2本质">2.本质</a></li>
-        <li><a href="#3内存">3.内存</a></li>
-        <li><a href="#4灵活性">4.灵活性</a></li>
-        <li><a href="#5代码生成">5.代码生成</a></li>
+        <li><a href="#在协议栈中应用层自己做会话层和表示层">在协议栈中应用层自己做会话层和表示层</a></li>
       </ul>
     </li>
-    <li><a href="#2类模版的继承">(2)类模版的继承</a>
-      <ul>
-        <li><a href="#1继承方式">1.继承方式</a></li>
-      </ul>
-    </li>
+    <li><a href="#传输层">传输层</a></li>
+    <li><a href="#网络层">网络层</a></li>
+    <li><a href="#链路层">链路层</a></li>
+    <li><a href="#物理层">物理层</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#例子">例子</a></li>
+    <li><a href="#体系结构">体系结构</a></li>
   </ul>
 </nav>
 </div></div>
@@ -260,186 +270,258 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-03-13 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-03-13</time
+    <time datetime="2026-04-26 12:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-04-26</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-03-13</time
+      >2026-04-26</time
     >
   </span></div>
-</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="一数据结构二叉树b站的逊老师">
-<a class="header-anchor" href="#%e4%b8%80%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%ba%8c%e5%8f%89%e6%a0%91b%e7%ab%99%e7%9a%84%e9%80%8a%e8%80%81%e5%b8%88"></a>
-一、数据结构(二叉树)//b站的逊老师
-</h1><h2 id="1树的定义">
-<a class="header-anchor" href="#1%e6%a0%91%e7%9a%84%e5%ae%9a%e4%b9%89"></a>
-(1)树的定义
-</h2><ul>
-<li>一个或多个结点的有限集合</li>
-<li>存在一个根，特定结点</li>
-<li>每个结点互不相交</li>
-</ul>
-<h3 id="1结点">
-<a class="header-anchor" href="#1%e7%bb%93%e7%82%b9"></a>
-1.结点：
-</h3><p>树中的一个独立单元</p>
-<h3 id="2结点的度">
-<a class="header-anchor" href="#2%e7%bb%93%e7%82%b9%e7%9a%84%e5%ba%a6"></a>
-2.结点的度：
-</h3><p>结点拥有的子树数称为结点的度</p>
-<h3 id="3树的度">
-<a class="header-anchor" href="#3%e6%a0%91%e7%9a%84%e5%ba%a6"></a>
-3.树的度：
-</h3><p>树内各结点度的最大值</p>
-<h3 id="4叶子">
-<a class="header-anchor" href="#4%e5%8f%b6%e5%ad%90"></a>
-4.叶子：
-</h3><p>度为0的结点或者终端结点</p>
-<h3 id="5非终端结点">
-<a class="header-anchor" href="#5%e9%9d%9e%e7%bb%88%e7%ab%af%e7%bb%93%e7%82%b9"></a>
-5.非终端结点：
-</h3><p>度不为0的结点</p>
-<h3 id="双亲和孩子">
-<a class="header-anchor" href="#%e5%8f%8c%e4%ba%b2%e5%92%8c%e5%ad%a9%e5%ad%90"></a>
-双亲和孩子：
-</h3><p>结点的子树的根称为该结点的孩子，相应的该结点称为孩子的双亲</p>
-<h3 id="层次">
-<a class="header-anchor" href="#%e5%b1%82%e6%ac%a1"></a>
-层次：
-</h3><p>结点的层次从根开始定义，数层数</p>
-<h2 id="2树的性质">
-<a class="header-anchor" href="#2%e6%a0%91%e7%9a%84%e6%80%a7%e8%b4%a8"></a>
-(2)树的性质
-</h2><ul>
-<li>1.树中的所有结点数等于所有结点的度数之和加1</li>
-<li>2.对于度为m的树，第i层上最多有m^(i-1)个结点</li>
-<li>3.对于高度为h，度为m的树，最多有(m^h-1)/(m-1)个结点</li>
-</ul>
-<h2 id="3二叉树">
-<a class="header-anchor" href="#3%e4%ba%8c%e5%8f%89%e6%a0%91"></a>
-(3)二叉树：
-</h2><ul>
-<li>n个结点所构成的集合，它或为空树，或为非空树T</li>
-<li>①有且仅有一个称为根的结点</li>
-<li>②除根结点以外的其余结点分为两个互不相交的子集T1和T2，分别称为T的左子树和右子树，且都为二叉树</li>
-<li>③每个结点之多只有两棵子树</li>
-<li>④有左右之分，且次序不能颠倒</li>
-</ul>
-<h3 id="1性质">
-<a class="header-anchor" href="#1%e6%80%a7%e8%b4%a8"></a>
-1.性质
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="协议层次和服务模型">
+<a class="header-anchor" href="#%e5%8d%8f%e8%ae%ae%e5%b1%82%e6%ac%a1%e5%92%8c%e6%9c%8d%e5%8a%a1%e6%a8%a1%e5%9e%8b"></a>
+协议层次和服务模型
+</h1><h2 id="服务和服务访问点sap">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%92%8c%e6%9c%8d%e5%8a%a1%e8%ae%bf%e9%97%ae%e7%82%b9sap"></a>
+服务和服务访问点(SAP)
+</h2><h3 id="服务">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1"></a>
+服务
 </h3><ul>
-<li>①二叉树的第i层最多有2^(i-1)个结点</li>
-<li>②深度为k的二叉树做多有2^k-1个人结点</li>
-<li>③对于任何非空的二叉树，若叶子结点的个数为n0，而度为2的结点为n2，则n0=n2+1</li>
+<li>底层实体提供他们之间的通信的能力</li>
+<li>垂直的关系</li>
 </ul>
-<h2 id="4特殊的二叉树">
-<a class="header-anchor" href="#4%e7%89%b9%e6%ae%8a%e7%9a%84%e4%ba%8c%e5%8f%89%e6%a0%91"></a>
-(4)特殊的二叉树
-</h2><h3 id="1满二叉树">
-<a class="header-anchor" href="#1%e6%bb%a1%e4%ba%8c%e5%8f%89%e6%a0%91"></a>
-1.满二叉树
+<h3 id="原语">
+<a class="header-anchor" href="#%e5%8e%9f%e8%af%ad"></a>
+原语
 </h3><ul>
-<li>深度为k且含有2^k-1个结点的二叉树</li>
-<li>①所有叶子结点只能出现在最后一层</li>
-<li>②对于同样深度的二叉树，满二叉树结点个数最多</li>
-<li>③对满二叉树编号，根结点从1开始，从上到下从左到右，对于编号为i的结点，若存在左孩子，则做孩子的编号为2i，又孩子为2i+1</li>
-<li>④必为奇数节点总数，偶数个必有一个n1</li>
-<li>PS:nX，度为x的结点数</li>
+<li>服务提供的形式</li>
+<li>例如socket api</li>
 </ul>
-<h3 id="2完全的二叉树">
-<a class="header-anchor" href="#2%e5%ae%8c%e5%85%a8%e7%9a%84%e4%ba%8c%e5%8f%89%e6%a0%91"></a>
-2.完全的二叉树
+<h3 id="服务访问点">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e8%ae%bf%e9%97%ae%e7%82%b9"></a>
+服务访问点
 </h3><ul>
-<li>深度为k的有n个结点的二叉树，当且仅当每个结点都与深度为k的满二叉树中编号从1至n的结点</li>
-<li>①叶子结点只可能在层次最大的两层上出现</li>
-<li>②若其右分支下的子孙的最大层次为i，则其左分支的子孙的最大层次必为i或i+1</li>
-<li><img src="2026-03-13-%E4%B8%80-4-2.jpg" alt="懒得打字了，贴张图，只要知道就行大概吧"></li>
+<li>区分服务对象</li>
 </ul>
-<h2 id="5二叉树存储">
-<a class="header-anchor" href="#5%e4%ba%8c%e5%8f%89%e6%a0%91%e5%ad%98%e5%82%a8"></a>
-(5)二叉树存储
-</h2><h3 id="顺序结构">
-<a class="header-anchor" href="#%e9%a1%ba%e5%ba%8f%e7%bb%93%e6%9e%84"></a>
-顺序结构
-</h3><p>除了满二叉树和完全二叉树占用率较高</p>
-<h3 id="链式结构">
-<a class="header-anchor" href="#%e9%93%be%e5%bc%8f%e7%bb%93%e6%9e%84"></a>
-链式结构
-</h3><div class="highlight" linenumbers="true"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">char</span> <span class="n">Data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="k">struct</span> <span class="n">BinaryTreeNode</span> <span class="p">{</span><span class="c1">//结构体
-</span></span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">BinaryTreeNode</span><span class="o">*</span> <span class="n">left</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">struct</span> <span class="n">BinaryTreeNode</span><span class="o">*</span> <span class="n">right</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Data</span> <span class="n">data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">BTN</span><span class="p">;</span>
-</span></span></code></pre></div><h3 id="前序遍历">
-<a class="header-anchor" href="#%e5%89%8d%e5%ba%8f%e9%81%8d%e5%8e%86"></a>
-前序遍历
+<h3 id="套接字">
+<a class="header-anchor" href="#%e5%a5%97%e6%8e%a5%e5%ad%97"></a>
+套接字
 </h3><ul>
-<li>从根开始从左到右一次遍历</li>
-<li>从左，然后中间，最后右</li>
-<li>从根开始从右到左一次遍历</li>
+<li>用于区分</li>
 </ul>
-<h1 id="二一些小问题">
-<a class="header-anchor" href="#%e4%ba%8c%e4%b8%80%e4%ba%9b%e5%b0%8f%e9%97%ae%e9%a2%98"></a>
-二、一些小问题
-</h1><h2 id="1class-vs-struct">
-<a class="header-anchor" href="#1class-vs-struct"></a>
-1.class VS struct
+<h3 id="sap-vs-端口">
+<a class="header-anchor" href="#sap-vs-%e7%ab%af%e5%8f%a3"></a>
+SAP VS 端口
+</h3><ul>
+<li>作用：</li>
+<li>SAP:相邻两层之间的逻辑标识</li>
+<li>端口:同一台主机内，区分不同应用进程</li>
+<li>范围:</li>
+<li>SAP:数据链路层、网络层等底层(层与层之间)</li>
+<li>端口:传输层→应用层之间(软件与软件)</li>
+</ul>
+<h3 id="面向连接的服务">
+<a class="header-anchor" href="#%e9%9d%a2%e5%90%91%e8%bf%9e%e6%8e%a5%e7%9a%84%e6%9c%8d%e5%8a%a1"></a>
+面向连接的服务
+</h3><ul>
+<li>TCP的三次握手</li>
+<li>要为通讯做好准备(缓冲)</li>
+</ul>
+<h3 id="无连接的服务">
+<a class="header-anchor" href="#%e6%97%a0%e8%bf%9e%e6%8e%a5%e7%9a%84%e6%9c%8d%e5%8a%a1"></a>
+无连接的服务
+</h3><ul>
+<li>UDP</li>
+<li>无需为通讯做准备</li>
+</ul>
+<h2 id="协议">
+<a class="header-anchor" href="#%e5%8d%8f%e8%ae%ae"></a>
+协议
 </h2><ul>
-<li>class适用于复杂的需要封装、继承、多态</li>
-<li>struct适用于只读的数据</li>
+<li>水平</li>
 </ul>
-<h2 id="2map-vs-pair">
-<a class="header-anchor" href="#2map-vs-pair"></a>
-2.map VS pair
+<h1 id="数据单元du">
+<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e5%8d%95%e5%85%83du"></a>
+数据单元(DU)
+</h1><ul>
+<li>服务数据单元SDU:</li>
+<li>上层来的数据(加入控制信息)</li>
+<li>只关心内容，不加头部</li>
+<li>协议数据单元PDU:</li>
+<li>本层的数据包</li>
+<li>用来在对等层之间通信</li>
+</ul>
+<h2 id="headerbodysdupdu">
+<a class="header-anchor" href="#headerbodysdupdu"></a>
+Header+Body(SDU)+=PDU
+</h2><h2 id="拆包">
+<a class="header-anchor" href="#%e6%8b%86%e5%8c%85"></a>
+拆包
 </h2><ul>
-<li>pair：只是一个键的对</li>
-<li>map：是字典，实现了键与值</li>
+<li>将SDU拆分开，组成多个PDU</li>
 </ul>
-<h1 id="三c模版">
-<a class="header-anchor" href="#%e4%b8%89c%e6%a8%a1%e7%89%88"></a>
-三、c++(模版)
-</h1><h2 id="1参数模版化">
-<a class="header-anchor" href="#1%e5%8f%82%e6%95%b0%e6%a8%a1%e7%89%88%e5%8c%96"></a>
-(1)参数模版化
-</h2><h3 id="1时机">
-<a class="header-anchor" href="#1%e6%97%b6%e6%9c%ba"></a>
-1.时机
-</h3><p>编译期</p>
-<h3 id="2本质">
-<a class="header-anchor" href="#2%e6%9c%ac%e8%b4%a8"></a>
-2.本质
-</h3><p>传递 “类型 / 编译期常量”</p>
-<h3 id="3内存">
-<a class="header-anchor" href="#3%e5%86%85%e5%ad%98"></a>
-3.内存
-</h3><p>无运行时开销（编译期展开）</p>
-<h3 id="4灵活性">
-<a class="header-anchor" href="#4%e7%81%b5%e6%b4%bb%e6%80%a7"></a>
-4.灵活性
-</h3><p>编译期固定，运行时无法修改</p>
-<h3 id="5代码生成">
-<a class="header-anchor" href="#5%e4%bb%a3%e7%a0%81%e7%94%9f%e6%88%90"></a>
-5.代码生成
-</h3><p>同模版一样根据模版参数生成不同实例</p>
-<h2 id="2类模版的继承">
-<a class="header-anchor" href="#2%e7%b1%bb%e6%a8%a1%e7%89%88%e7%9a%84%e7%bb%a7%e6%89%bf"></a>
-(2)类模版的继承
-</h2><p>知道父类中的数据类型才可继承</p>
-<h3 id="1继承方式">
-<a class="header-anchor" href="#1%e7%bb%a7%e6%89%bf%e6%96%b9%e5%bc%8f"></a>
-1.继承方式
-</h3><div class="highlight" linenumbers="true"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Fi</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">T</span> <span class="n">a</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//第一种继承方式-&gt;直接指定
-</span></span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Son1</span><span class="o">:</span><span class="k">public</span> <span class="n">Base</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">{}</span><span class="c1">//指定继承类型
-</span></span></span><span class="line"><span class="cl"><span class="c1">//第二种继承方式-&gt;子类也变为模版
-</span></span></span><span class="line"><span class="cl"><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T1</span><span class="p">,</span><span class="k">class</span> <span class="nc">T2</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Son2</span><span class="o">:</span><span class="k">public</span> <span class="n">Base</span><span class="o">&lt;</span><span class="n">T2</span><span class="o">&gt;</span><span class="p">{}</span>
-</span></span></code></pre></div></div>
+<h2 id="粘包">
+<a class="header-anchor" href="#%e7%b2%98%e5%8c%85"></a>
+粘包
+</h2><ul>
+<li>将多个SDU组成一个PDU</li>
+</ul>
+<h2 id="结构化">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84%e5%8c%96"></a>
+结构化
+</h2><h3 id="优点">
+<a class="header-anchor" href="#%e4%bc%98%e7%82%b9"></a>
+优点
+</h3><ul>
+<li>便于独立设计实现</li>
+<li>便于采用新技术</li>
+<li>便于交流和讨论</li>
+</ul>
+<h3 id="缺点">
+<a class="header-anchor" href="#%e7%bc%ba%e7%82%b9"></a>
+缺点
+</h3><ul>
+<li>效率低</li>
+</ul>
+<h1 id="internet协议栈">
+<a class="header-anchor" href="#internet%e5%8d%8f%e8%ae%ae%e6%a0%88"></a>
+Internet协议栈
+</h1><h2 id="应用层报文message">
+<a class="header-anchor" href="#%e5%ba%94%e7%94%a8%e5%b1%82%e6%8a%a5%e6%96%87message"></a>
+应用层(报文(message))
+</h2><ul>
+<li>为人类和应用提供对应的服务</li>
+<li>FTP,SMTP,HTTP,DNS</li>
+</ul>
+<h2 id="传输层报文段segment">
+<a class="header-anchor" href="#%e4%bc%a0%e8%be%93%e5%b1%82%e6%8a%a5%e6%96%87%e6%ae%b5segment"></a>
+传输层(报文段(segment))
+</h2><ul>
+<li>进程到进程的服务</li>
+<li>把网络层的不可靠的服务转换成可靠的服务</li>
+<li>区分进程</li>
+<li>TCP,UDP</li>
+</ul>
+<h2 id="网络层分组packet">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e5%b1%82%e5%88%86%e7%bb%84packet"></a>
+网络层(分组packet)
+</h2><ul>
+<li>原主机到目标主机的端到端的传输(E2E)</li>
+<li>IP,路由协议</li>
+</ul>
+<h3 id="作用">
+<a class="header-anchor" href="#%e4%bd%9c%e7%94%a8"></a>
+作用
+</h3><ul>
+<li>路由和转发</li>
+<li>点对点协议PPP,802.11(wifi),Ethernet</li>
+</ul>
+<h2 id="链路层帧frame">
+<a class="header-anchor" href="#%e9%93%be%e8%b7%af%e5%b1%82%e5%b8%a7frame"></a>
+链路层(帧(frame))
+</h2><ul>
+<li>传输以帧为单位的数据</li>
+<li>区分bit的帧的开始和结束</li>
+<li>解决了分组的传输</li>
+</ul>
+<h2 id="物理层位bit">
+<a class="header-anchor" href="#%e7%89%a9%e7%90%86%e5%b1%82%e4%bd%8dbit"></a>
+物理层(位(bit))
+</h2><ul>
+<li>传输帧的bit</li>
+</ul>
+<h3 id="发送端">
+<a class="header-anchor" href="#%e5%8f%91%e9%80%81%e7%ab%af"></a>
+发送端
+</h3><ul>
+<li>上层的(frame)帧的bit转换成介质的物理信号的发送出去</li>
+</ul>
+<h3 id="接收端">
+<a class="header-anchor" href="#%e6%8e%a5%e6%94%b6%e7%ab%af"></a>
+接收端
+</h3><ul>
+<li>将接收的介质的物理信号转换成原本的帧</li>
+</ul>
+<h2 id="p2p---e2e">
+<a class="header-anchor" href="#p2p---e2e"></a>
+P2P - E2E
+</h2><ul>
+<li>P2P:</li>
+<li>同层 ↔ 同层 聊天，交换的是本层 PDU</li>
+<li>E2E:</li>
+<li>不管中间路由器、二层交换机</li>
+<li>只负责两端软件 / 应用的数据直达</li>
+</ul>
+<h2 id="链路层和物理层一起封装在网卡">
+<a class="header-anchor" href="#%e9%93%be%e8%b7%af%e5%b1%82%e5%92%8c%e7%89%a9%e7%90%86%e5%b1%82%e4%b8%80%e8%b5%b7%e5%b0%81%e8%a3%85%e5%9c%a8%e7%bd%91%e5%8d%a1"></a>
+链路层和物理层一起封装在网卡
+</h2><h1 id="isoosi参考模型">
+<a class="header-anchor" href="#isoosi%e5%8f%82%e8%80%83%e6%a8%a1%e5%9e%8b"></a>
+ISO/OSI参考模型
+</h1><h2 id="应用层">
+<a class="header-anchor" href="#%e5%ba%94%e7%94%a8%e5%b1%82"></a>
+应用层
+</h2><h2 id="表示层">
+<a class="header-anchor" href="#%e8%a1%a8%e7%a4%ba%e5%b1%82"></a>
+表示层
+</h2><ul>
+<li>表示管理,转换</li>
+</ul>
+<h2 id="会话层">
+<a class="header-anchor" href="#%e4%bc%9a%e8%af%9d%e5%b1%82"></a>
+会话层
+</h2><ul>
+<li>会话管理</li>
+</ul>
+<h3 id="在协议栈中应用层自己做会话层和表示层">
+<a class="header-anchor" href="#%e5%9c%a8%e5%8d%8f%e8%ae%ae%e6%a0%88%e4%b8%ad%e5%ba%94%e7%94%a8%e5%b1%82%e8%87%aa%e5%b7%b1%e5%81%9a%e4%bc%9a%e8%af%9d%e5%b1%82%e5%92%8c%e8%a1%a8%e7%a4%ba%e5%b1%82"></a>
+在协议栈中应用层自己做会话层和表示层
+</h3><h2 id="传输层">
+<a class="header-anchor" href="#%e4%bc%a0%e8%be%93%e5%b1%82"></a>
+传输层
+</h2><h2 id="网络层">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e5%b1%82"></a>
+网络层
+</h2><h2 id="链路层">
+<a class="header-anchor" href="#%e9%93%be%e8%b7%af%e5%b1%82"></a>
+链路层
+</h2><h2 id="物理层">
+<a class="header-anchor" href="#%e7%89%a9%e7%90%86%e5%b1%82"></a>
+物理层
+</h2><h1 id="封装和解封装">
+<a class="header-anchor" href="#%e5%b0%81%e8%a3%85%e5%92%8c%e8%a7%a3%e5%b0%81%e8%a3%85"></a>
+封装和解封装
+</h1><ul>
+<li>报文-&gt;报文段-&gt;数据报-&gt;帧</li>
+<li>PH-DL分析再DL-&gt;PH</li>
+<li>三层的解封装再封装</li>
+</ul>
+<h1 id="应用层-1">
+<a class="header-anchor" href="#%e5%ba%94%e7%94%a8%e5%b1%82-1"></a>
+应用层
+</h1><h1 id="应用层的原理">
+<a class="header-anchor" href="#%e5%ba%94%e7%94%a8%e5%b1%82%e7%9a%84%e5%8e%9f%e7%90%86"></a>
+应用层的原理
+</h1><h2 id="例子">
+<a class="header-anchor" href="#%e4%be%8b%e5%ad%90"></a>
+例子
+</h2><ul>
+<li>E-mail</li>
+<li>Web</li>
+<li>文本消息</li>
+<li>远程登录</li>
+<li>P2P</li>
+<li>……</li>
+</ul>
+<h2 id="体系结构">
+<a class="header-anchor" href="#%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84"></a>
+体系结构
+</h2><ul>
+<li>客户端-服务端(C/S)</li>
+<li>P2P</li>
+<li>混合模式</li>
+</ul>
+</div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
 </footer>
@@ -450,27 +532,15 @@
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260312总结"
+              alt="20260420总结"
               class="lazyload"
             /><a
-          href="/post/2026-03-12-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260312总结"
-          title="前一篇:20260312总结"
+          href="/post/2026-04-20-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260420总结"
+          title="前一篇:20260420总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260312总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260314总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-03-14-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260314总结"
-          title="后一篇:20260314总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260314总结</h3>
+        <h3 class="article-nav-title">20260420总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -521,58 +591,68 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#1树的定义">(1)树的定义</a>
+    <li><a href="#服务和服务访问点sap">服务和服务访问点(SAP)</a>
       <ul>
-        <li><a href="#1结点">1.结点：</a></li>
-        <li><a href="#2结点的度">2.结点的度：</a></li>
-        <li><a href="#3树的度">3.树的度：</a></li>
-        <li><a href="#4叶子">4.叶子：</a></li>
-        <li><a href="#5非终端结点">5.非终端结点：</a></li>
-        <li><a href="#双亲和孩子">双亲和孩子：</a></li>
-        <li><a href="#层次">层次：</a></li>
+        <li><a href="#服务">服务</a></li>
+        <li><a href="#原语">原语</a></li>
+        <li><a href="#服务访问点">服务访问点</a></li>
+        <li><a href="#套接字">套接字</a></li>
+        <li><a href="#sap-vs-端口">SAP VS 端口</a></li>
+        <li><a href="#面向连接的服务">面向连接的服务</a></li>
+        <li><a href="#无连接的服务">无连接的服务</a></li>
       </ul>
     </li>
-    <li><a href="#2树的性质">(2)树的性质</a></li>
-    <li><a href="#3二叉树">(3)二叉树：</a>
+    <li><a href="#协议">协议</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#headerbodysdupdu">Header+Body(SDU)+=PDU</a></li>
+    <li><a href="#拆包">拆包</a></li>
+    <li><a href="#粘包">粘包</a></li>
+    <li><a href="#结构化">结构化</a>
       <ul>
-        <li><a href="#1性质">1.性质</a></li>
-      </ul>
-    </li>
-    <li><a href="#4特殊的二叉树">(4)特殊的二叉树</a>
-      <ul>
-        <li><a href="#1满二叉树">1.满二叉树</a></li>
-        <li><a href="#2完全的二叉树">2.完全的二叉树</a></li>
-      </ul>
-    </li>
-    <li><a href="#5二叉树存储">(5)二叉树存储</a>
-      <ul>
-        <li><a href="#顺序结构">顺序结构</a></li>
-        <li><a href="#链式结构">链式结构</a></li>
-        <li><a href="#前序遍历">前序遍历</a></li>
+        <li><a href="#优点">优点</a></li>
+        <li><a href="#缺点">缺点</a></li>
       </ul>
     </li>
   </ul>
 
   <ul>
-    <li><a href="#1class-vs-struct">1.class VS struct</a></li>
-    <li><a href="#2map-vs-pair">2.map VS pair</a></li>
+    <li><a href="#应用层报文message">应用层(报文(message))</a></li>
+    <li><a href="#传输层报文段segment">传输层(报文段(segment))</a></li>
+    <li><a href="#网络层分组packet">网络层(分组packet)</a>
+      <ul>
+        <li><a href="#作用">作用</a></li>
+      </ul>
+    </li>
+    <li><a href="#链路层帧frame">链路层(帧(frame))</a></li>
+    <li><a href="#物理层位bit">物理层(位(bit))</a>
+      <ul>
+        <li><a href="#发送端">发送端</a></li>
+        <li><a href="#接收端">接收端</a></li>
+      </ul>
+    </li>
+    <li><a href="#p2p---e2e">P2P - E2E</a></li>
+    <li><a href="#链路层和物理层一起封装在网卡">链路层和物理层一起封装在网卡</a></li>
   </ul>
 
   <ul>
-    <li><a href="#1参数模版化">(1)参数模版化</a>
+    <li><a href="#应用层">应用层</a></li>
+    <li><a href="#表示层">表示层</a></li>
+    <li><a href="#会话层">会话层</a>
       <ul>
-        <li><a href="#1时机">1.时机</a></li>
-        <li><a href="#2本质">2.本质</a></li>
-        <li><a href="#3内存">3.内存</a></li>
-        <li><a href="#4灵活性">4.灵活性</a></li>
-        <li><a href="#5代码生成">5.代码生成</a></li>
+        <li><a href="#在协议栈中应用层自己做会话层和表示层">在协议栈中应用层自己做会话层和表示层</a></li>
       </ul>
     </li>
-    <li><a href="#2类模版的继承">(2)类模版的继承</a>
-      <ul>
-        <li><a href="#1继承方式">1.继承方式</a></li>
-      </ul>
-    </li>
+    <li><a href="#传输层">传输层</a></li>
+    <li><a href="#网络层">网络层</a></li>
+    <li><a href="#链路层">链路层</a></li>
+    <li><a href="#物理层">物理层</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#例子">例子</a></li>
+    <li><a href="#体系结构">体系结构</a></li>
   </ul>
 </nav>
 </div></div>
@@ -678,9 +758,9 @@
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260313总结",
-          url: "http:\/\/localhost:1313\/post\/2026-03-13-%E6%80%BB%E7%BB%93\/",
-          description: "20260313",
+          title: "20260426总结",
+          url: "http:\/\/localhost:1313\/post\/2026-04-26\/",
+          description: "20260426",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
