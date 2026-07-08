@@ -12,12 +12,44 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Sun, 31 May 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 08 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260708总结</title>
+      <link>http://localhost:1313/post/2026-07-08-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 08 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-08-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260708总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="proto">
+<a class="header-anchor" href="#proto"></a>
+Proto:
+</h1><h2 id="环境配置以c为例">
+<a class="header-anchor" href="#%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae%e4%bb%a5c%e4%b8%ba%e4%be%8b"></a>
+环境配置(以c++为例)：
+</h2><h3 id="1-安装-protobuf-编译器-protoc">
+<a class="header-anchor" href="#1-%e5%ae%89%e8%a3%85-protobuf-%e7%bc%96%e8%af%91%e5%99%a8-protoc"></a>
+1. 安装 protobuf 编译器 (protoc)
+</h3><p><strong>Ubuntu/Debian:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install protobuf-compiler libprotobuf-dev
+</span></span></code></pre></div><p><strong>macOS (Homebrew):</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install protobuf
+</span></span></code></pre></div><p><strong>Windows:</strong>
+从 <a href="https://github.com/protocolbuffers/protobuf/releases">GitHub Releases</a> 下载 <code>protoc-&lt;version&gt;-win64.zip</code>，解压后将 <code>bin</code> 目录添加到系统 PATH。</p>
+        
+        <hr><p>本文2026-07-08首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-08</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -1225,68 +1257,6 @@ stl
 </h3><p>upper_bound(x);</p>
         
         <hr><p>本文2026-04-02首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-04-02</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>202604文章总览</title>
-      <link>http://localhost:1313/post/2026-04%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 01 Apr 2026 14:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-04%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>202604文章总览</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="20260401">
-<a class="header-anchor" href="#20260401"></a>
-2026.04.01
-</h1><ul>
-<li>编写了选牌和读取</li>
-</ul>
-<h1 id="20260406">
-<a class="header-anchor" href="#20260406"></a>
-2026.04.06
-</h1><ul>
-<li>重构了CGR(CardGameRandom)的工具库</li>
-</ul>
-<h1 id="20260407">
-<a class="header-anchor" href="#20260407"></a>
-2026.04.07
-</h1><ul>
-<li>写了CGR的选牌模块</li>
-</ul>
-<h1 id="20260418">
-<a class="header-anchor" href="#20260418"></a>
-2026.04.18
-</h1><ul>
-<li>网络核心(电路交换和分组交换)</li>
-<li>c++标准库(stl):</li>
-</ul>
-<h1 id="20260419">
-<a class="header-anchor" href="#20260419"></a>
-2026.04.19
-</h1><ul>
-<li>接入网络和物理媒介</li>
-<li>互联网的结构和ISP</li>
-<li>c++标准库(stl)</li>
-</ul>
-<h1 id="20260426">
-<a class="header-anchor" href="#20260426"></a>
-2026.04.26
-</h1><ul>
-<li>网络七层</li>
-<li>服务和服务点</li>
-<li>应用层</li>
-</ul>
-<h1 id="我的个人博客">
-<a class="header-anchor" href="#%e6%88%91%e7%9a%84%e4%b8%aa%e4%ba%ba%e5%8d%9a%e5%ae%a2"></a>
-我的个人博客
-</h1><p>本博客基于 Hugo 静态站点生成器开发，使用 D-Sketon 开发的 hugo-theme-reimu 主题模板。</p>
-        
-        <hr><p>本文2026-04-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-04-01</p>]]>
       </description>
       
     </item>
