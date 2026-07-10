@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260709总结 | D-Sketon
+  20260710总结 | D-Sketon
 </title>
-<meta name="description" content="20260709"/><script>
+<meta name="description" content="20260710"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260709总结 | D-Sketon" />
+  <meta property="og:title" content="20260710总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260709"
+    content="20260710"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-07-09-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-07-10-%E6%80%BB%E7%BB%93/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-07-09T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-07-09T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-07-10T08:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-07-10T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260709总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260710总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260709总结</h1>
+            <h1 data-aos="slide-up">20260710总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -140,12 +140,25 @@
     <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
     <li><a href="#逐关键字解释">逐关键字解释</a>
       <ul>
-        <li><a href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)</a></li>
-        <li><a href="#for-size_t-i--0-i--num_threads-i">for (size_t i = 0; i &lt; num_threads; ++i)</a></li>
-        <li><a href="#workersemplace_back">workers.emplace_back()</a></li>
-        <li><a href="#this">this</a></li>
-        <li><a href="#stdfunctionvoid-task">std::function&lt;void()&gt; task;</a></li>
-        <li><a href="#stdunique_lock-lockthis-queue_mutex">std::unique_lockstd::mutex lock(this-&gt;queue_mutex);</a></li>
+        <li></li>
+        <li><a href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty">this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#源代码">源代码</a></li>
+    <li><a href="#解释">解释</a>
+      <ul>
+        <li><a href="#workersemplace_backthisthis-worker">workers.emplace_back([this]{this-&gt;worker();});</a></li>
+      </ul>
+    </li>
+    <li><a href="#放入队列的源代码">放入队列的源代码</a></li>
+    <li><a href="#逐行解释">逐行解释</a>
+      <ul>
+        <li><a href="#template-typename-f-typename-arg">template &lt;typename F, typename&hellip; Arg&gt;</a></li>
+        <li><a href="#auto-threadpoolenquesf-f-arg-arg">auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)</a></li>
+        <li><a href="#stdfuturetypename-stdresult_offargtype">std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;</a></li>
       </ul>
     </li>
   </ul>
@@ -219,30 +232,16 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-07-09 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-07-09</time
+    <time datetime="2026-07-10 08:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-07-10</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-07-09</time
+      >2026-07-10</time
     >
   </span></div>
-</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="q">
-<a class="header-anchor" href="#q"></a>
-Q:
-</h1><ul>
-<li>
-<p>Q1:为什么vcpkg对于g++的支持这么差！</p>
-</li>
-<li>
-<p>Q2:为什么vcpkg装g++的boost总是装不上！</p>
-</li>
-<li>
-<p>Q3:为什么vcpkg装g++的protobuf也是装不上！用不了！</p>
-</li>
-</ul>
-<h1 id="线程池1">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a01"></a>
-线程池1
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="线程池续1">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%bb%ad1"></a>
+线程池续1
 </h1><h2 id="类的构造函数源码使用">
 <a class="header-anchor" href="#%e7%b1%bb%e7%9a%84%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e6%ba%90%e7%a0%81%e4%bd%bf%e7%94%a8"></a>
 类的构造函数源码使用：
@@ -279,67 +278,112 @@ Q:
 </span></span></code></pre></div><h2 id="逐关键字解释">
 <a class="header-anchor" href="#%e9%80%90%e5%85%b3%e9%94%ae%e5%ad%97%e8%a7%a3%e9%87%8a"></a>
 逐关键字解释
-</h2><h3 id="explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">
-<a class="header-anchor" href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse"></a>
-explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)
-</h3><h4 id="explicit">
-<a class="header-anchor" href="#explicit"></a>
-explicit:
+</h2><h3 id="">
+<a class="header-anchor" href="#"></a>
+
+</h3><ul>
+<li>是一个将下面的循环代码独立成代码块，用于控制std::unique_lock的生命周期</li>
+<li>目的是尽早释放互斥锁，让其他线程能访问队列</li>
+</ul>
+<h3 id="this-conditionwaitlock-this-return-this-stop--this-tasksempty">
+<a class="header-anchor" href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty"></a>
+this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});
+</h3><ul>
+<li>condition.wait(lock, predicate)是等待predicate条件成立</li>
+<li>自动释放锁，让其他线程能访问共享数据</li>
+<li>线程休眠，不浪费 CPU</li>
+<li>被通知后重新获取锁，再次检查条件</li>
+<li>确保线程只在确实有工作要做时才被唤醒</li>
+</ul>
+<h1 id="线程池新1">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e6%96%b01"></a>
+线程池新1
+</h1><h2 id="源代码">
+<a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
+源代码
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">ThreadPool</span><span class="o">::</span><span class="n">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">num_threads</span><span class="p">)</span><span class="o">:</span><span class="n">stop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_threads</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="o">-&gt;</span><span class="n">worker</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h2 id="解释">
+<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
+解释
+</h2><h3 id="workersemplace_backthisthis-worker">
+<a class="header-anchor" href="#workersemplace_backthisthis-worker"></a>
+workers.emplace_back([this]{this-&gt;worker();});
+</h3><ul>
+<li>类比一的只不过将内部的匿名函数抽象成worker</li>
+<li>更便于理解</li>
+</ul>
+<h2 id="放入队列的源代码">
+<a class="header-anchor" href="#%e6%94%be%e5%85%a5%e9%98%9f%e5%88%97%e7%9a%84%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
+放入队列的源代码
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Arg</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">enques</span><span class="p">(</span><span class="n">F</span> <span class="o">&amp;&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">Arg</span> <span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">result_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">using</span> <span class="n">functype</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">resulit_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">..)</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">packaged_task</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;&gt;</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Arg</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">)...));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;</span> <span class="n">retfuture</span> <span class="o">=</span> <span class="n">task</span><span class="o">-&gt;</span><span class="n">get_future</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutx</span><span class="o">&gt;</span> <span class="n">lock_guard</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">mtx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">stop</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&#34;error:threadpool on off&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">work_que</span><span class="p">.</span><span class="n">emplace</span><span class="p">([</span><span class="k">this</span><span class="p">](){</span>
+</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="p">.</span><span class="n">notify_all</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">retfuture</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h2 id="逐行解释">
+<a class="header-anchor" href="#%e9%80%90%e8%a1%8c%e8%a7%a3%e9%87%8a"></a>
+逐行解释
+</h2><h3 id="template-typename-f-typename-arg">
+<a class="header-anchor" href="#template-typename-f-typename-arg"></a>
+template &lt;typename F, typename&hellip; Arg&gt;
+</h3><ul>
+<li>F为单个固定的模版参数，Arg为不固定数量的模版类型</li>
+</ul>
+<h3 id="auto-threadpoolenquesf-f-arg-arg">
+<a class="header-anchor" href="#auto-threadpoolenquesf-f-arg-arg"></a>
+auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)
+</h3><ul>
+<li>自动类型，这里的类型通过后面的[&rsquo;-&gt;&rsquo;]确认类型</li>
+<li>强制需传入至少1个参数，Arg为不定参数’</li>
+</ul>
+<h3 id="stdfuturetypename-stdresult_offargtype">
+<a class="header-anchor" href="#stdfuturetypename-stdresult_offargtype"></a>
+std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;
+</h3><ul>
+<li>为前面的类型</li>
+</ul>
+<h4 id="stdfuture">
+<a class="header-anchor" href="#stdfuture"></a>
+std::future
 </h4><ul>
-<li>作用：防止隐式类型转换和防止拷贝初始化。</li>
-<li>例如，ThreadPool pool = 4; 会编译错误，而必须写成 ThreadPool pool(4);。这可以避免一些意外的类型转换错误</li>
+<li>定义返回的异步的操作的结果</li>
 </ul>
-<h4 id="stdthreadhardware_concurrency">
-<a class="header-anchor" href="#stdthreadhardware_concurrency"></a>
-std::thread::hardware_concurrency()
+<h4 id="typename">
+<a class="header-anchor" href="#typename"></a>
+typename
 </h4><ul>
-<li>获取可以并发的核心数</li>
-<li>PS：可以改成任意的合法数字此种写法默认全部线程创建</li>
+<li>任意变量类型</li>
 </ul>
-<h4 id="stopfalse">
-<a class="header-anchor" href="#stopfalse"></a>
-stop(false)
-</h4><ul>
-<li>初始化 stop 标志为 false，表示线程池刚开始运行时，所有线程都应该继续工作。</li>
-</ul>
-<h3 id="for-size_t-i--0-i--num_threads-i">
-<a class="header-anchor" href="#for-size_t-i--0-i--num_threads-i"></a>
-for (size_t i = 0; i &lt; num_threads; ++i)
-</h3><ul>
-<li>创建与可以并发的核心数一样的工作线程</li>
-</ul>
-<h3 id="workersemplace_back">
-<a class="header-anchor" href="#workersemplace_back"></a>
-workers.emplace_back()
-</h3><ul>
-<li>workers(为类里存放工作线程的集合)</li>
-<li>emplace_back()此方法为在可以接受构造对象所需的参数</li>
-<li>PS:对比push_back()方法，不接受传参构造，只存放构造完成的参数</li>
-</ul>
-<h3 id="this">
-<a class="header-anchor" href="#this"></a>
-<a href="">this</a>
-</h3><ul>
-<li>匿名函数构造</li>
-<li>作用：为每个创建的线程进行无限循环</li>
-</ul>
-<h3 id="stdfunctionvoid-task">
-<a class="header-anchor" href="#stdfunctionvoid-task"></a>
-std::function&lt;void()&gt; task;
-</h3><ul>
-<li>嵌套于for循环</li>
-<li>每次循环都创建一个新的 task 对象，循环结束时，task 被销毁，下次循环重新创建</li>
-<li>作用：</li>
-<li>1、实现每个线程的重复利用</li>
-<li>2、将传入的任务打包成函数</li>
-</ul>
-<h3 id="stdunique_lock-lockthis-queue_mutex">
-<a class="header-anchor" href="#stdunique_lock-lockthis-queue_mutex"></a>
-std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
-</h3><ul>
-<li>为该线程加锁</li>
-</ul>
-</div>
+<h4 id="">
+<a class="header-anchor" href="#"></a>
+
+</h4></div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
 </footer>
@@ -350,27 +394,15 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260708总结"
+              alt="20260709总结"
               class="lazyload"
             /><a
-          href="/post/2026-07-08-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260708总结"
-          title="前一篇:20260708总结"
+          href="/post/2026-07-09-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260709总结"
+          title="前一篇:20260709总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260708总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260710总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-07-10-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260710总结"
-          title="后一篇:20260710总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260710总结</h3>
+        <h3 class="article-nav-title">20260709总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -424,12 +456,25 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
     <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
     <li><a href="#逐关键字解释">逐关键字解释</a>
       <ul>
-        <li><a href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)</a></li>
-        <li><a href="#for-size_t-i--0-i--num_threads-i">for (size_t i = 0; i &lt; num_threads; ++i)</a></li>
-        <li><a href="#workersemplace_back">workers.emplace_back()</a></li>
-        <li><a href="#this">this</a></li>
-        <li><a href="#stdfunctionvoid-task">std::function&lt;void()&gt; task;</a></li>
-        <li><a href="#stdunique_lock-lockthis-queue_mutex">std::unique_lockstd::mutex lock(this-&gt;queue_mutex);</a></li>
+        <li></li>
+        <li><a href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty">this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#源代码">源代码</a></li>
+    <li><a href="#解释">解释</a>
+      <ul>
+        <li><a href="#workersemplace_backthisthis-worker">workers.emplace_back([this]{this-&gt;worker();});</a></li>
+      </ul>
+    </li>
+    <li><a href="#放入队列的源代码">放入队列的源代码</a></li>
+    <li><a href="#逐行解释">逐行解释</a>
+      <ul>
+        <li><a href="#template-typename-f-typename-arg">template &lt;typename F, typename&hellip; Arg&gt;</a></li>
+        <li><a href="#auto-threadpoolenquesf-f-arg-arg">auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)</a></li>
+        <li><a href="#stdfuturetypename-stdresult_offargtype">std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;</a></li>
       </ul>
     </li>
   </ul>
@@ -537,9 +582,9 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260709总结",
-          url: "http:\/\/localhost:1313\/post\/2026-07-09-%E6%80%BB%E7%BB%93\/",
-          description: "20260709",
+          title: "20260710总结",
+          url: "http:\/\/localhost:1313\/post\/2026-07-10-%E6%80%BB%E7%BB%93\/",
+          description: "20260710",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
