@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260710总结 | D-Sketon
+  20260711总结 | D-Sketon
 </title>
-<meta name="description" content="20260710"/><script>
+<meta name="description" content="20260711"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260710总结 | D-Sketon" />
+  <meta property="og:title" content="20260711总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260710"
+    content="20260711"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-07-10-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-07-11-%E6%80%BB%E7%BB%93/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-07-10T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-07-10T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-07-11T08:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-07-11T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260710总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260711总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260710总结</h1>
+            <h1 data-aos="slide-up">20260711总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -137,28 +137,16 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
-    <li><a href="#逐关键字解释">逐关键字解释</a>
+    <li><a href="#enques函数2">enques函数2</a>
       <ul>
-        <li></li>
-        <li><a href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty">this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});</a></li>
+        <li><a href="#源代码">源代码</a></li>
+        <li><a href="#解释">解释</a></li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#源代码">源代码</a></li>
-    <li><a href="#解释">解释</a>
+    <li><a href="#worker">worker</a>
       <ul>
-        <li><a href="#workersemplace_backthisthis-worker">workers.emplace_back([this]{this-&gt;worker();});</a></li>
-      </ul>
-    </li>
-    <li><a href="#放入队列的源代码">放入队列的源代码</a></li>
-    <li><a href="#逐行解释">逐行解释</a>
-      <ul>
-        <li><a href="#template-typename-f-typename-arg">template &lt;typename F, typename&hellip; Arg&gt;</a></li>
-        <li><a href="#auto-threadpoolenquesf-f-arg-arg">auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)</a></li>
-        <li><a href="#stdfuturetypename-stdresult_offargtype">std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;</a></li>
+        <li><a href="#源代码-1">源代码</a></li>
+        <li><a href="#解释-1">解释</a></li>
       </ul>
     </li>
   </ul>
@@ -232,99 +220,23 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-07-10 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-07-10</time
+    <time datetime="2026-07-11 08:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-07-11</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-07-10</time
+      >2026-07-11</time
     >
   </span></div>
-</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="线程池续1">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%bb%ad1"></a>
-线程池续1
-</h1><h2 id="类的构造函数源码使用">
-<a class="header-anchor" href="#%e7%b1%bb%e7%9a%84%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e6%ba%90%e7%a0%81%e4%bd%bf%e7%94%a8"></a>
-类的构造函数源码使用：
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">explicit</span> <span class="nf">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">hardware_concurrency</span><span class="p">())</span><span class="o">:</span> <span class="n">stop</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_threads</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="c1">// 每个工作线程的无限循环
-</span></span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 加锁获取任务
-</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">queue_mutex</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 等待条件：停止标志 或 任务队列非空
-</span></span></span><span class="line"><span class="cl">                        <span class="k">this</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                            <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">});</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 如果停止且没有任务，退出线程
-</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 取出一个任务
-</span></span></span><span class="line"><span class="cl">                        <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    <span class="c1">// 执行任务（在锁外执行，避免阻塞其他线程）
-</span></span></span><span class="line"><span class="cl">                    <span class="n">task</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="p">});</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><h2 id="逐关键字解释">
-<a class="header-anchor" href="#%e9%80%90%e5%85%b3%e9%94%ae%e5%ad%97%e8%a7%a3%e9%87%8a"></a>
-逐关键字解释
-</h2><h3 id="">
-<a class="header-anchor" href="#"></a>
-
-</h3><ul>
-<li>是一个将下面的循环代码独立成代码块，用于控制std::unique_lock的生命周期</li>
-<li>目的是尽早释放互斥锁，让其他线程能访问队列</li>
-</ul>
-<h3 id="this-conditionwaitlock-this-return-this-stop--this-tasksempty">
-<a class="header-anchor" href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty"></a>
-this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});
-</h3><ul>
-<li>condition.wait(lock, predicate)是等待predicate条件成立</li>
-<li>自动释放锁，让其他线程能访问共享数据</li>
-<li>线程休眠，不浪费 CPU</li>
-<li>被通知后重新获取锁，再次检查条件</li>
-<li>确保线程只在确实有工作要做时才被唤醒</li>
-</ul>
-<h1 id="线程池新1">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e6%96%b01"></a>
-线程池新1
-</h1><h2 id="源代码">
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="线程池类新1续1">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%b1%bb%e6%96%b01%e7%bb%ad1"></a>
+线程池类新1续1
+</h1><h2 id="enques函数2">
+<a class="header-anchor" href="#enques%e5%87%bd%e6%95%b02"></a>
+enques函数2
+</h2><h3 id="源代码">
 <a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
 源代码
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">ThreadPool</span><span class="o">::</span><span class="n">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">num_threads</span><span class="p">)</span><span class="o">:</span><span class="n">stop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_threads</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">                <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="o">-&gt;</span><span class="n">worker</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="p">});</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><h2 id="解释">
-<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
-解释
-</h2><h3 id="workersemplace_backthisthis-worker">
-<a class="header-anchor" href="#workersemplace_backthisthis-worker"></a>
-workers.emplace_back([this]{this-&gt;worker();});
-</h3><ul>
-<li>类比一的只不过将内部的匿名函数抽象成worker</li>
-<li>更便于理解</li>
-</ul>
-<h2 id="放入队列的源代码">
-<a class="header-anchor" href="#%e6%94%be%e5%85%a5%e9%98%9f%e5%88%97%e7%9a%84%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
-放入队列的源代码
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Arg</span><span class="o">&gt;</span>
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Arg</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">enques</span><span class="p">(</span><span class="n">F</span> <span class="o">&amp;&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">Arg</span> <span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">arg</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">        <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">result_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
@@ -342,44 +254,251 @@ workers.emplace_back([this]{this-&gt;worker();});
 </span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span>
 </span></span><span class="line"><span class="cl">            <span class="p">});</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="p">.</span><span class="n">notify_all</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">retfuture</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><h2 id="逐行解释">
-<a class="header-anchor" href="#%e9%80%90%e8%a1%8c%e8%a7%a3%e9%87%8a"></a>
-逐行解释
-</h2><h3 id="template-typename-f-typename-arg">
-<a class="header-anchor" href="#template-typename-f-typename-arg"></a>
-template &lt;typename F, typename&hellip; Arg&gt;
-</h3><ul>
-<li>F为单个固定的模版参数，Arg为不固定数量的模版类型</li>
+</span></span></code></pre></div><h3 id="解释">
+<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
+解释
+</h3><h4 id="using-functype--typename-stdresulit_offargtype">
+<a class="header-anchor" href="#using-functype--typename-stdresulit_offargtype"></a>
+using functype = typename std::resulit_of&lt;F(Arg..)&gt;::type;
+</h4><ul>
+<li>将std::resulit_of&lt;F(Arg..)&gt;::type推导出的类型命名为functype</li>
 </ul>
-<h3 id="auto-threadpoolenquesf-f-arg-arg">
-<a class="header-anchor" href="#auto-threadpoolenquesf-f-arg-arg"></a>
-auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)
-</h3><ul>
-<li>自动类型，这里的类型通过后面的[&rsquo;-&gt;&rsquo;]确认类型</li>
-<li>强制需传入至少1个参数，Arg为不定参数’</li>
+<h5 id="stdresult_offarg">
+<a class="header-anchor" href="#stdresult_offarg"></a>
+std::result_of&lt;F(Arg&hellip;)&gt;
+</h5><ul>
+<li>用于在编译期推导可调用对象 F 接受参数 Arg&hellip; 后的返回类型</li>
+<li>Arg可能会有不定参数使用&hellip;去表示</li>
+<li>c++17开始被弃用，使用std::invoke_result_t</li>
 </ul>
-<h3 id="stdfuturetypename-stdresult_offargtype">
-<a class="header-anchor" href="#stdfuturetypename-stdresult_offargtype"></a>
-std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;
-</h3><ul>
-<li>为前面的类型</li>
+<h5 id="type">
+<a class="header-anchor" href="#type"></a>
+::type
+</h5><ul>
+<li>是std::result_of的内部静态函数</li>
+<li>是 std::result_of 内部定义的类型别名，表示推导出的返回类型</li>
 </ul>
-<h4 id="stdfuture">
+<h4 id="auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg">
+<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg"></a>
+auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;(std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;))
+</h4><ul>
+<li>创建一个完美转发的异步任务</li>
+</ul>
+<h5 id="auto-task--stdmake_sharedstdpackaged_task">
+<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_task"></a>
+auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;()
+</h5><ul>
+<li>auto task 自动推导类型为 shared_ptr&lt;packaged_task<!-- raw HTML omitted -->&gt;（并为其赋值创建的任务）</li>
+<li>std::make_shared&lt;&hellip;&gt;()是在在堆上创建对象，并返回 std::shared_ptr 智能指针，共享智能指针管理</li>
+<li>std::packaged_task<!-- raw HTML omitted -->是打包封装成一个异步任务</li>
+</ul>
+<h5 id="stdbindstdforwardf-stdforwardarg">
+<a class="header-anchor" href="#stdbindstdforwardf-stdforwardarg"></a>
+std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;)
+</h5><ul>
+<li>
+<p>这句代码是 C++ 中完美转发 + 函数绑定的组合，用于创建一个绑定好参数的可调用对象。</p>
+</li>
+<li>
+<p>std::bind 将函数和参数绑定在一起，生成一个新的可调用对象。可以绑定部分参数（占位符）或全部参数 5#### using functype = typename std::resulit_of&lt;F(Arg..)&gt;::type;</p>
+</li>
+<li>
+<p>将std::resulit_of&lt;F(Arg..)&gt;::type推导出的类型命名为functype</p>
+</li>
+<li>
+<p>std::forward<!-- raw HTML omitted -->(f) 完美转发左右值（这里指函数名）</p>
+</li>
+<li>
+<p>std::forward<!-- raw HTML omitted -->(arg)&hellip; 完美转发参数包中的每个参数以及其类别（这里指参数）</p>
+</li>
+</ul>
+<h4 id="stdfuture-retfuture--task-get_future">
+<a class="header-anchor" href="#stdfuture-retfuture--task-get_future"></a>
+std::future<!-- raw HTML omitted --> retfuture = task-&gt;get_future();
+</h4><ul>
+<li>从某个异步任务对象中获取一个 std::future 对象，并将其赋值给 retfuture。之后可以通过 retfuture.get() 来等待任务完成并获取其返回值。</li>
+</ul>
+<h5 id="stdfuture">
 <a class="header-anchor" href="#stdfuture"></a>
-std::future
-</h4><ul>
-<li>定义返回的异步的操作的结果</li>
+std::future<!-- raw HTML omitted -->
+</h5><ul>
+<li>声明一个 std::future 对象，模板参数 functype 是异步任务返回值的类型。</li>
 </ul>
-<h4 id="typename">
-<a class="header-anchor" href="#typename"></a>
-typename
+<h5 id="stdfuture-1">
+<a class="header-anchor" href="#stdfuture-1"></a>
+std::future
+</h5><ul>
+<li>用于获取异步操作的结果。</li>
+</ul>
+<h5 id="retfuture">
+<a class="header-anchor" href="#retfuture"></a>
+retfuture
+</h5><ul>
+<li>用于存储获取到的 future 对象。</li>
+</ul>
+<h5 id="task-get_future">
+<a class="header-anchor" href="#task-get_future"></a>
+task-&gt;get_future()
+</h5><ul>
+<li>调用 task 指针所指向对象的 get_future() 成员函数。会返回一个与任务关联的 std::future 对象</li>
+</ul>
+<h4 id="stdlock_guard-lock_guardthis-mtx">
+<a class="header-anchor" href="#stdlock_guard-lock_guardthis-mtx"></a>
+std::lock_guard<a href="#ZgotmplZ">std::mutx</a> lock_guard(this-&gt;mtx);
 </h4><ul>
-<li>任意变量类型</li>
-<li>这是最常见的用法，告诉编译器后面的名字是一个类型，而不是静态成员变量或其他东西。</li>
+<li>创建一个 std::lock_guard 对象，在构造时自动锁定 this-&gt;mtx 互斥量，在析构时（离开作用域时）自动解锁。</li>
+<li>保护对共享数据的访问</li>
+</ul>
+<h5 id="stdlock_guard">
+<a class="header-anchor" href="#stdlock_guard"></a>
+std::lock_guard<a href="#ZgotmplZ">std::mutex</a>
+</h5><ul>
+<li>std::lock_guard 是一个 RAII（资源获取即初始化）锁管理器。</li>
+<li>这里用来管理线程锁</li>
+</ul>
+<h4 id="if-stop-throw-stdruntime_errorerrorthreadpool-on-off">
+<a class="header-anchor" href="#if-stop-throw-stdruntime_errorerrorthreadpool-on-off"></a>
+if (stop) throw std::runtime_error(&ldquo;error:threadpool on off&rdquo;);
+</h4><ul>
+<li>判断线程池是否停止</li>
+<li>是：进入抛出异常</li>
+</ul>
+<h4 id="work_queemplacethistask">
+<a class="header-anchor" href="#work_queemplacethistask"></a>
+work_que.emplace(<a href="">this</a>{(*task)();});
+</h4><ul>
+<li>加入到线程池队列(通过对task名称解引用的方式获得函数就加入队列)</li>
+</ul>
+<h4 id="cvnotify_one">
+<a class="header-anchor" href="#cvnotify_one"></a>
+cv.notify_one();
+</h4><ul>
+<li>唤醒一个线程去运行</li>
+</ul>
+<h4 id="return-retfuture">
+<a class="header-anchor" href="#return-retfuture"></a>
+return retfuture;
+</h4><ul>
+<li>获取调用的结果</li>
+</ul>
+<h2 id="worker">
+<a class="header-anchor" href="#worker"></a>
+worker
+</h2><h3 id="源代码-1">
+<a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81-1"></a>
+源代码
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">worker</span><span class="p">()</span> <span class="c1">// 每个线程执行函数
+</span></span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">while</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// 死循环
+</span></span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">;</span> <span class="c1">// 定义一临时存储异步任务的变量
+</span></span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">mtx</span><span class="p">);</span> <span class="c1">// 给mtx上锁
+</span></span></span><span class="line"><span class="cl">                <span class="n">cv</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">{</span> <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">work_que</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span> <span class="p">});</span> <span class="c1">// 等待条件（是否是stop变量为false，或者任务队列是否为空）
+</span></span></span><span class="line"><span class="cl">                <span class="k">if</span> <span class="p">(</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="n">work_que</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>                               <span class="c1">// stop==1并且任务队列为空，则关闭线程
+</span></span></span><span class="line"><span class="cl">                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">work_que</span><span class="p">.</span><span class="n">front</span><span class="p">());</span> <span class="c1">// 给队列上面的赋值给task
+</span></span></span><span class="line"><span class="cl">                <span class="k">this</span><span class="o">-&gt;</span><span class="n">work_que</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>                     <span class="c1">// 出队
+</span></span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">task</span><span class="p">();</span> <span class="c1">// 执行task
+</span></span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h3 id="解释-1">
+<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a-1"></a>
+解释
+</h3><h4 id="while-1">
+<a class="header-anchor" href="#while-1"></a>
+while (1)
+</h4><ul>
+<li>死循环，使每个工作线程持续不断地从任务队列中获取任务并执行</li>
+<li>线程不会主动退出，除非满足退出条件</li>
+</ul>
+<h4 id="stdfunctionvoid-task">
+<a class="header-anchor" href="#stdfunctionvoid-task"></a>
+std::function&lt;void()&gt; task;
+</h4><ul>
+<li>定义一个可调用对象 task，用于临时存储从任务队列中取出的任务</li>
+<li>std::function&lt;void()&gt; 可以包装任何可调用目标（函数、lambda、bind表达式等），且返回类型为 void，无参数</li>
+</ul>
+<h4 id="stdunique_lock-lockmtx">
+<a class="header-anchor" href="#stdunique_lock-lockmtx"></a>
+std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(mtx);
+</h4><ul>
+<li>创建一个 std::unique_lock 对象，在构造时锁定互斥量 mtx</li>
+<li>与 std::lock_guard 不同，std::unique_lock 更灵活，允许手动解锁/重新锁定，配合条件变量使用</li>
+</ul>
+<h5 id="stdunique_lock">
+<a class="header-anchor" href="#stdunique_lock"></a>
+std::unique_lock<a href="#ZgotmplZ">std::mutex</a>
+</h5><ul>
+<li>是一个互斥量包装器，提供 RAII 风格的锁管理</li>
+<li>支持延迟锁定、尝试锁定、定时锁定以及转移所有权等操作</li>
+<li>条件变量 cv.wait() 要求参数必须是 std::unique_lock</li>
+</ul>
+<h4 id="cvwaitlock-this-return-this-stop--this-work_queempty-">
+<a class="header-anchor" href="#cvwaitlock-this-return-this-stop--this-work_queempty-"></a>
+cv.wait(lock, [this]{ return this-&gt;stop || !this-&gt;work_que.empty(); });
+</h4><ul>
+<li>条件变量等待，线程在此处阻塞，直到条件满足（谓词返回 true）才被唤醒</li>
+<li>等待期间自动解锁 lock，唤醒后重新锁定 lock</li>
+</ul>
+<h5 id="cvwaitlock-predicate">
+<a class="header-anchor" href="#cvwaitlock-predicate"></a>
+cv.wait(lock, predicate)
+</h5><ul>
+<li>等价于 <code>while (!predicate()) { cv.wait(lock); }</code></li>
+<li>避免虚假唤醒（spurious wakeup）</li>
+<li>predicate 是一个可调用对象，返回 bool 值</li>
+</ul>
+<h5 id="谓词-this-return-this-stop--this-work_queempty-">
+<a class="header-anchor" href="#%e8%b0%93%e8%af%8d-this-return-this-stop--this-work_queempty-"></a>
+谓词 <code>[this]{ return this-&gt;stop || !this-&gt;work_que.empty(); }</code>
+</h5><ul>
+<li>捕获 this 指针的 lambda 表达式</li>
+<li>条件：线程池已停止（stop == true）<strong>或</strong> 任务队列不为空（!work_que.empty()）</li>
+<li>只要满足任一条件，线程就被唤醒继续执行</li>
+</ul>
+<h4 id="if-stop--work_queempty-return">
+<a class="header-anchor" href="#if-stop--work_queempty-return"></a>
+if (stop &amp;&amp; work_que.empty()) return;
+</h4><ul>
+<li>检查退出条件：线程池已停止 <strong>且</strong> 任务队列为空</li>
+<li>两个条件同时满足时，线程安全退出，结束 while 死循环</li>
+<li>如果只有 stop 为 true 但队列中还有未处理的任务，则继续处理完所有任务再退出</li>
+</ul>
+<h4 id="task--stdmovethis-work_quefront">
+<a class="header-anchor" href="#task--stdmovethis-work_quefront"></a>
+task = std::move(this-&gt;work_que.front());
+</h4><ul>
+<li>将任务队列 front 处的任务通过 std::move 转移给 task 变量</li>
+<li>std::move 将左值转换为右值引用，避免拷贝，提高性能</li>
+</ul>
+<h5 id="stdmove">
+<a class="header-anchor" href="#stdmove"></a>
+std::move
+</h5><ul>
+<li>将对象资源的所有权转移给另一个对象</li>
+<li>转移后原对象处于有效但未指定的状态</li>
+</ul>
+<h4 id="this-work_quepop">
+<a class="header-anchor" href="#this-work_quepop"></a>
+this-&gt;work_que.pop();
+</h4><ul>
+<li>将任务队列 front 处的元素弹出（出队）</li>
+<li>与上一步配合：先取出任务，再将其从队列中移除</li>
+</ul>
+<h4 id="task">
+<a class="header-anchor" href="#task"></a>
+task();
+</h4><ul>
+<li>执行取出的任务</li>
+<li>调用 task 所包装的可调用对象，实际执行用户提交的函数</li>
+<li>注意：此操作在锁的作用域之外执行，避免长时间持有锁影响其他线程</li>
 </ul>
 </div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
@@ -392,27 +511,15 @@ typename
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260709总结"
+              alt="20260710总结"
               class="lazyload"
             /><a
-          href="/post/2026-07-09-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260709总结"
-          title="前一篇:20260709总结"
+          href="/post/2026-07-10-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260710总结"
+          title="前一篇:20260710总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260709总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260711总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-07-11-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260711总结"
-          title="后一篇:20260711总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260711总结</h3>
+        <h3 class="article-nav-title">20260710总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -463,28 +570,16 @@ typename
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
-    <li><a href="#逐关键字解释">逐关键字解释</a>
+    <li><a href="#enques函数2">enques函数2</a>
       <ul>
-        <li></li>
-        <li><a href="#this-conditionwaitlock-this-return-this-stop--this-tasksempty">this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.empty();});</a></li>
+        <li><a href="#源代码">源代码</a></li>
+        <li><a href="#解释">解释</a></li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#源代码">源代码</a></li>
-    <li><a href="#解释">解释</a>
+    <li><a href="#worker">worker</a>
       <ul>
-        <li><a href="#workersemplace_backthisthis-worker">workers.emplace_back([this]{this-&gt;worker();});</a></li>
-      </ul>
-    </li>
-    <li><a href="#放入队列的源代码">放入队列的源代码</a></li>
-    <li><a href="#逐行解释">逐行解释</a>
-      <ul>
-        <li><a href="#template-typename-f-typename-arg">template &lt;typename F, typename&hellip; Arg&gt;</a></li>
-        <li><a href="#auto-threadpoolenquesf-f-arg-arg">auto ThreadPool::enques(F &amp;&amp;f, Arg &amp;&amp;&hellip;arg)</a></li>
-        <li><a href="#stdfuturetypename-stdresult_offargtype">std::future&lt;typename std::result_of&lt;F(Arg&hellip;)&gt;::type&gt;</a></li>
+        <li><a href="#源代码-1">源代码</a></li>
+        <li><a href="#解释-1">解释</a></li>
       </ul>
     </li>
   </ul>
@@ -592,9 +687,9 @@ typename
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260710总结",
-          url: "http:\/\/localhost:1313\/post\/2026-07-10-%E6%80%BB%E7%BB%93\/",
-          description: "20260710",
+          title: "20260711总结",
+          url: "http:\/\/localhost:1313\/post\/2026-07-11-%E6%80%BB%E7%BB%93\/",
+          description: "20260711",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {

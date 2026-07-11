@@ -12,12 +12,104 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Fri, 10 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260711总结</title>
+      <link>http://localhost:1313/post/2026-07-11-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 11 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-11-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260711总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="线程池类新1续1">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%b1%bb%e6%96%b01%e7%bb%ad1"></a>
+线程池类新1续1
+</h1><h2 id="enques函数2">
+<a class="header-anchor" href="#enques%e5%87%bd%e6%95%b02"></a>
+enques函数2
+</h2><h3 id="源代码">
+<a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
+源代码
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Arg</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">enques</span><span class="p">(</span><span class="n">F</span> <span class="o">&amp;&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">Arg</span> <span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">arg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">result_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">using</span> <span class="n">functype</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">resulit_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">..)</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">packaged_task</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;&gt;</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Arg</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">)...));</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;</span> <span class="n">retfuture</span> <span class="o">=</span> <span class="n">task</span><span class="o">-&gt;</span><span class="n">get_future</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutx</span><span class="o">&gt;</span> <span class="n">lock_guard</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">mtx</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">stop</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&#34;error:threadpool on off&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">            <span class="n">work_que</span><span class="p">.</span><span class="n">emplace</span><span class="p">([</span><span class="k">this</span><span class="p">](){</span>
+</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">retfuture</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h3 id="解释">
+<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
+解释
+</h3><h4 id="using-functype--typename-stdresulit_offargtype">
+<a class="header-anchor" href="#using-functype--typename-stdresulit_offargtype"></a>
+using functype = typename std::resulit_of&lt;F(Arg..)&gt;::type;
+</h4><ul>
+<li>将std::resulit_of&lt;F(Arg..)&gt;::type推导出的类型命名为functype</li>
+</ul>
+<h5 id="stdresult_offarg">
+<a class="header-anchor" href="#stdresult_offarg"></a>
+std::result_of&lt;F(Arg&hellip;)&gt;
+</h5><ul>
+<li>用于在编译期推导可调用对象 F 接受参数 Arg&hellip; 后的返回类型</li>
+<li>Arg可能会有不定参数使用&hellip;去表示</li>
+<li>c++17开始被弃用，使用std::invoke_result_t</li>
+</ul>
+<h5 id="type">
+<a class="header-anchor" href="#type"></a>
+::type
+</h5><ul>
+<li>是std::result_of的内部静态函数</li>
+<li>是 std::result_of 内部定义的类型别名，表示推导出的返回类型</li>
+</ul>
+<h4 id="auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg">
+<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg"></a>
+auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;(std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;))
+</h4><ul>
+<li>创建一个完美转发的异步任务</li>
+</ul>
+<h5 id="auto-task--stdmake_sharedstdpackaged_task">
+<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_task"></a>
+auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;()
+</h5><ul>
+<li>auto task 自动推导类型为 shared_ptr&lt;packaged_task<!-- raw HTML omitted -->&gt;（并为其赋值创建的任务）</li>
+<li>std::make_shared&lt;&hellip;&gt;()是在在堆上创建对象，并返回 std::shared_ptr 智能指针，共享智能指针管理</li>
+<li>std::packaged_task<!-- raw HTML omitted -->是打包封装成一个异步任务</li>
+</ul>
+<h5 id="stdbindstdforwardf-stdforwardarg">
+<a class="header-anchor" href="#stdbindstdforwardf-stdforwardarg"></a>
+std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;)
+</h5><ul>
+<li>
+<p>这句代码是 C++ 中完美转发 + 函数绑定的组合，用于创建一个绑定好参数的可调用对象。</p>
+        
+        <hr><p>本文2026-07-11首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-11</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -86,6 +178,32 @@ this-&gt;condition.wait(lock, [this] {return this-&gt;stop || !this-&gt;tasks.em
 <li>被通知后重新获取锁，再次检查条件</li>
 <li>确保线程只在确实有工作要做时才被唤醒</li>
 </ul>
+<h1 id="线程池新1">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e6%96%b01"></a>
+线程池新1
+</h1><h2 id="源代码">
+<a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
+源代码
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">ThreadPool</span><span class="o">::</span><span class="n">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">num_threads</span><span class="p">)</span><span class="o">:</span><span class="n">stop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="n">size_t</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">num_threads</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">this</span><span class="o">-&gt;</span><span class="n">worker</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span></code></pre></div><h2 id="解释">
+<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
+解释
+</h2><h3 id="workersemplace_backthisthis-worker">
+<a class="header-anchor" href="#workersemplace_backthisthis-worker"></a>
+workers.emplace_back([this]{this-&gt;worker();});
+</h3><ul>
+<li>类比一的只不过将内部的匿名函数抽象成worker</li>
+<li>更便于理解</li>
+</ul>
 <h2 id="放入队列的源代码">
 <a class="header-anchor" href="#%e6%94%be%e5%85%a5%e9%98%9f%e5%88%97%e7%9a%84%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
 放入队列的源代码
@@ -144,11 +262,8 @@ std::future
 typename
 </h4><ul>
 <li>任意变量类型</li>
+<li>这是最常见的用法，告诉编译器后面的名字是一个类型，而不是静态成员变量或其他东西。</li>
 </ul>
-<h4 id="">
-<a class="header-anchor" href="#"></a>
-
-</h4>
         
         <hr><p>本文2026-07-10首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-10</p>]]>
       </description>
@@ -245,6 +360,15 @@ Proto:
 0710
 </h1><ul>
 <li>线程池类的构造函数2</li>
+<li>线程池类新1的1 构造函数 enques(任务入队函数)1</li>
+</ul>
+<h1 id="0711">
+<a class="header-anchor" href="#0711"></a>
+0711
+</h1><ul>
+<li>线程池类新1的：</li>
+<li>1.enques(任务入队函数)2</li>
+<li>2.woker的</li>
 </ul>
         
         <hr><p>本文2026-07-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-01</p>]]>
@@ -1075,150 +1199,6 @@ ICMP
 </ul>
         
         <hr><p>本文2026-04-20首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-04-20</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260419总结</title>
-      <link>http://localhost:1313/post/2026-04-19-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sun, 19 Apr 2026 12:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-04-19-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260419总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="接入网络和物理媒介">
-<a class="header-anchor" href="#%e6%8e%a5%e5%85%a5%e7%bd%91%e7%bb%9c%e5%92%8c%e7%89%a9%e7%90%86%e5%aa%92%e4%bb%8b"></a>
-接入网络和物理媒介
-</h1><h2 id="接入网modem">
-<a class="header-anchor" href="#%e6%8e%a5%e5%85%a5%e7%bd%91modem"></a>
-接入网(modem)
-</h2><h3 id="住宅接入">
-<a class="header-anchor" href="#%e4%bd%8f%e5%ae%85%e6%8e%a5%e5%85%a5"></a>
-住宅接入
-</h3><ul>
-<li>独享带宽</li>
-</ul>
-<h3 id="电话线">
-<a class="header-anchor" href="#%e7%94%b5%e8%af%9d%e7%ba%bf"></a>
-电话线
-</h3><ul>
-<li>用电话线(带宽4kHz)连接到猫(调制解调器(modem))进行电话与互联网分离</li>
-<li>调幅和调频</li>
-<li>带宽窄</li>
-<li>打电话的时候不能上网</li>
-<li>0-4电话，4+非对称的进行分为上下行</li>
-</ul>
-<h3 id="dsladsl">
-<a class="header-anchor" href="#dsladsl"></a>
-DSL/ADSL
-</h3><ul>
-<li>DSL:数据与电话线分离</li>
-<li>ADSL:非对称的DSL</li>
-</ul>
-<h3 id="光纤到户">
-<a class="header-anchor" href="#%e5%85%89%e7%ba%a4%e5%88%b0%e6%88%b7"></a>
-光纤到户
-</h3><h2 id="线缆网络">
-<a class="header-anchor" href="#%e7%ba%bf%e7%bc%86%e7%bd%91%e7%bb%9c"></a>
-线缆网络
-</h2><ul>
-<li>共享上行带宽</li>
-<li>通过头端下传</li>
-<li>共享带宽</li>
-<li>电话公司，电视公司，电力公司都可以去上网</li>
-</ul>
-<h3 id="有线电力公司">
-<a class="header-anchor" href="#%e6%9c%89%e7%ba%bf%e7%94%b5%e5%8a%9b%e5%85%ac%e5%8f%b8"></a>
-有线电力公司
-</h3><ul>
-<li>越往下面同轴线缆，越往上面光纤</li>
-<li>ISP方式连接</li>
-<li>采用kpmodem</li>
-<li>电缆模式</li>
-</ul>
-<h3 id="家庭网络">
-<a class="header-anchor" href="#%e5%ae%b6%e5%ba%ad%e7%bd%91%e7%bb%9c"></a>
-家庭网络
-</h3><ul>
-<li>路由&lt;-&gt;猫</li>
-<li>路由：1.内网交换2.接入猫的互联网3.分配IP</li>
-</ul>
-<h3 id="企业接入网络">
-<a class="header-anchor" href="#%e4%bc%81%e4%b8%9a%e6%8e%a5%e5%85%a5%e7%bd%91%e7%bb%9c"></a>
-企业接入网络
-</h3><ul>
-<li>AP(无线接入点)&lt;-&gt;交换机&lt;-&gt;机构的路由器</li>
-<li>以太网</li>
-</ul>
-<h2 id="无线接入网">
-<a class="header-anchor" href="#%e6%97%a0%e7%ba%bf%e6%8e%a5%e5%85%a5%e7%bd%91"></a>
-无线接入网
-</h2><h3 id="无线lans">
-<a class="header-anchor" href="#%e6%97%a0%e7%ba%bflans"></a>
-无线LANs
-</h3><ul>
-<li>建筑物内部</li>
-<li>WIFI等</li>
-</ul>
-<h3 id="广域无线接入">
-<a class="header-anchor" href="#%e5%b9%bf%e5%9f%9f%e6%97%a0%e7%ba%bf%e6%8e%a5%e5%85%a5"></a>
-广域无线接入
-</h3><ul>
-<li>由电信运营商提供</li>
-<li>3G,4G：LTE</li>
-</ul>
-<h2 id="物理媒体">
-<a class="header-anchor" href="#%e7%89%a9%e7%90%86%e5%aa%92%e4%bd%93"></a>
-物理媒体
-</h2><ul>
-<li>物理连接的介质</li>
-</ul>
-<h3 id="导引型">
-<a class="header-anchor" href="#%e5%af%bc%e5%bc%95%e5%9e%8b"></a>
-导引型
-</h3><ul>
-<li>看得到的</li>
-<li>可单可双稳定</li>
-<li>安全性好</li>
-<li>常见的：双绞线、同轴线缆、光纤</li>
-</ul>
-<h3 id="非导引型">
-<a class="header-anchor" href="#%e9%9d%9e%e5%af%bc%e5%bc%95%e5%9e%8b"></a>
-非导引型
-</h3><ul>
-<li>看不见</li>
-<li>双向的不稳定</li>
-<li>常见的：WIFI，移动流量</li>
-</ul>
-<h1 id="互联网的结构和isp">
-<a class="header-anchor" href="#%e4%ba%92%e8%81%94%e7%bd%91%e7%9a%84%e7%bb%93%e6%9e%84%e5%92%8cisp"></a>
-互联网的结构和ISP
-</h1><ul>
-<li>端系统通过ISPs(互联网提供商)接入互联网</li>
-</ul>
-<h2 id="全部连接">
-<a class="header-anchor" href="#%e5%85%a8%e9%83%a8%e8%bf%9e%e6%8e%a5"></a>
-全部连接
-</h2><ul>
-<li>不可扩展，O(n²)的复杂度</li>
-</ul>
-<h2 id="路由连在一起">
-<a class="header-anchor" href="#%e8%b7%af%e7%94%b1%e8%bf%9e%e5%9c%a8%e4%b8%80%e8%b5%b7"></a>
-路由连在一起
-</h2><h1 id="iscp">
-<a class="header-anchor" href="#iscp"></a>
-ISCP
-</h1><ul>
-<li>内容提供商</li>
-<li>全球部署DC</li>
-<li>通过自己部署线缆或者专线连接各DC</li>
-</ul>
-        
-        <hr><p>本文2026-04-19首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-04-19</p>]]>
       </description>
       
     </item>
