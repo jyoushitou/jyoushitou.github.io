@@ -154,6 +154,7 @@
       <ul>
         <li><a href="#之前的写法">之前的写法</a></li>
         <li><a href="#新版">新版</a></li>
+        <li><a href="#连接服务器">连接服务器</a></li>
       </ul>
     </li>
   </ul>
@@ -171,7 +172,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">36</div>
+    <div>文章</div><div class="sidebar-state-number">37</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -292,26 +293,26 @@ reactor
 </h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//客户端
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">client_end_point</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;127.4.8.1&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address</span> <span class="n">ip_address</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;127.4.8.1&#34;</span><span class="p">;</span><span class="c1">//目标地址
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//目标端口
+</span></span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span><span class="c1">//错误对象
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address</span> <span class="n">ip_address</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span><span class="c1">//将ip与端口绑定
+</span></span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span><span class="c1">//ec有错误进入
+</span></span></span><span class="line"><span class="cl">	<span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;failed to parse the IP address. Error code = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;.Message is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">port_num</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span><span class="c1">//返回错误码
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">port_num</span><span class="p">);</span><span class="c1">//创建 TCP 端点 (endpoint) 连接对象
+</span></span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1">//服务端
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">server_end_point</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address</span> <span class="n">ip_address</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">port_num</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//端口号
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address</span> <span class="n">ip_address</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">();</span><span class="c1">//监听哪些网卡的ip
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">ip_address</span><span class="p">,</span> <span class="n">port_num</span><span class="p">);</span><span class="c1">//创建一个 TCP 连接对象
+</span></span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h2 id="同步写法">
 <a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e5%86%99%e6%b3%95"></a>
@@ -322,12 +323,12 @@ reactor
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//创建socket
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">create_tcp_socket</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">())</span> 
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span><span class="c1">//创建io上下文
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">();</span><span class="c1">//指定tcp协议
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">);</span><span class="c1">//创建一个 未连接的 TCP socket，并将其与 io_context 关联
+</span></span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">sock</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span><span class="c1">//显式打开一个 socket，并将其与指定的协议关联。
+</span></span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">())</span>
 </span></span><span class="line"><span class="cl">	<span class="p">{</span>
 </span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;failed to parse the IP address. Error code = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;.Message is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">();</span>
 </span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
@@ -338,16 +339,32 @@ reactor
 </span></span><span class="line"><span class="cl"><span class="c1">//接受socket
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">create_accept_socket</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP的上下文
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//TCP 接受器 (acceptor) 对象，用于在服务器端监听和接受传入的连接请求。
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">();</span><span class="c1">//指定tcp协议
+</span></span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="n">acceptor</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">protocol</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;failed to parse the IP address. Error code = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;.Message is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;bind failed: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5 id="绑定acceptor">
+<a class="header-anchor" href="#%e7%bb%91%e5%ae%9aacceptor"></a>
+绑定acceptor
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">bind_acceptor_socket</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//端口号
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">(),</span><span class="n">port_num</span><span class="p">);</span><span class="c1">//指定所有的网卡为接收网卡
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//上下文
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//TCP接收器
+</span></span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">acceptor</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ep</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span><span class="c1">//绑定
+</span></span></span><span class="line"><span class="cl">	<span class="n">acceptor</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">socket_base</span><span class="o">::</span><span class="n">max_listen_connections</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span><span class="c1">//监听
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;listen failed: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="新版">
@@ -358,6 +375,24 @@ reactor
 </span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">a</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span> <span class="mi">3333</span><span class="p">));</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="连接服务器">
+<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e6%9c%8d%e5%8a%a1%e5%99%a8"></a>
+连接服务器
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">connect_to_end</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.102&#34;</span><span class="p">;</span><span class="c1">//ip
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//端口
+</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span><span class="c1">//创建端口
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP上下文
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//创建socket
+</span></span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//连接
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div></div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
@@ -379,6 +414,18 @@ reactor
         ></a>
         <div class="article-nav-caption">前一篇</div>
         <h3 class="article-nav-title">20260714总结</h3>
+      </div><div class="article-nav-link-wrap right"><img
+              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
+              data-sizes="auto"
+              alt="20260716总结"
+              class="lazyload"
+            /><a
+          href="/post/2026-07-16-%E6%80%BB%E7%BB%93/"
+          aria-label="后一篇:20260716总结"
+          title="后一篇:20260716总结"
+        ></a>
+        <div class="article-nav-caption">后一篇</div>
+        <h3 class="article-nav-title">20260716总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -400,10 +447,10 @@ reactor
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;12.9k</span
+          >&nbsp;13.7k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:50</span>
+        <span class="icon-coffee">&nbsp;00:53</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -446,6 +493,7 @@ reactor
       <ul>
         <li><a href="#之前的写法">之前的写法</a></li>
         <li><a href="#新版">新版</a></li>
+        <li><a href="#连接服务器">连接服务器</a></li>
       </ul>
     </li>
   </ul>
@@ -463,7 +511,7 @@ reactor
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">36</div>
+    <div>文章</div><div class="sidebar-state-number">37</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
