@@ -54,6 +54,28 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="服务器端的连接代码">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e7%9a%84%e8%bf%9e%e6%8e%a5%e4%bb%a3%e7%a0%81"></a>
+服务器端的连接代码
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">acceptor_new_connection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">BACKLOG_SIZE</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span><span class="c1">//等待队列的最大长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">(),</span><span class="n">port_num</span><span class="p">);</span><span class="c1">//指定所有的网卡为接收网卡
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP上下文
+</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//TCP协议
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//绑定网卡
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">BACKLOG_SIZE</span><span class="p">);</span><span class="c1">//监听队列
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//创建socket
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span><span class="c1">//等待连接
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div>
         
         <hr><p>本文2026-07-16首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-16</p>]]>
@@ -83,7 +105,8 @@
 <h1 id="网络编程1">
 <a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b1"></a>
 网络编程1
-</h1><h2 id="使用模式">
+</h1><p><img src="93659207129259f287397b6b9a2f5c13.jpg" alt="网络框图"></p>
+<h2 id="使用模式">
 <a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e6%a8%a1%e5%bc%8f"></a>
 使用模式
 </h2><h3 id="proactor">
@@ -124,9 +147,9 @@ reactor
 <li>2.connect-根据服务器的ip+port发起连接请求</li>
 <li>3.write、read-建立连接收发消息</li>
 </ul>
-<h2 id="连接端口">
-<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e7%ab%af%e5%8f%a3"></a>
-连接端口
+<h2 id="连接端口地址">
+<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e7%ab%af%e5%8f%a3%e5%9c%b0%e5%9d%80"></a>
+连接端口（地址）
 </h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//客户端
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">client_end_point</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -157,7 +180,13 @@ reactor
 </h2><h3 id="之前的写法">
 <a class="header-anchor" href="#%e4%b9%8b%e5%89%8d%e7%9a%84%e5%86%99%e6%b3%95"></a>
 之前的写法
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//创建socket
+</h3><h4 id="socket">
+<a class="header-anchor" href="#socket"></a>
+socket
+</h4><ul>
+<li>连接管道</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//创建socket
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">create_tcp_socket</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span><span class="c1">//创建io上下文
@@ -216,7 +245,10 @@ reactor
 </span></span></code></pre></div><h3 id="连接服务器">
 <a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e6%9c%8d%e5%8a%a1%e5%99%a8"></a>
 连接服务器
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">connect_to_end</span><span class="p">()</span> 
+</h3><ul>
+<li>执行操作</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">connect_to_end</span><span class="p">()</span> 
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.102&#34;</span><span class="p">;</span><span class="c1">//ip
 </span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//端口

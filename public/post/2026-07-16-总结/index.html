@@ -140,6 +140,8 @@
     <li><a href="#同步续">同步续</a>
       <ul>
         <li><a href="#解析域名">解析域名</a></li>
+        <li><a href="#服务器端的连接代码">服务器端的连接代码</a></li>
+        <li><a href="#创建buffer">创建buffer</a></li>
       </ul>
     </li>
   </ul>
@@ -157,7 +159,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">37</div>
+    <div>文章</div><div class="sidebar-state-number">38</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -244,7 +246,54 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div></div>
+</span></span></code></pre></div><h3 id="服务器端的连接代码">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e7%9a%84%e8%bf%9e%e6%8e%a5%e4%bb%a3%e7%a0%81"></a>
+服务器端的连接代码
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">acceptor_new_connection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">BACKLOG_SIZE</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span><span class="c1">//等待队列的最大长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">(),</span><span class="n">port_num</span><span class="p">);</span><span class="c1">//指定所有的网卡为接收网卡
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP上下文
+</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//TCP协议
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//绑定网卡
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">BACKLOG_SIZE</span><span class="p">);</span><span class="c1">//监听队列
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//创建socket
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span><span class="c1">//等待连接
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="创建buffer">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%babuffer"></a>
+创建buffer
+</h3><ul>
+<li>用于发送数据的对象</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//只读字符串
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_str</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">const_buffer</span> <span class="n">out</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：发送字符串数据到网络连接。
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//可读写数组的
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_array</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">size_t</span> <span class="n">BUF_SIZE_BYTES</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">[]</span><span class="o">&gt;</span><span class="n">buf</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">BUF_SIZE_BYTES</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">input_buf</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">get</span><span class="p">()),</span><span class="n">BUF_SIZE_BYTES</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：准备缓冲区来接收从网络连接读取的数据。
+</span></span></span></code></pre></div><ul>
+<li>这两个函数本质上是 Asio 中发送和接收数据时创建 buffer 的标准模式。</li>
+</ul>
+</div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
 </footer>
@@ -264,6 +313,18 @@
         ></a>
         <div class="article-nav-caption">前一篇</div>
         <h3 class="article-nav-title">20260715总结</h3>
+      </div><div class="article-nav-link-wrap right"><img
+              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
+              data-sizes="auto"
+              alt="20260717总结"
+              class="lazyload"
+            /><a
+          href="/post/2026-07-17-%E6%80%BB%E7%BB%93/"
+          aria-label="后一篇:20260717总结"
+          title="后一篇:20260717总结"
+        ></a>
+        <div class="article-nav-caption">后一篇</div>
+        <h3 class="article-nav-title">20260717总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -285,10 +346,10 @@
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;13.7k</span
+          >&nbsp;15.0k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;00:53</span>
+        <span class="icon-coffee">&nbsp;00:56</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -317,6 +378,8 @@
     <li><a href="#同步续">同步续</a>
       <ul>
         <li><a href="#解析域名">解析域名</a></li>
+        <li><a href="#服务器端的连接代码">服务器端的连接代码</a></li>
+        <li><a href="#创建buffer">创建buffer</a></li>
       </ul>
     </li>
   </ul>
@@ -334,7 +397,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">37</div>
+    <div>文章</div><div class="sidebar-state-number">38</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>

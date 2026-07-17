@@ -12,12 +12,254 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Thu, 16 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260717总结</title>
+      <link>http://localhost:1313/post/2026-07-17-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 17 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-17-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260717总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="网络编程3">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b3"></a>
+网络编程3
+</h1><h2 id="同步续2">
+<a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e7%bb%ad2"></a>
+同步续2
+</h2><h3 id="发送数据函数">
+<a class="header-anchor" href="#%e5%8f%91%e9%80%81%e6%95%b0%e6%8d%ae%e5%87%bd%e6%95%b0"></a>
+发送数据函数
+</h3><h4 id="循环发送">
+<a class="header-anchor" href="#%e5%be%aa%e7%8e%af%e5%8f%91%e9%80%81"></a>
+循环发送
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">write_to_socket</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">sock</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">total_bytes_written</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">//循环发送
+</span></span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="p">(</span><span class="n">total_bytes_written</span><span class="o">!=</span><span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">total_bytes_written</span> <span class="o">+=</span> <span class="n">sock</span><span class="p">.</span><span class="n">write_some</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">()</span><span class="o">+</span><span class="n">total_bytes_written</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">			<span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">()</span> <span class="o">-</span> <span class="n">total_bytes_written</span><span class="p">));</span><span class="c1">//循环的发送，一次发送最大的数据，并累加到total_bytes_written
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">send_data_by_write_some</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.60&#34;</span><span class="p">;</span><span class="c1">//地址
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span><span class="mi">3333</span><span class="p">;</span><span class="c1">//端口
+</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span><span class="c1">//这段代码是使用 Boost.Asio（或独立 Asio 库）创建一个 TCP 端点（endpoint），用于表示一个网络通信的目标地址和端口。
+</span></span></span><span class="line"><span class="cl">		<span class="c1">//asio::io_service ios;
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span><span class="c1">//TCP上下文
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//创建socket
+</span></span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//socket连接
+</span></span></span><span class="line"><span class="cl">		<span class="n">write_to_socket</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span><span class="c1">//发送数据
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="使用send发送">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8send%e5%8f%91%e9%80%81"></a>
+使用send发送
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">send_data_by_write_some</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.60&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//asio::io_service ios;
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">send_length</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">()));</span><span class="c1">//length&lt;0是系统的错误，length==0是发送失败，length&gt;0是发送成功
+</span></span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">send_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="写数据">
+<a class="header-anchor" href="#%e5%86%99%e6%95%b0%e6%8d%ae"></a>
+写数据
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">send_data_by_send</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.60&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//asio::io_service ios;
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">send_length</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span> <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">send_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//两函数行为是等效的
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">send_data_by_write</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.60&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//asio::io_service ios;
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world!&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">send_length</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">()));</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">send_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="读数据">
+<a class="header-anchor" href="#%e8%af%bb%e6%95%b0%e6%8d%ae"></a>
+读数据
+</h3><h4 id="循环读取">
+<a class="header-anchor" href="#%e5%be%aa%e7%8e%af%e8%af%bb%e5%8f%96"></a>
+循环读取
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//循环读
+</span></span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">read_from_socket</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">sock</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">MESSAGE_SIZE</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">MESSAGE_SIZE</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">size_t</span> <span class="n">total_bytes_read</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="p">(</span><span class="n">total_bytes_read</span> <span class="o">!=</span> <span class="n">MESSAGE_SIZE</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">total_bytes_read</span> <span class="o">+=</span> <span class="n">sock</span><span class="p">.</span><span class="n">read_some</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span>
+</span></span><span class="line"><span class="cl">		<span class="p">(</span><span class="n">buf</span> <span class="o">+</span> <span class="n">total_bytes_read</span><span class="p">,</span> <span class="n">MESSAGE_SIZE</span> <span class="o">-</span> <span class="n">total_bytes_read</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">total_bytes_read</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//读取的函数
+</span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_data_by_read_some</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;127.0.0.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">read_from_socket</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="使用receive">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8receive"></a>
+使用receive
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_data_by_receive</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;127.0.0.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">BUFF_SIZE</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="n">buffer_receive</span><span class="p">[</span><span class="n">BUFF_SIZE</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">receive_length</span> <span class="o">=</span> <span class="n">sock</span><span class="p">.</span><span class="n">receive</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buffer_receive</span><span class="p">,</span><span class="n">BUFF_SIZE</span><span class="p">));</span><span class="c1">//recevice读取返回的数值与send一致
+</span></span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">receive_length</span><span class="o">&lt;=</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="使用read">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8read"></a>
+使用read
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">read_data_by_read</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;127.0.0.0&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">make_address</span><span class="p">(</span><span class="n">raw_ip_address</span><span class="p">),</span> <span class="n">port_num</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="n">BUFF_SIZE</span> <span class="o">=</span> <span class="mi">7</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">char</span> <span class="n">buffer_receive</span><span class="p">[</span><span class="n">BUFF_SIZE</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="kt">int</span> <span class="n">receive_length</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">buffer_receive</span><span class="p">,</span> <span class="n">BUFF_SIZE</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">receive_length</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">e</span><span class="p">.</span><span class="n">code</span><span class="p">().</span><span class="n">value</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
+        
+        <hr><p>本文2026-07-17首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-17</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -54,7 +296,53 @@
 </span></span><span class="line"><span class="cl">	<span class="p">}</span>
 </span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div>
+</span></span></code></pre></div><h3 id="服务器端的连接代码">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e7%9a%84%e8%bf%9e%e6%8e%a5%e4%bb%a3%e7%a0%81"></a>
+服务器端的连接代码
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">acceptor_new_connection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">BACKLOG_SIZE</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span><span class="c1">//等待队列的最大长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">(),</span><span class="n">port_num</span><span class="p">);</span><span class="c1">//指定所有的网卡为接收网卡
+</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP上下文
+</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//TCP协议
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//绑定网卡
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">BACKLOG_SIZE</span><span class="p">);</span><span class="c1">//监听队列
+</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//创建socket
+</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span><span class="c1">//等待连接
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="创建buffer">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%babuffer"></a>
+创建buffer
+</h3><ul>
+<li>用于发送数据的对象</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//只读字符串
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_str</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">const_buffer</span> <span class="n">out</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：发送字符串数据到网络连接。
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">//可读写数组的
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_array</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">size_t</span> <span class="n">BUF_SIZE_BYTES</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">[]</span><span class="o">&gt;</span><span class="n">buf</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">BUF_SIZE_BYTES</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">input_buf</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">get</span><span class="p">()),</span><span class="n">BUF_SIZE_BYTES</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：准备缓冲区来接收从网络连接读取的数据。
+</span></span></span></code></pre></div><ul>
+<li>这两个函数本质上是 Asio 中发送和接收数据时创建 buffer 的标准模式。</li>
+</ul>
         
         <hr><p>本文2026-07-16首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-16</p>]]>
       </description>
@@ -83,7 +371,8 @@
 <h1 id="网络编程1">
 <a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b1"></a>
 网络编程1
-</h1><h2 id="使用模式">
+</h1><p><img src="93659207129259f287397b6b9a2f5c13.jpg" alt="网络框图"></p>
+<h2 id="使用模式">
 <a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e6%a8%a1%e5%bc%8f"></a>
 使用模式
 </h2><h3 id="proactor">
@@ -124,9 +413,9 @@ reactor
 <li>2.connect-根据服务器的ip+port发起连接请求</li>
 <li>3.write、read-建立连接收发消息</li>
 </ul>
-<h2 id="连接端口">
-<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e7%ab%af%e5%8f%a3"></a>
-连接端口
+<h2 id="连接端口地址">
+<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e7%ab%af%e5%8f%a3%e5%9c%b0%e5%9d%80"></a>
+连接端口（地址）
 </h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//客户端
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">client_end_point</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
@@ -157,7 +446,13 @@ reactor
 </h2><h3 id="之前的写法">
 <a class="header-anchor" href="#%e4%b9%8b%e5%89%8d%e7%9a%84%e5%86%99%e6%b3%95"></a>
 之前的写法
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//创建socket
+</h3><h4 id="socket">
+<a class="header-anchor" href="#socket"></a>
+socket
+</h4><ul>
+<li>连接管道</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//创建socket
 </span></span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">create_tcp_socket</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span><span class="c1">//创建io上下文
@@ -216,7 +511,10 @@ reactor
 </span></span></code></pre></div><h3 id="连接服务器">
 <a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e6%9c%8d%e5%8a%a1%e5%99%a8"></a>
 连接服务器
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">connect_to_end</span><span class="p">()</span> 
+</h3><ul>
+<li>执行操作</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">connect_to_end</span><span class="p">()</span> 
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">raw_ip_address</span> <span class="o">=</span> <span class="s">&#34;192.168.0.102&#34;</span><span class="p">;</span><span class="c1">//ip
 </span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span><span class="c1">//端口
@@ -653,6 +951,30 @@ Proto:
 网络编程
 </h2><ul>
 <li>域名解析</li>
+<li>服务器端的连接代码</li>
+<li>buffer的创建</li>
+</ul>
+<h1 id="0717">
+<a class="header-anchor" href="#0717"></a>
+0717
+</h1><h2 id="网络编程-2">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b-2"></a>
+网络编程
+</h2><h3 id="发送数据">
+<a class="header-anchor" href="#%e5%8f%91%e9%80%81%e6%95%b0%e6%8d%ae"></a>
+发送数据
+</h3><ul>
+<li>循环发送</li>
+<li>send</li>
+<li>write</li>
+</ul>
+<h3 id="写数据">
+<a class="header-anchor" href="#%e5%86%99%e6%95%b0%e6%8d%ae"></a>
+写数据
+</h3><ul>
+<li>循环读取</li>
+<li>receive</li>
+<li>read</li>
 </ul>
         
         <hr><p>本文2026-07-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-01</p>]]>
@@ -683,58 +1005,6 @@ Proto:
 </ul>
         
         <hr><p>本文2026-05-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-05-31</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260513</title>
-      <link>http://localhost:1313/post/2026_05_13/</link>
-      <pubDate>Wed, 13 May 2026 00:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026_05_13/</guid>
-      <description>
-        <![CDATA[<h1>20260513</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="计算机组成原理1">
-<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bb%84%e6%88%90%e5%8e%9f%e7%90%861"></a>
-计算机组成原理1
-</h1><h2 id="计算机系统概论">
-<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%b3%bb%e7%bb%9f%e6%a6%82%e8%ae%ba"></a>
-计算机系统概论
-</h2><h3 id="硬件和软件组成">
-<a class="header-anchor" href="#%e7%a1%ac%e4%bb%b6%e5%92%8c%e8%bd%af%e4%bb%b6%e7%bb%84%e6%88%90"></a>
-硬件和软件组成
-</h3><h4 id="硬件">
-<a class="header-anchor" href="#%e7%a1%ac%e4%bb%b6"></a>
-硬件
-</h4><h4 id="软件">
-<a class="header-anchor" href="#%e8%bd%af%e4%bb%b6"></a>
-软件
-</h4><h1 id="计算机网络p2p">
-<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e6%9c%ba%e7%bd%91%e7%bb%9cp2p"></a>
-计算机网络P2P
-</h1><h2 id="纯p2p">
-<a class="header-anchor" href="#%e7%ba%afp2p"></a>
-纯P2P
-</h2><ul>
-<li>没有(或极少)一直运行的服务器</li>
-<li>任意端系统都可以直接通讯</li>
-<li>Peer结点间隙上网，每次IP地址都有可能变化</li>
-</ul>
-<h2 id="文件分发">
-<a class="header-anchor" href="#%e6%96%87%e4%bb%b6%e5%88%86%e5%8f%91"></a>
-文件分发
-</h2><h3 id="cs">
-<a class="header-anchor" href="#cs"></a>
-C/S
-</h3><ul>
-<li>从服务器获取文件</li>
-</ul>
-        
-        <hr><p>本文2026-05-13首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-05-13</p>]]>
       </description>
       
     </item>
