@@ -33,13 +33,16 @@
           <h1 id="网络编程">
 <a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
 网络编程
-</h1><h2 id="同步读的客户端和服务端">
+</h1><h2 id="同步续3">
+<a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e7%bb%ad3"></a>
+同步续3
+</h2><h3 id="同步读的客户端和服务端">
 <a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e8%af%bb%e7%9a%84%e5%ae%a2%e6%88%b7%e7%ab%af%e5%92%8c%e6%9c%8d%e5%8a%a1%e7%ab%af"></a>
 同步读的客户端和服务端
-</h2><h3 id="客户端client">
+</h3><h4 id="客户端client">
 <a class="header-anchor" href="#%e5%ae%a2%e6%88%b7%e7%ab%afclient"></a>
 客户端(client)
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
@@ -78,10 +81,10 @@
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="服务器端service">
+</span></span></code></pre></div><h4 id="服务器端service">
 <a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%afservice"></a>
 服务器端(Service)
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
@@ -156,10 +159,103 @@
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="因为应答式demo致使现在不在使用并且此为粘包问题并且并发少">
+</span></span></code></pre></div><h4 id="因为应答式demo致使现在不在使用并且此为粘包问题并且并发少">
 <a class="header-anchor" href="#%e5%9b%a0%e4%b8%ba%e5%ba%94%e7%ad%94%e5%bc%8fdemo%e8%87%b4%e4%bd%bf%e7%8e%b0%e5%9c%a8%e4%b8%8d%e5%9c%a8%e4%bd%bf%e7%94%a8%e5%b9%b6%e4%b8%94%e6%ad%a4%e4%b8%ba%e7%b2%98%e5%8c%85%e9%97%ae%e9%a2%98%e5%b9%b6%e4%b8%94%e5%b9%b6%e5%8f%91%e5%b0%91"></a>
 因，为应答式demo，致使现在不在使用，并且此为粘包问题，并且并发少
-</h3>
+</h4><h2 id="异步读写">
+<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5%e8%af%bb%e5%86%99"></a>
+异步读写
+</h2><h3 id="封装tcp网络连接">
+<a class="header-anchor" href="#%e5%b0%81%e8%a3%85tcp%e7%bd%91%e7%bb%9c%e8%bf%9e%e6%8e%a5"></a>
+封装TCP网络连接
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Session</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">socket</span><span class="p">);</span><span class="c1">//构造函数接收一个tcp共享指针的socket
+</span></span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Connect</span><span class="p">(</span><span class="k">const</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="o">&amp;</span> <span class="n">ep</span><span class="p">);</span><span class="c1">//发起连接到指定端口
+</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">_socket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">Session</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">socket</span><span class="p">)</span><span class="o">:</span><span class="n">_socket</span><span class="p">(</span><span class="n">socket</span><span class="p">){}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Connect</span><span class="p">(</span><span class="k">const</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="o">&amp;</span> <span class="n">ep</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">_socket</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="封装消息节点">
+<a class="header-anchor" href="#%e5%b0%81%e8%a3%85%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
+封装消息节点
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MsgNode</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span><span class="kt">int</span> <span class="n">total_len</span><span class="p">)</span><span class="o">:</span><span class="n">_total_len</span><span class="p">(</span><span class="n">total_len</span><span class="p">)</span><span class="c1">//接收构造
+</span></span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_msg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="p">];</span><span class="c1">//为发送申请个缓冲区
+</span></span></span><span class="line"><span class="cl">		<span class="n">memcpy</span><span class="p">(</span><span class="n">_msg</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">total_len</span><span class="p">);</span><span class="c1">//拷贝数据
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">total_len</span><span class="p">)</span><span class="o">:</span><span class="n">_total_len</span><span class="p">(</span><span class="n">total_len</span><span class="p">),</span><span class="n">_cur_len</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="c1">//发送构造
+</span></span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_msg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="p">];</span><span class="c1">//为发送的数据申请缓冲区
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">MsgNode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span><span class="p">[]</span> <span class="n">_msg</span><span class="p">;</span><span class="c1">//删除创建的动态内存
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_total_len</span><span class="p">;</span><span class="c1">//总长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_cur_len</span><span class="p">;</span><span class="c1">//目前传入/传出长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">char</span><span class="o">*</span> <span class="n">_msg</span><span class="p">;</span><span class="c1">//消息串
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h3 id="writetosocket发送函数">
+<a class="header-anchor" href="#writetosocket%e5%8f%91%e9%80%81%e5%87%bd%e6%95%b0"></a>
+WriteToSocket发送函数
+</h3><h4 id="使用write_some的写法">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8write_some%e7%9a%84%e5%86%99%e6%b3%95"></a>
+使用write_some的写法
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 发起异步写入的调用
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">StartWrite</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">-&gt;</span><span class="n">_socket</span><span class="o">-&gt;</span><span class="n">async_write_some</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span><span class="p">,</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">WriteCallBackErr</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">error</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">bytes_transferred</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">send_node</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="匿名lambda表达式">
+<a class="header-anchor" href="#%e5%8c%bf%e5%90%8dlambda%e8%a1%a8%e8%be%be%e5%bc%8f"></a>
+匿名(lambda表达式)
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 使用 lambda 的版本
+</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">WriteToSocket</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>  <span class="c1">// 确保 Session 对象存活
+</span></span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">   
+</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">-&gt;</span><span class="n">_socket</span><span class="o">-&gt;</span><span class="n">async_write_some</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span><span class="p">,</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="k">this</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">send_node</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                                <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Write failed: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">Close</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Successfully wrote &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">bytes_transferred</span> 
+</span></span><span class="line"><span class="cl">                      <span class="o">&lt;&lt;</span> <span class="s">&#34; bytes out of &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">bytes_transferred</span> <span class="o">&lt;</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span> <span class="o">+=</span> <span class="n">bytes_transferred</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span> <span class="o">-=</span> <span class="n">bytes_transferred</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">WriteToSocket</span><span class="p">(</span><span class="n">send_node</span><span class="p">);</span>  <span class="c1">// 递归调用继续发送
+</span></span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Message sent completely&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div>
         
         <hr><p>本文2026-07-18首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-18</p>]]>
       </description>
@@ -1132,7 +1228,16 @@ Proto:
 </h2><h3 id="同步读的客户端和服务端">
 <a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e8%af%bb%e7%9a%84%e5%ae%a2%e6%88%b7%e7%ab%af%e5%92%8c%e6%9c%8d%e5%8a%a1%e7%ab%af"></a>
 同步读的客户端和服务端
-</h3>
+</h3><h3 id="异步">
+<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5"></a>
+异步
+</h3><h4 id="封装tcp网络连接">
+<a class="header-anchor" href="#%e5%b0%81%e8%a3%85tcp%e7%bd%91%e7%bb%9c%e8%bf%9e%e6%8e%a5"></a>
+封装TCP网络连接
+</h4><h4 id="封装消息节点">
+<a class="header-anchor" href="#%e5%b0%81%e8%a3%85%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
+封装消息节点
+</h4>
         
         <hr><p>本文2026-07-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-01</p>]]>
       </description>
