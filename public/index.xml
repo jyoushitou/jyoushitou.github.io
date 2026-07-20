@@ -12,12 +12,273 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Sun, 19 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 20 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260720总结</title>
+      <link>http://localhost:1313/post/2026-07-20-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 20 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-20-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260720总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="网路编程">
+<a class="header-anchor" href="#%e7%bd%91%e8%b7%af%e7%bc%96%e7%a8%8b"></a>
+网路编程
+</h1><h2 id="异步续">
+<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5%e7%bb%ad"></a>
+异步续
+</h2><h3 id="异步demo">
+<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5demo"></a>
+异步Demo
+</h3><h4 id="session">
+<a class="header-anchor" href="#session"></a>
+Session
+</h4><ul>
+<li>TCP 会话（Session）</li>
+<li>封装 TCP 套接字</li>
+<li>异步读写框架</li>
+<li>数据缓冲区</li>
+</ul>
+<h5 id="源码">
+<a class="header-anchor" href="#%e6%ba%90%e7%a0%81"></a>
+源码
+</h5><h6 id="头文件">
+<a class="header-anchor" href="#%e5%a4%b4%e6%96%87%e4%bb%b6"></a>
+头文件
+</h6><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Session</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">)</span><span class="o">:</span><span class="n">_socket</span><span class="p">(</span><span class="n">ioc</span><span class="p">){}</span><span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">Socket</span><span class="p">()</span> <span class="p">{</span><span class="c1">//返回套接字
+</span></span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">_socket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span><span class="c1">//启动会话
+</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span><span class="n">size_t</span> <span class="n">bytes_transferred</span> <span class="p">);</span><span class="c1">//异步读回调函数
+</span></span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">);</span><span class="c1">//异步写回调函数
+</span></span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">_socket</span><span class="p">;</span><span class="c1">//套接字
+</span></span></span><span class="line"><span class="cl">	<span class="k">enum</span> <span class="p">{</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">};</span><span class="c1">//缓冲区最大长度
+</span></span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">_data</span><span class="p">[</span><span class="n">max_length</span><span class="p">];</span><span class="c1">//缓冲区
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h6 id="实现">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0"></a>
+实现
+</h6><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span><span class="c1">//初始化缓冲区
+</span></span></span><span class="line"><span class="cl">	<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">		<span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">));</span><span class="c1">//异步读
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span><span class="c1">//异步读回调函数
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;server receive data is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">_data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_write</span><span class="p">(</span><span class="n">_socket</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">			<span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_write</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">));</span>	<span class="c1">//异步写
+</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in read,error code is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span> <span class="k">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">)</span><span class="c1">//异步写回调函数
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">			<span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">));</span>	<span class="c1">//异步读
+</span></span></span><span class="line"><span class="cl">		<span class="c1">//也可以使用Start()
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in write,error code is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span> <span class="k">this</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="server">
+<a class="header-anchor" href="#server"></a>
+Server
+</h4><h5 id="源码-1">
+<a class="header-anchor" href="#%e6%ba%90%e7%a0%81-1"></a>
+源码
+</h5><h6 id="头文件-1">
+<a class="header-anchor" href="#%e5%a4%b4%e6%96%87%e4%bb%b6-1"></a>
+头文件
+</h6><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Server</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_accept</span><span class="p">(</span><span class="n">Session</span><span class="o">*</span> <span class="n">new_session</span><span class="p">,</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">io_context</span><span class="o">&amp;</span> <span class="n">_ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">_acceptor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h5 id="实现-1">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0-1"></a>
+实现
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Server</span><span class="o">::</span><span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span> <span class="o">:</span><span class="n">_ioc</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span> <span class="n">_acceptor</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span> <span class="n">port</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Server starting&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">start_accept</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="o">*</span> <span class="n">new_session</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Session</span><span class="p">(</span><span class="n">_ioc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">_acceptor</span><span class="p">.</span><span class="n">async_accept</span><span class="p">(</span><span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Socket</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">new_session</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">(</span><span class="n">Session</span><span class="o">*</span> <span class="n">new_session</span><span class="p">,</span> <span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span> <span class="n">new_session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li>只实现应答式的，无法实现全双工</li>
+</ul>
+<hr>
+<h1 id="mysql数据库">
+<a class="header-anchor" href="#mysql%e6%95%b0%e6%8d%ae%e5%ba%93"></a>
+MySQL数据库
+</h1><h2 id="5函数">
+<a class="header-anchor" href="#5%e5%87%bd%e6%95%b0"></a>
+5.函数
+</h2><h3 id="51string字符串">
+<a class="header-anchor" href="#51string%e5%ad%97%e7%ac%a6%e4%b8%b2"></a>
+5.1string字符串
+</h3><h4 id="511concat">
+<a class="header-anchor" href="#511concat"></a>
+5.1.1CONCAT
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">CONCAT</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s3</span><span class="p">,</span><span class="err">……</span><span class="p">,</span><span class="n">sn</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>拼接字符串</li>
+</ul>
+<h4 id="512lower">
+<a class="header-anchor" href="#512lower"></a>
+5.1.2LOWER
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">LOWER</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>全部转换成小写</li>
+</ul>
+<h4 id="513upper">
+<a class="header-anchor" href="#513upper"></a>
+5.1.3UPPER
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">UPPAER</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>全部转接成大写</li>
+</ul>
+<h4 id="514lpad">
+<a class="header-anchor" href="#514lpad"></a>
+5.1.4LPAD
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">LPAD</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="k">pad</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>左填充字符串使数据达到n个字符长度</li>
+</ul>
+<h4 id="515rpad">
+<a class="header-anchor" href="#515rpad"></a>
+5.1.5RPAD
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">RPAD</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="k">pad</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>右填充字符串使数据达到n个字符长度</li>
+</ul>
+<h4 id="516trim">
+<a class="header-anchor" href="#516trim"></a>
+5.1.6TRIM
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">TRIM</span><span class="p">(</span><span class="n">str</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>去除首尾空格</li>
+</ul>
+<h4 id="517substring">
+<a class="header-anchor" href="#517substring"></a>
+5.1.7SUBSTRING
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SUBSTRING</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="k">start</span><span class="p">,</span><span class="n">len</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>截取字符串</li>
+</ul>
+<h3 id="52数值函数">
+<a class="header-anchor" href="#52%e6%95%b0%e5%80%bc%e5%87%bd%e6%95%b0"></a>
+5.2数值函数
+</h3><h4 id="521ceil向上取整">
+<a class="header-anchor" href="#521ceil%e5%90%91%e4%b8%8a%e5%8f%96%e6%95%b4"></a>
+5.2.1CEIL向上取整
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">CEIL</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h4 id="521ceil向上取整-1">
+<a class="header-anchor" href="#521ceil%e5%90%91%e4%b8%8a%e5%8f%96%e6%95%b4-1"></a>
+5.2.1CEIL向上取整
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">CEIL</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h4 id="522floor向下取整">
+<a class="header-anchor" href="#522floor%e5%90%91%e4%b8%8b%e5%8f%96%e6%95%b4"></a>
+5.2.2FLOOR向下取整
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">FLOOR</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h4 id="523mod返回xy的模">
+<a class="header-anchor" href="#523mod%e8%bf%94%e5%9b%9exy%e7%9a%84%e6%a8%a1"></a>
+5.2.3MOD返回x/y的模
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">MOD</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h4 id="524rand返回0-1的随机数">
+<a class="header-anchor" href="#524rand%e8%bf%94%e5%9b%9e0-1%e7%9a%84%e9%9a%8f%e6%9c%ba%e6%95%b0"></a>
+5.2.4RAND返回0-1的随机数
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">RAND</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h4 id="525-round四舍五入">
+<a class="header-anchor" href="#525-round%e5%9b%9b%e8%88%8d%e4%ba%94%e5%85%a5"></a>
+5.2.5 ROUND四舍五入
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">ROUND</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><h3 id="53日期函数">
+<a class="header-anchor" href="#53%e6%97%a5%e6%9c%9f%e5%87%bd%e6%95%b0"></a>
+5.3日期函数
+</h3><h4 id="531curdate">
+<a class="header-anchor" href="#531curdate"></a>
+5.3.1CURDATE
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">CURDATE</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>获取当前日期</li>
+</ul>
+<h4 id="532curtime">
+<a class="header-anchor" href="#532curtime"></a>
+5.3.2CURTIME
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">CURTIME</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>获取当前时间</li>
+</ul>
+<h4 id="533now">
+<a class="header-anchor" href="#533now"></a>
+5.3.3NOW
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">NOW</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>获取当前的日期和时间</li>
+</ul>
+<h4 id="534year">
+<a class="header-anchor" href="#534year"></a>
+5.3.4YEAR
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">YEAR</span><span class="p">(</span><span class="nb">date</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><p>获取指定date的数据</p>
+        
+        <hr><p>本文2026-07-20首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-20</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -2080,38 +2341,6 @@ Q:
 <p>Q3:为什么vcpkg装g++的protobuf也是装不上！用不了！</p>
         
         <hr><p>本文2026-07-09首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-09</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260708总结</title>
-      <link>http://localhost:1313/post/2026-07-08-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 08 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-08-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260708总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="proto">
-<a class="header-anchor" href="#proto"></a>
-Proto:
-</h1><h2 id="环境配置以c为例">
-<a class="header-anchor" href="#%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae%e4%bb%a5c%e4%b8%ba%e4%be%8b"></a>
-环境配置(以c++为例)：
-</h2><h3 id="1-安装-protobuf-编译器-protoc">
-<a class="header-anchor" href="#1-%e5%ae%89%e8%a3%85-protobuf-%e7%bc%96%e8%af%91%e5%99%a8-protoc"></a>
-1. 安装 protobuf 编译器 (protoc)
-</h3><p><strong>Ubuntu/Debian:</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt install protobuf-compiler libprotobuf-dev
-</span></span></code></pre></div><p><strong>macOS (Homebrew):</strong></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install protobuf
-</span></span></code></pre></div><p><strong>Windows:</strong>
-从 <a href="https://github.com/protocolbuffers/protobuf/releases">GitHub Releases</a> 下载 <code>protoc-&lt;version&gt;-win64.zip</code>，解压后将 <code>bin</code> 目录添加到系统 PATH。</p>
-        
-        <hr><p>本文2026-07-08首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-08</p>]]>
       </description>
       
     </item>
