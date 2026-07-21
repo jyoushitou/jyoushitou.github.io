@@ -12,12 +12,189 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Mon, 20 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 21 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260721总结</title>
+      <link>http://localhost:1313/post/2026-07-21-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 21 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-21-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260721总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="伪闭包">
+<a class="header-anchor" href="#%e4%bc%aa%e9%97%ad%e5%8c%85"></a>
+伪闭包
+</h2><ul>
+<li>昨天的handle_read和handle_write代码致使可能会两次delete this，造成报错</li>
+</ul>
+<h3 id="解决问题">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3%e9%97%ae%e9%a2%98"></a>
+解决问题
+</h3><ul>
+<li>把智能指针作为参数传入函数</li>
+<li>引入lambda进行智能指针加一</li>
+</ul>
+<h3 id="智能指针管理session">
+<a class="header-anchor" href="#%e6%99%ba%e8%83%bd%e6%8c%87%e9%92%88%e7%ae%a1%e7%90%86session"></a>
+智能指针管理Session
+</h3><ul>
+<li>延长指针周期</li>
+<li>解决方案：将shared_ptr<!-- raw HTML omitted -->作为参数传入回调函数，通过智能指针增加引用计数，确保对象在异步操作期间存活。</li>
+</ul>
+<h4 id="头文件">
+<a class="header-anchor" href="#%e5%a4%b4%e6%96%87%e4%bb%b6"></a>
+头文件
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Server</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">ClearSession</span><span class="p">(</span><span class="n">string</span> <span class="n">uuid</span><span class="p">);</span><span class="c1">//清除Session
+</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_accept</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="p">,</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">io_context</span><span class="o">&amp;</span> <span class="n">_ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">_acceptor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;&gt;</span><span class="n">_session</span><span class="p">;</span><span class="c1">//管理Session
+</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h4 id="实现文件">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0%e6%96%87%e4%bb%b6"></a>
+实现文件
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">Server</span><span class="o">::</span><span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span> <span class="o">:</span><span class="n">_ioc</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span> <span class="n">_acceptor</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span> <span class="n">port</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Server starting&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">start_accept</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="o">=</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_ioc</span><span class="p">,</span><span class="k">this</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">_acceptor</span><span class="p">.</span><span class="n">async_accept</span><span class="p">(</span><span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Socket</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">new_session</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">));</span><span class="c1">//加入this使其变为普通函数对象
+</span></span></span><span class="line"><span class="cl">	<span class="c1">//shared_ptr不会随右括号而关闭
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="p">,</span> <span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_session</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Get_uuid</span><span class="p">(),</span> <span class="n">new_session</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">string</span> <span class="n">uuid</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">_session</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4 id="session类">
+<a class="header-anchor" href="#session%e7%b1%bb"></a>
+Session类
+</h4><h5 id="头文件-1">
+<a class="header-anchor" href="#%e5%a4%b4%e6%96%87%e4%bb%b6-1"></a>
+头文件
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">CSession</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CSession</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">io_context</span><span class="p">,</span> <span class="n">CServer</span><span class="o">*</span> <span class="n">server</span><span class="p">);</span><span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">    <span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">GetSocket</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_socket</span><span class="p">;</span> <span class="p">}</span><span class="c1">//获取socket
+</span></span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">GetUuid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">_uuid</span><span class="p">;</span> <span class="p">}</span><span class="c1">//获取uuid
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span><span class="c1">//启动session
+</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">HandleRead</span><span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span>  <span class="n">bytes_transferred</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CSession</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">);</span><span class="c1">//处理读取
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">HandleWrite</span><span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CSession</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">);</span><span class="c1">//处理写入
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">_socket</span><span class="p">;</span><span class="c1">//socket
+</span></span></span><span class="line"><span class="cl">    <span class="n">CServer</span><span class="o">*</span> <span class="n">_server</span><span class="p">;</span><span class="c1">//服务器指针
+</span></span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">_uuid</span><span class="p">;</span><span class="c1">//uuid
+</span></span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">mutex</span> <span class="n">_send_lock</span><span class="p">;</span><span class="c1">//发送锁
+</span></span></span><span class="line"><span class="cl">    <span class="n">std</span><span class="o">::</span><span class="n">queue</span><span class="o">&lt;</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">CMessage</span><span class="o">&gt;&gt;</span> <span class="n">_send_que</span><span class="p">;</span><span class="c1">//发送队列
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="k">class</span> <span class="nc">Session</span><span class="o">:</span><span class="k">public</span> <span class="n">enable_shared_from_this</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="c1">//为Start的shared_from_this()的可以共享的使用
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span><span class="n">Server</span><span class="o">*</span> <span class="n">server</span><span class="p">)</span><span class="o">:</span><span class="n">_socket</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span><span class="n">_server</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">uuid</span> <span class="n">a_uuid</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">random_generator</span><span class="p">()();</span>
+</span></span><span class="line"><span class="cl">		<span class="n">uuid</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">a_uuid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">Socket</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">_socket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">string</span><span class="o">&amp;</span> <span class="n">Get_uuid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">uuid</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">_socket</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">enum</span> <span class="p">{</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">_data</span><span class="p">[</span><span class="n">max_length</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Server</span><span class="o">*</span> <span class="n">_server</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">string</span> <span class="n">uuid</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h5 id="实现文件-1">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0%e6%96%87%e4%bb%b6-1"></a>
+实现文件
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Start</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">		<span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span><span class="n">shared_from_this</span><span class="p">()));</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;server receive data is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">_data</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_write</span><span class="p">(</span><span class="n">_socket</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">			<span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_write</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span><span class="n">_self_shared</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in read,error code is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">_server</span><span class="o">-&gt;</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">_self_shared</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">			<span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_2</span><span class="p">,</span><span class="n">_self_shared</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">		<span class="c1">//也可以使用Start()
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="k">else</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in write,error code is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_server</span><span class="o">-&gt;</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><hr>
+        
+        <hr><p>本文2026-07-21首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-21</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -2312,35 +2489,6 @@ typename
 </ul>
         
         <hr><p>本文2026-07-10首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-10</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260709总结</title>
-      <link>http://localhost:1313/post/2026-07-09-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Thu, 09 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-09-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260709总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="q">
-<a class="header-anchor" href="#q"></a>
-Q:
-</h1><ul>
-<li>
-<p>Q1:为什么vcpkg对于g++的支持这么差！</p>
-</li>
-<li>
-<p>Q2:为什么vcpkg装g++的boost总是装不上！</p>
-</li>
-<li>
-<p>Q3:为什么vcpkg装g++的protobuf也是装不上！用不了！</p>
-        
-        <hr><p>本文2026-07-09首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-09</p>]]>
       </description>
       
     </item>
