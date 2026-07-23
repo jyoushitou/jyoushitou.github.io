@@ -12,12 +12,186 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Wed, 22 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 23 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260723总结</title>
+      <link>http://localhost:1313/post/2026-07-23-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 23 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-23-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260723总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="粘包问题">
+<a class="header-anchor" href="#%e7%b2%98%e5%8c%85%e9%97%ae%e9%a2%98"></a>
+粘包问题
+</h2><h3 id="问题">
+<a class="header-anchor" href="#%e9%97%ae%e9%a2%98"></a>
+问题
+</h3><ul>
+<li>多个数据包在服务器收到数据包，导致tcp缓冲区，导致数据粘在一起了</li>
+<li>tcp并不会导致数据包的混乱，tcp会保证数据的准确性和顺序性</li>
+<li>是我们逻辑缓冲区会造成粘包</li>
+</ul>
+<h3 id="原因">
+<a class="header-anchor" href="#%e5%8e%9f%e5%9b%a0"></a>
+原因
+</h3><ul>
+<li>客户端的发送频率高于服务器的接收频率</li>
+<li>tcp底层的安全和效率不允许字节数特别少的小包发送频率过高</li>
+<li>发送缓冲区有上次未发送的数据，或者接收缓冲区有上次未取的数据</li>
+</ul>
+<h3 id="办法">
+<a class="header-anchor" href="#%e5%8a%9e%e6%b3%95"></a>
+办法
+</h3><ul>
+<li>切包的方式处理</li>
+<li>使用tlv协议（消息id+消息长度+消息内容）</li>
+</ul>
+<h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="1环境及配置">
+<a class="header-anchor" href="#1%e7%8e%af%e5%a2%83%e5%8f%8a%e9%85%8d%e7%bd%ae"></a>
+1.环境及配置
+</h2><h3 id="创建项目">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e9%a1%b9%e7%9b%ae"></a>
+创建项目
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo new project-name
+</span></span></code></pre></div><h3 id="srcmainrs">
+<a class="header-anchor" href="#srcmainrs"></a>
+src/main.rs
+</h3><ul>
+<li>rust的源文件代码</li>
+</ul>
+<h3 id="构建">
+<a class="header-anchor" href="#%e6%9e%84%e5%bb%ba"></a>
+构建
+</h3><ul>
+<li>调试构建</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo build
+</span></span></code></pre></div><ul>
+<li>正式构建</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo build --release
+</span></span></code></pre></div><h3 id="运行">
+<a class="header-anchor" href="#%e8%bf%90%e8%a1%8c"></a>
+运行
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo run
+</span></span></code></pre></div><h2 id="1变量">
+<a class="header-anchor" href="#1%e5%8f%98%e9%87%8f"></a>
+1.变量
+</h2><h3 id="代码例子">
+<a class="header-anchor" href="#%e4%bb%a3%e7%a0%81%e4%be%8b%e5%ad%90"></a>
+代码例子
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="c1">//导入
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;guess math!&#34;</span><span class="p">);</span><span class="c1">//打印宏
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;猜一个数&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;无法读取&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;你猜的数是:</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">guess</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="是否为可变类型">
+<a class="header-anchor" href="#%e6%98%af%e5%90%a6%e4%b8%ba%e5%8f%af%e5%8f%98%e7%b1%bb%e5%9e%8b"></a>
+是否为可变类型
+</h3><ul>
+<li>对比c++，c++也有const作为不可变类型，但多为标记</li>
+<li>rust则是在编译期间会检查是否为不可变量更改数值</li>
+</ul>
+<h4 id="不可变默认变量类型">
+<a class="header-anchor" href="#%e4%b8%8d%e5%8f%af%e5%8f%98%e9%bb%98%e8%ae%a4%e5%8f%98%e9%87%8f%e7%b1%bb%e5%9e%8b"></a>
+不可变(默认变量类型)
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h4 id="可变">
+<a class="header-anchor" href="#%e5%8f%af%e5%8f%98"></a>
+可变
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="c1">//mut为immutable这个英文的缩写
+</span></span></span></code></pre></div><h3 id="类型">
+<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b"></a>
+类型
+</h3><h4 id="string">
+<a class="header-anchor" href="#string"></a>
+String
+</h4><ul>
+<li>字符串</li>
+</ul>
+<h3 id="创建实例方法">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e5%ae%9e%e4%be%8b%e6%96%b9%e6%b3%95"></a>
+创建实例方法
+</h3><ul>
+<li>new(函数)</li>
+<li>使用(变量类型)::new();完成创建</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="o">=</span><span class="n">Strimg</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></div><h3 id="2输入和输出继续看1的例子代码">
+<a class="header-anchor" href="#2%e8%be%93%e5%85%a5%e5%92%8c%e8%be%93%e5%87%ba%e7%bb%a7%e7%bb%ad%e7%9c%8b1%e7%9a%84%e4%be%8b%e5%ad%90%e4%bb%a3%e7%a0%81"></a>
+2.输入和输出（继续看1.的例子代码）
+</h3><h3 id="使用函数">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e5%87%bd%e6%95%b0"></a>
+使用函数
+</h3><ul>
+<li>println!();</li>
+<li>std::io::stdin().read_line(&amp;(是否可变类型名) (变量名)).expect(&quot;&quot;);</li>
+</ul>
+<h4 id="println">
+<a class="header-anchor" href="#println"></a>
+println()
+</h4><ul>
+<li>打印一个宏</li>
+</ul>
+<h4 id="printlnguess">
+<a class="header-anchor" href="#printlnguess"></a>
+println(&quot;{}&quot;，guess)
+</h4><ul>
+<li>此处的花括号为占位符</li>
+<li>会被替换为后面的变量名</li>
+</ul>
+<h4 id="read_line">
+<a class="header-anchor" href="#read_line"></a>
+read_line()
+</h4><ul>
+<li>将用户的输入放到字符串里面</li>
+<li>需要可变类型</li>
+<li>使用引用获取</li>
+<li>保证可以简单安全的使用引用</li>
+<li>返回io::Result(枚举类型)，有两个类型，为ok，err</li>
+</ul>
+<h4 id="expect">
+<a class="header-anchor" href="#expect"></a>
+expect
+</h4><ul>
+<li>返回的是Err中端程序，将字符串程序打印</li>
+<li>返回ok将输入的数据返回</li>
+</ul>
+<h4 id="读取">
+<a class="header-anchor" href="#%e8%af%bb%e5%8f%96"></a>
+读取
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="输出">
+<a class="header-anchor" href="#%e8%be%93%e5%87%ba"></a>
+输出
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">guess</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div>
+        
+        <hr><p>本文2026-07-23首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-23</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -2457,98 +2631,6 @@ socket
 </ul>
         
         <hr><p>本文2026-07-14首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-14</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260711总结</title>
-      <link>http://localhost:1313/post/2026-07-11-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sat, 11 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-11-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260711总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="线程池类新1续1">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a0%e7%b1%bb%e6%96%b01%e7%bb%ad1"></a>
-线程池类新1续1
-</h1><h2 id="enques函数2">
-<a class="header-anchor" href="#enques%e5%87%bd%e6%95%b02"></a>
-enques函数2
-</h2><h3 id="源代码">
-<a class="header-anchor" href="#%e6%ba%90%e4%bb%a3%e7%a0%81"></a>
-源代码
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="n">F</span><span class="p">,</span> <span class="k">typename</span><span class="p">...</span> <span class="n">Arg</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">ThreadPool</span><span class="o">::</span><span class="n">enques</span><span class="p">(</span><span class="n">F</span> <span class="o">&amp;&amp;</span><span class="n">f</span><span class="p">,</span> <span class="n">Arg</span> <span class="o">&amp;&amp;</span><span class="p">...</span><span class="n">arg</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="o">-&gt;</span> <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">result_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">...)</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">using</span> <span class="n">functype</span> <span class="o">=</span> <span class="k">typename</span> <span class="n">std</span><span class="o">::</span><span class="n">resulit_of</span><span class="o">&lt;</span><span class="n">F</span><span class="p">(</span><span class="n">Arg</span><span class="p">..)</span><span class="o">&gt;::</span><span class="n">type</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">packaged_task</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;&gt;</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">F</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">),</span> <span class="n">std</span><span class="o">::</span><span class="n">forward</span><span class="o">&lt;</span><span class="n">Arg</span><span class="o">&gt;</span><span class="p">(</span><span class="n">arg</span><span class="p">)...));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">future</span><span class="o">&lt;</span><span class="n">functype</span><span class="o">&gt;</span> <span class="n">retfuture</span> <span class="o">=</span> <span class="n">task</span><span class="o">-&gt;</span><span class="n">get_future</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutx</span><span class="o">&gt;</span> <span class="n">lock_guard</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">mtx</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">stop</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">                <span class="k">throw</span> <span class="n">std</span><span class="o">::</span><span class="n">runtime_error</span><span class="p">(</span><span class="s">&#34;error:threadpool on off&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">work_que</span><span class="p">.</span><span class="n">emplace</span><span class="p">([</span><span class="k">this</span><span class="p">](){</span>
-</span></span><span class="line"><span class="cl">                <span class="p">(</span><span class="o">*</span><span class="n">task</span><span class="p">)();</span>
-</span></span><span class="line"><span class="cl">            <span class="p">});</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cv</span><span class="p">.</span><span class="n">notify_one</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">retfuture</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><h3 id="解释">
-<a class="header-anchor" href="#%e8%a7%a3%e9%87%8a"></a>
-解释
-</h3><h4 id="using-functype--typename-stdresulit_offargtype">
-<a class="header-anchor" href="#using-functype--typename-stdresulit_offargtype"></a>
-using functype = typename std::resulit_of&lt;F(Arg..)&gt;::type;
-</h4><ul>
-<li>将std::resulit_of&lt;F(Arg..)&gt;::type推导出的类型命名为functype</li>
-</ul>
-<h5 id="stdresult_offarg">
-<a class="header-anchor" href="#stdresult_offarg"></a>
-std::result_of&lt;F(Arg&hellip;)&gt;
-</h5><ul>
-<li>用于在编译期推导可调用对象 F 接受参数 Arg&hellip; 后的返回类型</li>
-<li>Arg可能会有不定参数使用&hellip;去表示</li>
-<li>c++17开始被弃用，使用std::invoke_result_t</li>
-</ul>
-<h5 id="type">
-<a class="header-anchor" href="#type"></a>
-::type
-</h5><ul>
-<li>是std::result_of的内部静态函数</li>
-<li>是 std::result_of 内部定义的类型别名，表示推导出的返回类型</li>
-</ul>
-<h4 id="auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg">
-<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_taskstdbindstdforwardf-stdforwardarg"></a>
-auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;(std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;))
-</h4><ul>
-<li>创建一个完美转发的异步任务</li>
-</ul>
-<h5 id="auto-task--stdmake_sharedstdpackaged_task">
-<a class="header-anchor" href="#auto-task--stdmake_sharedstdpackaged_task"></a>
-auto task = std::make_shared&lt;std::packaged_task<!-- raw HTML omitted -->&gt;()
-</h5><ul>
-<li>auto task 自动推导类型为 shared_ptr&lt;packaged_task<!-- raw HTML omitted -->&gt;（并为其赋值创建的任务）</li>
-<li>std::make_shared&lt;&hellip;&gt;()是在在堆上创建对象，并返回 std::shared_ptr 智能指针，共享智能指针管理</li>
-<li>std::packaged_task<!-- raw HTML omitted -->是打包封装成一个异步任务</li>
-</ul>
-<h5 id="stdbindstdforwardf-stdforwardarg">
-<a class="header-anchor" href="#stdbindstdforwardf-stdforwardarg"></a>
-std::bind(std::forward<!-- raw HTML omitted -->(f), std::forward<!-- raw HTML omitted -->(arg)&hellip;)
-</h5><ul>
-<li>
-<p>这句代码是 C++ 中完美转发 + 函数绑定的组合，用于创建一个绑定好参数的可调用对象。</p>
-        
-        <hr><p>本文2026-07-11首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-11</p>]]>
       </description>
       
     </item>
