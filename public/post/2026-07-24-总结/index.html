@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260316总结 | D-Sketon
+  20260724总结 | D-Sketon
 </title>
-<meta name="description" content="20260316"/><script>
+<meta name="description" content="20260724"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260316总结 | D-Sketon" />
+  <meta property="og:title" content="20260724总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260316"
+    content="20260724"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-03-16-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-07-24-%E6%80%BB%E7%BB%93/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-03-16T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-03-16T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-07-24T08:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-07-24T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260316总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260724总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260316总结</h1>
+            <h1 data-aos="slide-up">20260724总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -137,8 +137,41 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#throw-抛出">throw 抛出</a></li>
-    <li><a href="#catch-捕获">catch 捕获</a></li>
+    <li><a href="#字节序处理和消息队列控制">字节序处理和消息队列控制</a>
+      <ul>
+        <li><a href="#序列化">序列化</a></li>
+        <li><a href="#大端序">大端序</a></li>
+        <li><a href="#小端序">小端序</a></li>
+        <li><a href="#字节序问题">字节序问题</a></li>
+        <li><a href="#通过函数判断">通过函数判断</a></li>
+        <li><a href="#asio提供的">asio提供的</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#事务">事务</a>
+      <ul>
+        <li><a href="#select-autocommit">SELECT @@autocommit;</a></li>
+        <li><a href="#set-autocommit-0">set @@autocommit-0;</a></li>
+        <li><a href="#commit">commit;</a></li>
+        <li><a href="#rollback">rollback</a></li>
+        <li><a href="#start-transaction">start transaction;</a></li>
+        <li><a href="#四大特性">四大特性</a></li>
+        <li><a href="#并发事务问题">并发事务问题</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#包crate">包crate</a>
+      <ul>
+        <li><a href="#导入包">导入包</a></li>
+        <li><a href="#cargolock会在你构建时记录cargotoml下记录">cargo.lock会在你构建时，记录cargo.toml下记录</a></li>
+        <li><a href="#更新包">更新包</a></li>
+        <li><a href="#创建随机数">创建随机数</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 </div></div>
@@ -210,31 +243,244 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-03-16 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-03-16</time
+    <time datetime="2026-07-24 08:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-07-24</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-03-16</time
+      >2026-07-24</time
     >
   </span></div>
-</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="一数据结构使用cpp重写">
-<a class="header-anchor" href="#%e4%b8%80%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e4%bd%bf%e7%94%a8cpp%e9%87%8d%e5%86%99"></a>
-一、数据结构(使用cpp重写)
-</h1><h1 id="二异常">
-<a class="header-anchor" href="#%e4%ba%8c%e5%bc%82%e5%b8%b8"></a>
-二、异常
-</h1><h2 id="throw-抛出">
-<a class="header-anchor" href="#throw-%e6%8a%9b%e5%87%ba"></a>
-throw 抛出
-</h2><p>直接抛出，可以是任意的</p>
-<h2 id="catch-捕获">
-<a class="header-anchor" href="#catch-%e6%8d%95%e8%8e%b7"></a>
-catch 捕获
-</h2><ul>
-<li>捕获异常类</li>
-<li>catch(&hellip;)来捕获不确定异常</li>
-<li>可以在{}中直接加入throw再抛出异常</li>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="字节序处理和消息队列控制">
+<a class="header-anchor" href="#%e5%ad%97%e8%8a%82%e5%ba%8f%e5%a4%84%e7%90%86%e5%92%8c%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e6%8e%a7%e5%88%b6"></a>
+字节序处理和消息队列控制
+</h2><h3 id="序列化">
+<a class="header-anchor" href="#%e5%ba%8f%e5%88%97%e5%8c%96"></a>
+序列化
+</h3><ul>
+<li>使用protobuf等序列化成字符串</li>
 </ul>
+<h3 id="大端序">
+<a class="header-anchor" href="#%e5%a4%a7%e7%ab%af%e5%ba%8f"></a>
+大端序
+</h3><ul>
+<li>指数据从高地址开始存储</li>
+</ul>
+<h3 id="小端序">
+<a class="header-anchor" href="#%e5%b0%8f%e7%ab%af%e5%ba%8f"></a>
+小端序
+</h3><ul>
+<li>指数据从低地址开始存储</li>
+</ul>
+<h3 id="字节序问题">
+<a class="header-anchor" href="#%e5%ad%97%e8%8a%82%e5%ba%8f%e9%97%ae%e9%a2%98"></a>
+字节序问题
+</h3><ul>
+<li>为避免通讯过程的编码不同</li>
+<li>字节序使用大端序，即网络字节序</li>
+</ul>
+<h3 id="通过函数判断">
+<a class="header-anchor" href="#%e9%80%9a%e8%bf%87%e5%87%bd%e6%95%b0%e5%88%a4%e6%96%ad"></a>
+通过函数判断
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">is_bug_endian</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">num</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li>0(flase)为小端，1(ture)为大端</li>
+</ul>
+<h3 id="asio提供的">
+<a class="header-anchor" href="#asio%e6%8f%90%e4%be%9b%e7%9a%84"></a>
+asio提供的
+</h3><h4 id="host_to_network_long">
+<a class="header-anchor" href="#host_to_network_long"></a>
+host_to_network_long()
+</h4><ul>
+<li>网络转换成long类型</li>
+</ul>
+<h4 id="host_to_network_short">
+<a class="header-anchor" href="#host_to_network_short"></a>
+host_to_network_short()
+</h4><ul>
+<li>网络转换成short类型</li>
+</ul>
+<h1 id="mysql">
+<a class="header-anchor" href="#mysql"></a>
+MySQL
+</h1><h2 id="事务">
+<a class="header-anchor" href="#%e4%ba%8b%e5%8a%a1"></a>
+事务
+</h2><ul>
+<li>一组操作的集合，所有指令顺序执行，有一条操作失败则退回到事务执行前的状态</li>
+</ul>
+<h3 id="select-autocommit">
+<a class="header-anchor" href="#select-autocommit"></a>
+SELECT @@autocommit;
+</h3><ul>
+<li>查看提交方式</li>
+<li>1为自动</li>
+<li>0为手动</li>
+</ul>
+<h3 id="set-autocommit-0">
+<a class="header-anchor" href="#set-autocommit-0"></a>
+set @@autocommit-0;
+</h3><ul>
+<li>设置手动提交</li>
+<li>之后所有的操作临时执行</li>
+</ul>
+<h3 id="commit">
+<a class="header-anchor" href="#commit"></a>
+commit;
+</h3><ul>
+<li>提交事务，让操作保存与数据与表</li>
+<li>保证事务是一起的执行的</li>
+</ul>
+<h3 id="rollback">
+<a class="header-anchor" href="#rollback"></a>
+rollback
+</h3><ul>
+<li>回滚操作</li>
+<li>事务操作失败后使用这个回滚</li>
+</ul>
+<h3 id="start-transaction">
+<a class="header-anchor" href="#start-transaction"></a>
+start transaction;
+</h3><ul>
+<li>开启事务</li>
+<li>即开启局部手动的提交事务</li>
+</ul>
+<h3 id="四大特性">
+<a class="header-anchor" href="#%e5%9b%9b%e5%a4%a7%e7%89%b9%e6%80%a7"></a>
+四大特性
+</h3><h4 id="原子性acid">
+<a class="header-anchor" href="#%e5%8e%9f%e5%ad%90%e6%80%a7acid"></a>
+原子性ACID
+</h4><ul>
+<li>不可分割最小单元</li>
+</ul>
+<h4 id="一致性">
+<a class="header-anchor" href="#%e4%b8%80%e8%87%b4%e6%80%a7"></a>
+一致性
+</h4><ul>
+<li>事务完成时，必须使所有的数据保存一致状态</li>
+</ul>
+<h4 id="隔离性">
+<a class="header-anchor" href="#%e9%9a%94%e7%a6%bb%e6%80%a7"></a>
+隔离性
+</h4><ul>
+<li>数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行</li>
+</ul>
+<h4 id="持久性">
+<a class="header-anchor" href="#%e6%8c%81%e4%b9%85%e6%80%a7"></a>
+持久性
+</h4><ul>
+<li>事务一旦提交或回滚 ，他对数据库的中的数据改变是永久的</li>
+</ul>
+<h3 id="并发事务问题">
+<a class="header-anchor" href="#%e5%b9%b6%e5%8f%91%e4%ba%8b%e5%8a%a1%e9%97%ae%e9%a2%98"></a>
+并发事务问题
+</h3><h4 id="脏读">
+<a class="header-anchor" href="#%e8%84%8f%e8%af%bb"></a>
+脏读
+</h4><ul>
+<li>一个事务读到另外一个事务未提交的数据</li>
+</ul>
+<h4 id="不可重复读">
+<a class="header-anchor" href="#%e4%b8%8d%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb"></a>
+不可重复读
+</h4><ul>
+<li>一个事务先后到读取同一条记录，但两次读取的数据不同，称之为不可重复读</li>
+</ul>
+<h4 id="幻读">
+<a class="header-anchor" href="#%e5%b9%bb%e8%af%bb"></a>
+幻读
+</h4><ul>
+<li>一个事务按照条件查询数据是，没有对应的数据行，但是插入数据时，又发现这行数据已经存在，好像出现了幻影</li>
+</ul>
+<h4 id="解决方法事务隔离级别">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3%e6%96%b9%e6%b3%95%e4%ba%8b%e5%8a%a1%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab"></a>
+解决方法：事务隔离级别
+</h4><ul>
+<li>级别越高效率越低，安全性越低</li>
+</ul>
+<h5 id="read-uncommitted-读未提交">
+<a class="header-anchor" href="#read-uncommitted-%e8%af%bb%e6%9c%aa%e6%8f%90%e4%ba%a4"></a>
+Read uncommitted 读未提交
+</h5><ul>
+<li>啥也不解决</li>
+</ul>
+<h5 id="read-commited-读已提交">
+<a class="header-anchor" href="#read-commited-%e8%af%bb%e5%b7%b2%e6%8f%90%e4%ba%a4"></a>
+Read commited 读已提交
+</h5><ul>
+<li>解决幻读</li>
+</ul>
+<h5 id="repeatable-read-可重复读">
+<a class="header-anchor" href="#repeatable-read-%e5%8f%af%e9%87%8d%e5%a4%8d%e8%af%bb"></a>
+Repeatable Read 可重复读
+</h5><ul>
+<li>解决不可重复读，幻读</li>
+<li>默认事务隔离级别</li>
+<li>orcal</li>
+</ul>
+<h5 id="serializabele-串行化">
+<a class="header-anchor" href="#serializabele-%e4%b8%b2%e8%a1%8c%e5%8c%96"></a>
+Serializabele 串行化
+</h5><ul>
+<li>解决脏读，不可重复读，幻读</li>
+</ul>
+<h5 id="查看事务隔离级别">
+<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b%e4%ba%8b%e5%8a%a1%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab"></a>
+查看事务隔离级别
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">SELECT</span><span class="w"> </span><span class="o">@@</span><span class="n">TRANSACTION_ISOLATION</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h5 id="设置当前窗口的隔离级别">
+<a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e5%bd%93%e5%89%8d%e7%aa%97%e5%8f%a3%e7%9a%84%e9%9a%94%e7%a6%bb%e7%ba%a7%e5%88%ab"></a>
+设置当前窗口的隔离·级别
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">SET [SEESSION|GLOBAL] TRANSACTION ISOLATION LEVEL {${级别}};
+</span></span></code></pre></div><h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="包crate">
+<a class="header-anchor" href="#%e5%8c%85crate"></a>
+包crate
+</h2><ul>
+<li>将以随机数包为例</li>
+</ul>
+<h3 id="导入包">
+<a class="header-anchor" href="#%e5%af%bc%e5%85%a5%e5%8c%85"></a>
+导入包
+</h3><ul>
+<li>在caro.toml</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">[</span><span class="n">dependencies</span><span class="p">]</span><span class="c1">//这个标题 下一行添加包名=&#34;(^)版本号&#34;
+</span></span></span><span class="line"><span class="cl"><span class="n">rand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;0.3.14&#34;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="cargolock会在你构建时记录cargotoml下记录">
+<a class="header-anchor" href="#cargolock%e4%bc%9a%e5%9c%a8%e4%bd%a0%e6%9e%84%e5%bb%ba%e6%97%b6%e8%ae%b0%e5%bd%95cargotoml%e4%b8%8b%e8%ae%b0%e5%bd%95"></a>
+cargo.lock会在你构建时，记录cargo.toml下记录
+</h3><h3 id="更新包">
+<a class="header-anchor" href="#%e6%9b%b4%e6%96%b0%e5%8c%85"></a>
+更新包
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo update
+</span></span></code></pre></div><ul>
+<li>会直接更新到当前小版本的最新版本，大版本不变</li>
+</ul>
+<h3 id="创建随机数">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e9%9a%8f%e6%9c%ba%e6%95%b0"></a>
+创建随机数
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rand</span>::<span class="n">Rng</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">secret_number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span>::<span class="n">thread_rng</span><span class="p">().</span><span class="n">gen_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><p>将会生成一个不会改变数字的随机数</p>
 </div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
@@ -246,27 +492,15 @@ catch 捕获
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260315总结"
+              alt="20260723总结"
               class="lazyload"
             /><a
-          href="/post/2026-03-15-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260315总结"
-          title="前一篇:20260315总结"
+          href="/post/2026-07-23-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260723总结"
+          title="前一篇:20260723总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260315总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260317总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-03-17-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260317总结"
-          title="后一篇:20260317总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260317总结</h3>
+        <h3 class="article-nav-title">20260723总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -288,10 +522,10 @@ catch 捕获
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;23.9k</span
+          >&nbsp;24.6k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;01:16</span>
+        <span class="icon-coffee">&nbsp;01:17</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -317,8 +551,41 @@ catch 捕获
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#throw-抛出">throw 抛出</a></li>
-    <li><a href="#catch-捕获">catch 捕获</a></li>
+    <li><a href="#字节序处理和消息队列控制">字节序处理和消息队列控制</a>
+      <ul>
+        <li><a href="#序列化">序列化</a></li>
+        <li><a href="#大端序">大端序</a></li>
+        <li><a href="#小端序">小端序</a></li>
+        <li><a href="#字节序问题">字节序问题</a></li>
+        <li><a href="#通过函数判断">通过函数判断</a></li>
+        <li><a href="#asio提供的">asio提供的</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#事务">事务</a>
+      <ul>
+        <li><a href="#select-autocommit">SELECT @@autocommit;</a></li>
+        <li><a href="#set-autocommit-0">set @@autocommit-0;</a></li>
+        <li><a href="#commit">commit;</a></li>
+        <li><a href="#rollback">rollback</a></li>
+        <li><a href="#start-transaction">start transaction;</a></li>
+        <li><a href="#四大特性">四大特性</a></li>
+        <li><a href="#并发事务问题">并发事务问题</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <ul>
+    <li><a href="#包crate">包crate</a>
+      <ul>
+        <li><a href="#导入包">导入包</a></li>
+        <li><a href="#cargolock会在你构建时记录cargotoml下记录">cargo.lock会在你构建时，记录cargo.toml下记录</a></li>
+        <li><a href="#更新包">更新包</a></li>
+        <li><a href="#创建随机数">创建随机数</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
 </div></div>
@@ -424,9 +691,9 @@ catch 捕获
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260316总结",
-          url: "http:\/\/localhost:1313\/post\/2026-03-16-%E6%80%BB%E7%BB%93\/",
-          description: "20260316",
+          title: "20260724总结",
+          url: "http:\/\/localhost:1313\/post\/2026-07-24-%E6%80%BB%E7%BB%93\/",
+          description: "20260724",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {

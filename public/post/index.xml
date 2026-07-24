@@ -12,12 +12,67 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Thu, 23 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 24 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260724总结</title>
+      <link>http://localhost:1313/post/2026-07-24-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Fri, 24 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-24-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260724总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="字节序处理和消息队列控制">
+<a class="header-anchor" href="#%e5%ad%97%e8%8a%82%e5%ba%8f%e5%a4%84%e7%90%86%e5%92%8c%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97%e6%8e%a7%e5%88%b6"></a>
+字节序处理和消息队列控制
+</h2><h3 id="序列化">
+<a class="header-anchor" href="#%e5%ba%8f%e5%88%97%e5%8c%96"></a>
+序列化
+</h3><ul>
+<li>使用protobuf等序列化成字符串</li>
+</ul>
+<h3 id="字节序问题">
+<a class="header-anchor" href="#%e5%ad%97%e8%8a%82%e5%ba%8f%e9%97%ae%e9%a2%98"></a>
+字节序问题
+</h3><ul>
+<li>为避免通讯过程的编码不同</li>
+<li>字节序使用大端序，即网络字节序</li>
+</ul>
+<h3 id="通过函数判断">
+<a class="header-anchor" href="#%e9%80%9a%e8%bf%87%e5%87%bd%e6%95%b0%e5%88%a4%e6%96%ad"></a>
+通过函数判断
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">bool</span> <span class="nf">is_bug_endian</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">if</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">num</span><span class="o">==</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li>0(flase)为小端，1(ture)为大端</li>
+</ul>
+        
+        <hr><p>本文2026-07-24首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-24</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -91,13 +146,101 @@ src/main.rs
 <a class="header-anchor" href="#%e8%bf%90%e8%a1%8c"></a>
 运行
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo run
-</span></span></code></pre></div><h2 id="2变量名">
-<a class="header-anchor" href="#2%e5%8f%98%e9%87%8f%e5%90%8d"></a>
-2.变量名
-</h2><h3 id="例子">
-<a class="header-anchor" href="#%e4%be%8b%e5%ad%90"></a>
-例子
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> 
+</span></span></code></pre></div><h2 id="1变量">
+<a class="header-anchor" href="#1%e5%8f%98%e9%87%8f"></a>
+1.变量
+</h2><h3 id="代码例子">
+<a class="header-anchor" href="#%e4%bb%a3%e7%a0%81%e4%be%8b%e5%ad%90"></a>
+代码例子
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="c1">//导入
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;guess math!&#34;</span><span class="p">);</span><span class="c1">//打印宏
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;猜一个数&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;无法读取&#34;</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;你猜的数是:</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">guess</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="是否为可变类型">
+<a class="header-anchor" href="#%e6%98%af%e5%90%a6%e4%b8%ba%e5%8f%af%e5%8f%98%e7%b1%bb%e5%9e%8b"></a>
+是否为可变类型
+</h3><ul>
+<li>对比c++，c++也有const作为不可变类型，但多为标记</li>
+<li>rust则是在编译期间会检查是否为不可变量更改数值</li>
+</ul>
+<h4 id="不可变默认变量类型">
+<a class="header-anchor" href="#%e4%b8%8d%e5%8f%af%e5%8f%98%e9%bb%98%e8%ae%a4%e5%8f%98%e9%87%8f%e7%b1%bb%e5%9e%8b"></a>
+不可变(默认变量类型)
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h4 id="可变">
+<a class="header-anchor" href="#%e5%8f%af%e5%8f%98"></a>
+可变
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="c1">//mut为immutable这个英文的缩写
+</span></span></span></code></pre></div><h3 id="类型">
+<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b"></a>
+类型
+</h3><h4 id="string">
+<a class="header-anchor" href="#string"></a>
+String
+</h4><ul>
+<li>字符串</li>
+</ul>
+<h3 id="创建实例方法">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e5%ae%9e%e4%be%8b%e6%96%b9%e6%b3%95"></a>
+创建实例方法
+</h3><ul>
+<li>new(函数)</li>
+<li>使用(变量类型)::new();完成创建</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="o">=</span><span class="n">Strimg</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></div><h3 id="2输入和输出继续看1的例子代码">
+<a class="header-anchor" href="#2%e8%be%93%e5%85%a5%e5%92%8c%e8%be%93%e5%87%ba%e7%bb%a7%e7%bb%ad%e7%9c%8b1%e7%9a%84%e4%be%8b%e5%ad%90%e4%bb%a3%e7%a0%81"></a>
+2.输入和输出（继续看1.的例子代码）
+</h3><h3 id="使用函数">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e5%87%bd%e6%95%b0"></a>
+使用函数
+</h3><ul>
+<li>println!();</li>
+<li>std::io::stdin().read_line(&amp;(是否可变类型名) (变量名)).expect(&quot;&quot;);</li>
+</ul>
+<h4 id="println">
+<a class="header-anchor" href="#println"></a>
+println()
+</h4><ul>
+<li>打印一个宏</li>
+</ul>
+<h4 id="printlnguess">
+<a class="header-anchor" href="#printlnguess"></a>
+println(&quot;{}&quot;，guess)
+</h4><ul>
+<li>此处的花括号为占位符</li>
+<li>会被替换为后面的变量名</li>
+</ul>
+<h4 id="read_line">
+<a class="header-anchor" href="#read_line"></a>
+read_line()
+</h4><ul>
+<li>将用户的输入放到字符串里面</li>
+<li>需要可变类型</li>
+<li>使用引用获取</li>
+<li>保证可以简单安全的使用引用</li>
+<li>返回io::Result(枚举类型)，有两个类型，为ok，err</li>
+</ul>
+<h4 id="expect">
+<a class="header-anchor" href="#expect"></a>
+expect
+</h4><ul>
+<li>返回的是Err中端程序，将字符串程序打印</li>
+<li>返回ok将输入的数据返回</li>
+</ul>
+<h4 id="读取">
+<a class="header-anchor" href="#%e8%af%bb%e5%8f%96"></a>
+读取
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="输出">
+<a class="header-anchor" href="#%e8%be%93%e5%87%ba"></a>
+输出
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">guess</span><span class="p">);</span><span class="w">
 </span></span></span></code></pre></div>
         
         <hr><p>本文2026-07-23首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-23</p>]]>
@@ -2520,29 +2663,6 @@ socket
 </span></span></code></pre></div>
         
         <hr><p>本文2026-07-15首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-15</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260714总结</title>
-      <link>http://localhost:1313/post/2026-07-14-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 14 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-14-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260714总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="原子操作">
-<a class="header-anchor" href="#%e5%8e%9f%e5%ad%90%e6%93%8d%e4%bd%9c"></a>
-原子操作
-</h1><ul>
-<li>将变量及一些方法临时变为原子一个整体，避免因为多线程导致的bug</li>
-</ul>
-        
-        <hr><p>本文2026-07-14首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-14</p>]]>
       </description>
       
     </item>
