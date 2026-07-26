@@ -12,12 +12,202 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Sat, 25 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 26 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260726总结</title>
+      <link>http://localhost:1313/post/2026-07-26-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sun, 26 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-26-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260726总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h2 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h2><h3 id="json序列化jsoncpp">
+<a class="header-anchor" href="#json%e5%ba%8f%e5%88%97%e5%8c%96jsoncpp"></a>
+json序列化（jsoncpp）
+</h3><ul>
+<li>将c++对象序列化为json</li>
+</ul>
+<h4 id="特点">
+<a class="header-anchor" href="#%e7%89%b9%e7%82%b9"></a>
+特点
+</h4><ul>
+<li>轻量级，速度快</li>
+<li>易于使用</li>
+<li>可靠性高</li>
+<li>用于前后端通讯，客户端和服务器通讯</li>
+</ul>
+<h3 id="使用jsoncpp">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8jsoncpp"></a>
+使用jsoncpp
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;json/json.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;json/value.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;json/reader.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">Json</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Json</span><span class="o">::</span><span class="n">Value</span> <span class="n">root</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">root</span><span class="p">[</span><span class="s">&#34;id&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1001</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">root</span><span class="p">[</span><span class="s">&#34;data&#34;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#34;hello world&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">string</span> <span class="n">request</span> <span class="o">=</span> <span class="n">root</span><span class="p">.</span><span class="n">toStyledString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;request is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">request</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="n">Value</span> <span class="n">root2</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">Reader</span> <span class="n">reader</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="n">reader</span><span class="p">.</span><span class="n">parse</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">root2</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;msg id is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">root</span><span class="p">[</span><span class="s">&#34;id&#34;</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;msg is&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">root2</span><span class="p">[</span><span class="s">&#34;data&#34;</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="思路">
+<a class="header-anchor" href="#%e6%80%9d%e8%b7%af"></a>
+思路
+</h3><h4 id="发送端">
+<a class="header-anchor" href="#%e5%8f%91%e9%80%81%e7%ab%af"></a>
+发送端
+</h4><ul>
+<li>先求转换后长度</li>
+<li>再转换成大端序</li>
+<li>再拷贝消息体</li>
+</ul>
+<h4 id="接收端">
+<a class="header-anchor" href="#%e6%8e%a5%e6%94%b6%e7%ab%af"></a>
+接收端
+</h4><ul>
+<li>接收长度</li>
+<li>再度数据</li>
+</ul>
+<hr>
+<h1 id="mysql">
+<a class="header-anchor" href="#mysql"></a>
+MySQL
+</h1><h2 id="索引">
+<a class="header-anchor" href="#%e7%b4%a2%e5%bc%95"></a>
+索引
+</h2><ul>
+<li>帮助MySQL高效获取数据的数据结（有序）</li>
+</ul>
+<h3 id="概述">
+<a class="header-anchor" href="#%e6%a6%82%e8%bf%b0"></a>
+概述
+</h3><h4 id="优点">
+<a class="header-anchor" href="#%e4%bc%98%e7%82%b9"></a>
+优点
+</h4><ul>
+<li>提高效率，降低IO成本</li>
+<li>通过索引列对数据进行排序，降低CPU的消耗</li>
+</ul>
+<h4 id="劣势">
+<a class="header-anchor" href="#%e5%8a%a3%e5%8a%bf"></a>
+劣势
+</h4><ul>
+<li>索引占用空间</li>
+<li>降低了更新表的速度</li>
+</ul>
+<h3 id="结构">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84"></a>
+结构
+</h3><h4 id="btree">
+<a class="header-anchor" href="#btree"></a>
+B+Tree
+</h4><ul>
+<li>常见索引类型</li>
+</ul>
+<h4 id="hash索引">
+<a class="header-anchor" href="#hash%e7%b4%a2%e5%bc%95"></a>
+hash索引
+</h4><ul>
+<li>底层通过hash实现，不能实现模糊查询</li>
+<li>性能高</li>
+<li>采用特定的hash算法，生成新的hash值，然后放入对应的格子</li>
+<li>hash冲突，则通过链表</li>
+<li>效率高</li>
+<li>Memory引擎</li>
+<li>InnoDB具有自适应hash功能</li>
+</ul>
+<h4 id="r-tree空间索引">
+<a class="header-anchor" href="#r-tree%e7%a9%ba%e9%97%b4%e7%b4%a2%e5%bc%95"></a>
+R-tree（空间索引）
+</h4><ul>
+<li>空间索引是MyISAM引擎的一个特殊索引类型，主要用于地理空间数据类型，通常使用较少</li>
+</ul>
+<h4 id="full-text全文索引">
+<a class="header-anchor" href="#full-text%e5%85%a8%e6%96%87%e7%b4%a2%e5%bc%95"></a>
+Full-text（全文索引）
+</h4><ul>
+<li>建立倒排索引，快速匹配文档的方式</li>
+</ul>
+<h3 id="分类">
+<a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
+分类
+</h3><h4 id="主键索引primary">
+<a class="header-anchor" href="#%e4%b8%bb%e9%94%ae%e7%b4%a2%e5%bc%95primary"></a>
+主键索引（primary）
+</h4><ul>
+<li>针对表中主键创建的索引</li>
+<li>默认自动创建，只有一个</li>
+</ul>
+<h4 id="唯一索引unique">
+<a class="header-anchor" href="#%e5%94%af%e4%b8%80%e7%b4%a2%e5%bc%95unique"></a>
+唯一索引（unique）
+</h4><ul>
+<li>避免表中字段值重复</li>
+<li>可以用多个</li>
+</ul>
+<h4 id="常规索引">
+<a class="header-anchor" href="#%e5%b8%b8%e8%a7%84%e7%b4%a2%e5%bc%95"></a>
+常规索引
+</h4><ul>
+<li>快速定位特定数据</li>
+<li>可以有多个</li>
+</ul>
+<h4 id="全文索引fulltext">
+<a class="header-anchor" href="#%e5%85%a8%e6%96%87%e7%b4%a2%e5%bc%95fulltext"></a>
+全文索引（fulltext）
+</h4><ul>
+<li>查找文本中的关键字</li>
+<li>可以有多个</li>
+</ul>
+<h4 id="在innodb中">
+<a class="header-anchor" href="#%e5%9c%a8innodb%e4%b8%ad"></a>
+在InnoDB中
+</h4><h5 id="聚集索引clustered-index">
+<a class="header-anchor" href="#%e8%81%9a%e9%9b%86%e7%b4%a2%e5%bc%95clustered-index"></a>
+聚集索引（clustered Index）
+</h5><ul>
+<li>数据存储与索引放到一块，索引的叶子结点保存行数据</li>
+<li>必须有，只有一个</li>
+<li>存在主键，默认主键索引</li>
+<li>第一个唯一索引作为聚集索引</li>
+<li>自动生成有一个影藏的rowid作为聚集索引</li>
+</ul>
+<h5 id="二级索引secondary-index">
+<a class="header-anchor" href="#%e4%ba%8c%e7%ba%a7%e7%b4%a2%e5%bc%95secondary-index"></a>
+二级索引（Secondary Index）
+</h5><ul>
+<li>将数据与索引分开存储，索引结构的叶子结点关联对应的主键</li>
+<li>可以存在多个</li>
+<li>通过回表查询（先通过二级获取主键，再通过聚集索引获取数据）</li>
+</ul>
+<hr>
+        
+        <hr><p>本文2026-07-26首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-26</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -30,7 +220,8 @@
       <description>
         <![CDATA[<h1>20260725总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
         
-          <h1 id="网络编程">
+          <hr>
+<h1 id="网络编程">
 <a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
 网络编程
 </h1><h2 id="protobuf序列化">
@@ -133,6 +324,7 @@ host_to_network_short()
 </h4><ul>
 <li>网络转换成short类型</li>
 </ul>
+<hr>
 <h1 id="mysql">
 <a class="header-anchor" href="#mysql"></a>
 MySQL
@@ -298,7 +490,10 @@ cargo.lock会在你构建时，记录cargo.toml下记录
 创建随机数
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">rand</span>::<span class="n">Rng</span><span class="p">;</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">secret_number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rand</span>::<span class="n">thread_rng</span><span class="p">().</span><span class="n">gen_range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">101</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><p>将会生成一个不会改变数字的随机数</p>
+</span></span></span></code></pre></div><h2 id="将会生成一个不会改变数字的随机数">
+<a class="header-anchor" href="#%e5%b0%86%e4%bc%9a%e7%94%9f%e6%88%90%e4%b8%80%e4%b8%aa%e4%b8%8d%e4%bc%9a%e6%94%b9%e5%8f%98%e6%95%b0%e5%ad%97%e7%9a%84%e9%9a%8f%e6%9c%ba%e6%95%b0"></a>
+将会生成一个不会改变数字的随机数
+</h2>
         
         <hr><p>本文2026-07-24首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-24</p>]]>
       </description>
@@ -2619,94 +2814,6 @@ WriteToSocket发送函数
 </span></span></code></pre></div>
         
         <hr><p>本文2026-07-17首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-17</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260716总结</title>
-      <link>http://localhost:1313/post/2026-07-16-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Thu, 16 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-16-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260716总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="网络编程2">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b2"></a>
-网络编程2
-</h1><h2 id="同步续">
-<a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e7%bb%ad"></a>
-同步续
-</h2><h3 id="解析域名">
-<a class="header-anchor" href="#%e8%a7%a3%e6%9e%90%e5%9f%9f%e5%90%8d"></a>
-解析域名
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">dns_conect_to_end</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">host</span> <span class="o">=</span> <span class="s">&#34;example.com&#34;</span><span class="p">;</span><span class="c1">//域名
-</span></span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">port_num</span> <span class="o">=</span> <span class="s">&#34;3333&#34;</span><span class="p">;</span><span class="c1">//端口
-</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//上下文
-</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">resolver</span> <span class="n">resolver</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//创建dns解析器对象
-</span></span></span><span class="line"><span class="cl">	<span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">results</span> <span class="o">=</span> <span class="n">resolver</span><span class="p">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port_num</span><span class="p">,</span> <span class="n">ec</span><span class="p">);</span><span class="c1">//解析域名
-</span></span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="n">ec</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;DNS 解析失败，错误码 = &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;，信息：&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">ec</span><span class="p">.</span><span class="n">value</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="服务器端的连接代码">
-<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%af%e7%9a%84%e8%bf%9e%e6%8e%a5%e4%bb%a3%e7%a0%81"></a>
-服务器端的连接代码
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">acceptor_new_connection</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="kt">int</span> <span class="n">BACKLOG_SIZE</span> <span class="o">=</span> <span class="mi">30</span><span class="p">;</span><span class="c1">//等待队列的最大长度
-</span></span></span><span class="line"><span class="cl">	<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port_num</span> <span class="o">=</span> <span class="mi">3333</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">ep</span><span class="p">(</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">address_v4</span><span class="o">::</span><span class="n">any</span><span class="p">(),</span><span class="n">port_num</span><span class="p">);</span><span class="c1">//指定所有的网卡为接收网卡
-</span></span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ios</span><span class="p">;</span><span class="c1">//TCP上下文
-</span></span></span><span class="line"><span class="cl">	<span class="k">try</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">(</span><span class="n">ios</span><span class="p">,</span> <span class="n">ep</span><span class="p">.</span><span class="n">protocol</span><span class="p">());</span><span class="c1">//TCP协议
-</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">bind</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span><span class="c1">//绑定网卡
-</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">listen</span><span class="p">(</span><span class="n">BACKLOG_SIZE</span><span class="p">);</span><span class="c1">//监听队列
-</span></span></span><span class="line"><span class="cl">		<span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ios</span><span class="p">);</span><span class="c1">//创建socket
-</span></span></span><span class="line"><span class="cl">		<span class="n">acceptor</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="n">sock</span><span class="p">);</span><span class="c1">//等待连接
-</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">catch</span> <span class="p">(</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="创建buffer">
-<a class="header-anchor" href="#%e5%88%9b%e5%bb%babuffer"></a>
-创建buffer
-</h3><ul>
-<li>用于发送数据的对象</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">//只读字符串
-</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_str</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">buf</span> <span class="o">=</span> <span class="s">&#34;hello world&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">asio</span><span class="o">::</span><span class="n">const_buffer</span> <span class="n">out</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">c_str</span><span class="p">(),</span> <span class="n">buf</span><span class="p">.</span><span class="n">length</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：发送字符串数据到网络连接。
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">//可读写数组的
-</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">use_buffer_array</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">const</span> <span class="n">size_t</span> <span class="n">BUF_SIZE_BYTES</span> <span class="o">=</span> <span class="mi">20</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="kt">char</span><span class="p">[]</span><span class="o">&gt;</span><span class="n">buf</span><span class="p">(</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">BUF_SIZE_BYTES</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">input_buf</span> <span class="o">=</span> <span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">buf</span><span class="p">.</span><span class="n">get</span><span class="p">()),</span><span class="n">BUF_SIZE_BYTES</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//典型用途：准备缓冲区来接收从网络连接读取的数据。
-</span></span></span></code></pre></div><ul>
-<li>这两个函数本质上是 Asio 中发送和接收数据时创建 buffer 的标准模式。</li>
-</ul>
-        
-        <hr><p>本文2026-07-16首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-16</p>]]>
       </description>
       
     </item>
