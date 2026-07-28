@@ -12,12 +12,105 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Mon, 27 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 28 Jul 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260728 总结</title>
+      <link>http://localhost:1313/post/2026-07-28-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 28 Jul 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-07-28-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260728 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="服务器逻辑层的架构设计">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%80%bb%e8%be%91%e5%b1%82%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1"></a>
+服务器逻辑层的架构设计
+</h2><h3 id="不使用逻辑">
+<a class="header-anchor" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8%e9%80%bb%e8%be%91"></a>
+不使用逻辑
+</h3><ul>
+<li>Session层注册一个读事件</li>
+<li>asio网络层io_context获取事件，再用对应的操作系统注册模型</li>
+<li>然后放入回调函数队列</li>
+<li>再返回给对端</li>
+</ul>
+<h3 id="将处理剥离">
+<a class="header-anchor" href="#%e5%b0%86%e5%a4%84%e7%90%86%e5%89%a5%e7%a6%bb"></a>
+将处理剥离
+</h3><ul>
+<li>将数据投递逻辑队列</li>
+<li>逻辑系统获取数据</li>
+<li>返回结果</li>
+</ul>
+<h4 id="优势">
+<a class="header-anchor" href="#%e4%bc%98%e5%8a%bf"></a>
+优势
+</h4><h5 id="不使用">
+<a class="header-anchor" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8"></a>
+不使用:
+</h5><ul>
+<li>减小单线程的阻塞时间，避免无法处理新线程，形成伪阻塞影响并发</li>
+<li>多线程下，回调函数后，会减轻队列阻塞压力</li>
+</ul>
+<h3 id="tlv">
+<a class="header-anchor" href="#tlv"></a>
+tlv
+</h3><h4 id="定义消息节点">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
+定义消息节点
+</h4><ul>
+<li>加入消息id</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MsgNode</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">friend</span> <span class="k">class</span> <span class="nc">Session</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_total_len</span> <span class="o">=</span> <span class="n">max_len</span> <span class="o">+</span> <span class="n">HEAD_LEN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_cur_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">_total_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_data</span><span class="p">[</span><span class="n">_total_len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Msg is ok.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">MsgNode</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">delete</span><span class="p">[]</span> <span class="n">_data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Msg is delete.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Clear</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="o">::</span><span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_total_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">		<span class="n">_cur_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_cur_len</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_total_len</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl">	<span class="kt">char</span><span class="o">*</span> <span class="n">_data</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></div><h4 id="接收消息节点">
+<a class="header-anchor" href="#%e6%8e%a5%e6%94%b6%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
+接收消息节点
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="o">---</span>
+</span></span></code></pre></div>
+        
+        <hr><p>本文2026-07-28首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-28</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -52,7 +145,139 @@ MySQL
 </h1><h2 id="索引2">
 <a class="header-anchor" href="#%e7%b4%a2%e5%bc%952"></a>
 索引2
-</h2>
+</h2><h3 id="索引语法">
+<a class="header-anchor" href="#%e7%b4%a2%e5%bc%95%e8%af%ad%e6%b3%95"></a>
+索引语法
+</h3><h4 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="p">[</span><span class="k">unique</span><span class="p">][</span><span class="n">fulltext</span><span class="p">]</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">taable_name</span><span class="w"> </span><span class="p">(</span><span class="n">index_col_name</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>创建一个唯一/联合索引</li>
+</ul>
+<h4 id="查看">
+<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b"></a>
+查看
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>查看表中的所有索引</li>
+</ul>
+<h4 id="删除索引">
+<a class="header-anchor" href="#%e5%88%a0%e9%99%a4%e7%b4%a2%e5%bc%95"></a>
+删除索引
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="sql性能分析">
+<a class="header-anchor" href="#sql%e6%80%a7%e8%83%bd%e5%88%86%e6%9e%90"></a>
+sql性能分析
+</h3><h4 id="sql执行频率">
+<a class="header-anchor" href="#sql%e6%89%a7%e8%a1%8c%e9%a2%91%e7%8e%87"></a>
+sql执行频率
+</h4><h5 id="查看服务状态">
+<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b%e6%9c%8d%e5%8a%a1%e7%8a%b6%e6%80%81"></a>
+查看服务状态
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="s1">&#39;com________&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>value值记录了使用语句次数</li>
+</ul>
+<h4 id="慢查询日志">
+<a class="header-anchor" href="#%e6%85%a2%e6%9f%a5%e8%af%a2%e6%97%a5%e5%bf%97"></a>
+慢查询日志
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"></code></pre></div><ul>
+<li>记录了所有执行时间超过指定参数的索引sql日志</li>
+<li>默认关闭</li>
+</ul>
+<h4 id="profile">
+<a class="header-anchor" href="#profile"></a>
+profile
+</h4><ul>
+<li>查看是否支持</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">@@</span><span class="n">have_profiling</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>设置</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">set</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h5 id="使用">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8"></a>
+使用
+</h5><ul>
+<li>耗时</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">profile</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>各语句的事务</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="p">[</span><span class="n">cpu</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">id</span><span class="w">
+</span></span></span></code></pre></div><h3 id="explain执行计划">
+<a class="header-anchor" href="#explain%e6%89%a7%e8%a1%8c%e8%ae%a1%e5%88%92"></a>
+explain执行计划
+</h3><ul>
+<li>查询</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">explanin</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="err">……</span><span class="w">
+</span></span></span></code></pre></div><h4 id="id">
+<a class="header-anchor" href="#id"></a>
+id
+</h4><ul>
+<li>执行顺序</li>
+</ul>
+<h4 id="slecet_table">
+<a class="header-anchor" href="#slecet_table"></a>
+slecet_table
+</h4><ul>
+<li>表示selectr类型</li>
+</ul>
+<h4 id="type">
+<a class="header-anchor" href="#type"></a>
+type
+</h4><ul>
+<li>表示连接类型</li>
+</ul>
+<h4 id="possible_keys">
+<a class="header-anchor" href="#possible_keys"></a>
+possible_keys
+</h4><ul>
+<li>可能用到的索引</li>
+</ul>
+<h4 id="key">
+<a class="header-anchor" href="#key"></a>
+key
+</h4><ul>
+<li>实际用的索引</li>
+</ul>
+<h4 id="key_len">
+<a class="header-anchor" href="#key_len"></a>
+key_len
+</h4><ul>
+<li>索引的最大长度</li>
+</ul>
+<h4 id="rows">
+<a class="header-anchor" href="#rows"></a>
+rows
+</h4><ul>
+<li>预估查询的行数</li>
+</ul>
+<h4 id="filtered">
+<a class="header-anchor" href="#filtered"></a>
+filtered
+</h4><ul>
+<li>返回的行数和查询行数的百分比</li>
+</ul>
+<hr>
+<h1 id="vue3">
+<a class="header-anchor" href="#vue3"></a>
+vue3
+</h1><h2 id="结构">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84"></a>
+结构
+</h2><ul>
+<li>pubilc:标签页图标</li>
+<li>src:源码</li>
+<li>index.html:入口的html</li>
+<li>pakge.json描述信息</li>
+<li>vit.config.json配置文件夹</li>
+</ul>
+<hr>
         
         <hr><p>本文2026-07-27首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-27</p>]]>
       </description>
@@ -2342,276 +2567,6 @@ check 检查约束
 <hr>
         
         <hr><p>本文2026-07-19首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-19</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260718总结</title>
-      <link>http://localhost:1313/post/2026-07-18-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sat, 18 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-18-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260718总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h1><h2 id="同步续3">
-<a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e7%bb%ad3"></a>
-同步续3
-</h2><h3 id="同步读的客户端和服务端">
-<a class="header-anchor" href="#%e5%90%8c%e6%ad%a5%e8%af%bb%e7%9a%84%e5%ae%a2%e6%88%b7%e7%ab%af%e5%92%8c%e6%9c%8d%e5%8a%a1%e7%ab%af"></a>
-同步读的客户端和服务端
-</h3><h4 id="客户端client">
-<a class="header-anchor" href="#%e5%ae%a2%e6%88%b7%e7%ab%afclient"></a>
-客户端(client)
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">MAX_LENGTH</span> <span class="o">=</span> <span class="mi">1024</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">//创建上下文服务
-</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">//构造endpoint对象
-</span></span></span><span class="line"><span class="cl">        <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span> <span class="n">remote_ep</span><span class="p">(</span><span class="n">make_address</span><span class="p">(</span><span class="s">&#34;127.0.0.1&#34;</span><span class="p">),</span><span class="mi">10086</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">(</span><span class="n">ioc</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">error</span><span class="o">=</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">host_not_found</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">sock</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span><span class="n">remote_ep</span><span class="p">,</span><span class="n">error</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;connect fails,code is&#34;</span><span class="o">&lt;&lt;</span><span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="s">&#34;error msg is&#34;</span><span class="o">&lt;&lt;</span><span class="n">error</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;enter message;&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="kt">char</span> <span class="n">request</span><span class="p">[</span><span class="n">MAX_LENGTH</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">.</span><span class="n">getline</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">MAX_LENGTH</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">size_t</span> <span class="n">request_size</span><span class="o">=</span><span class="n">strlen</span><span class="p">(</span><span class="n">request</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">request</span><span class="p">,</span><span class="n">request_size</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kt">char</span> <span class="n">reply</span><span class="p">[</span><span class="n">MAX_LENGTH</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">        <span class="n">size_t</span> <span class="n">reply_length</span><span class="o">=</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">read</span><span class="p">(</span><span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">reply</span><span class="p">,</span><span class="n">request_size</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;reply is &#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">reply</span><span class="p">,</span><span class="n">reply_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span> <span class="o">&amp;</span><span class="n">e</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="服务器端service">
-<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e7%ab%afservice"></a>
-服务器端(Service)
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;set&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">const</span> <span class="kt">int</span> <span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">socket_ptr</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">set</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">&gt;&gt;</span><span class="n">thread_set</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">seesion</span><span class="p">(</span><span class="n">socket_ptr</span> <span class="n">sock</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="kt">char</span> <span class="n">data</span><span class="p">[</span><span class="n">max_length</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">            <span class="n">memset</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="sc">&#39;\0&#39;</span><span class="p">,</span><span class="n">max_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">error</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">//size_t length =boost::asio::read(sock,boost::asio::buffer(data,max_length),error);
-</span></span></span><span class="line"><span class="cl">            <span class="n">size_t</span> <span class="n">length</span><span class="o">=</span><span class="n">sock</span><span class="o">-&gt;</span><span class="n">read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">max_length</span><span class="p">),</span><span class="n">error</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span><span class="p">(</span><span class="n">error</span><span class="o">==</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">error</span><span class="o">::</span><span class="n">eof</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;connect closed by peer&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="k">break</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="k">throw</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">system_error</span><span class="p">(</span><span class="n">error</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;receivce from&#34;</span><span class="o">&lt;&lt;</span><span class="n">sock</span><span class="o">-&gt;</span><span class="n">remote_endpoint</span><span class="p">().</span><span class="n">address</span><span class="p">().</span><span class="n">to_string</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;receivce message is&#34;</span><span class="o">&lt;&lt;</span><span class="n">data</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="c1">//回传数据
-</span></span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">write</span><span class="p">(</span><span class="o">*</span><span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">length</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="nf">server</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">io_context</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">a</span><span class="p">(</span><span class="n">io_context</span><span class="p">,</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span><span class="n">port</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">socket_ptr</span> <span class="n">socket</span><span class="p">(</span><span class="k">new</span> <span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="p">(</span><span class="n">io_context</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">        <span class="n">a</span><span class="p">.</span><span class="n">accept</span><span class="p">(</span><span class="o">*</span><span class="n">socket</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">t</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="kr">thread</span><span class="o">&gt;</span><span class="p">(</span><span class="n">seesion</span><span class="p">,</span><span class="n">socket</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="n">thread_set</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">t</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">try</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">ioc</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="n">server</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span><span class="mi">10086</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">t</span><span class="p">:</span><span class="n">thread_set</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">t</span><span class="o">-&gt;</span><span class="n">join</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="k">catch</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">exception</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h4 id="因为应答式demo致使现在不在使用并且此为粘包问题并且并发少">
-<a class="header-anchor" href="#%e5%9b%a0%e4%b8%ba%e5%ba%94%e7%ad%94%e5%bc%8fdemo%e8%87%b4%e4%bd%bf%e7%8e%b0%e5%9c%a8%e4%b8%8d%e5%9c%a8%e4%bd%bf%e7%94%a8%e5%b9%b6%e4%b8%94%e6%ad%a4%e4%b8%ba%e7%b2%98%e5%8c%85%e9%97%ae%e9%a2%98%e5%b9%b6%e4%b8%94%e5%b9%b6%e5%8f%91%e5%b0%91"></a>
-因，为应答式demo，致使现在不在使用，并且此为粘包问题，并且并发少
-</h4><h2 id="异步读写1">
-<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5%e8%af%bb%e5%86%991"></a>
-异步读写1
-</h2><h3 id="封装tcp网络连接">
-<a class="header-anchor" href="#%e5%b0%81%e8%a3%85tcp%e7%bd%91%e7%bb%9c%e8%bf%9e%e6%8e%a5"></a>
-封装TCP网络连接
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Session</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">socket</span><span class="p">);</span><span class="c1">//构造函数接收一个tcp共享指针的socket
-</span></span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Connect</span><span class="p">(</span><span class="k">const</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="o">&amp;</span> <span class="n">ep</span><span class="p">);</span><span class="c1">//发起连接到指定端口
-</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">_socket</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Session</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">socket</span><span class="p">)</span><span class="o">:</span><span class="n">_socket</span><span class="p">(</span><span class="n">socket</span><span class="p">){}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Connect</span><span class="p">(</span><span class="k">const</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="o">&amp;</span> <span class="n">ep</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">_socket</span><span class="o">-&gt;</span><span class="n">connect</span><span class="p">(</span><span class="n">ep</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="封装消息节点">
-<a class="header-anchor" href="#%e5%b0%81%e8%a3%85%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
-封装消息节点
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MsgNode</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span><span class="kt">int</span> <span class="n">total_len</span><span class="p">)</span><span class="o">:</span><span class="n">_total_len</span><span class="p">(</span><span class="n">total_len</span><span class="p">)</span><span class="c1">//接收构造
-</span></span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_msg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="p">];</span><span class="c1">//为发送申请个缓冲区
-</span></span></span><span class="line"><span class="cl">		<span class="n">memcpy</span><span class="p">(</span><span class="n">_msg</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">total_len</span><span class="p">);</span><span class="c1">//拷贝数据
-</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">total_len</span><span class="p">)</span><span class="o">:</span><span class="n">_total_len</span><span class="p">(</span><span class="n">total_len</span><span class="p">),</span><span class="n">_cur_len</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="c1">//发送构造
-</span></span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_msg</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="p">];</span><span class="c1">//为发送的数据申请缓冲区
-</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">MsgNode</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">delete</span><span class="p">[]</span> <span class="n">_msg</span><span class="p">;</span><span class="c1">//删除创建的动态内存
-</span></span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_total_len</span><span class="p">;</span><span class="c1">//总长度
-</span></span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_cur_len</span><span class="p">;</span><span class="c1">//目前传入/传出长度
-</span></span></span><span class="line"><span class="cl">	<span class="kt">char</span><span class="o">*</span> <span class="n">_msg</span><span class="p">;</span><span class="c1">//消息串
-</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h3 id="writetosocket发送函数">
-<a class="header-anchor" href="#writetosocket%e5%8f%91%e9%80%81%e5%87%bd%e6%95%b0"></a>
-WriteToSocket发送函数
-</h3><h4 id="无消息队列">
-<a class="header-anchor" href="#%e6%97%a0%e6%b6%88%e6%81%af%e9%98%9f%e5%88%97"></a>
-无消息队列
-</h4><ul>
-<li>可能会使数据流混乱</li>
-</ul>
-<h5 id="使用write_some的写法">
-<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8write_some%e7%9a%84%e5%86%99%e6%b3%95"></a>
-使用write_some的写法
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 发起异步写入的调用
-</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">StartWrite</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">MsgNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">-&gt;</span><span class="n">_socket</span><span class="o">-&gt;</span><span class="n">async_write_some</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span><span class="p">,</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">WriteCallBackErr</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">error</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">bytes_transferred</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="n">send_node</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h5 id="匿名lambda表达式">
-<a class="header-anchor" href="#%e5%8c%bf%e5%90%8dlambda%e8%a1%a8%e8%be%be%e5%bc%8f"></a>
-匿名(lambda表达式)
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 使用 lambda 的版本
-</span></span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">WriteToSocket</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>  <span class="c1">// 确保 Session 对象存活
-</span></span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="k">this</span><span class="o">-&gt;</span><span class="n">_socket</span><span class="o">-&gt;</span><span class="n">async_write_some</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span><span class="p">,</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">        <span class="p">[</span><span class="k">this</span><span class="p">,</span> <span class="n">self</span><span class="p">,</span> <span class="n">send_node</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                                <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Write failed: &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">message</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">Close</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Successfully wrote &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">bytes_transferred</span>
-</span></span><span class="line"><span class="cl">                      <span class="o">&lt;&lt;</span> <span class="s">&#34; bytes out of &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="n">bytes_transferred</span> <span class="o">&lt;</span> <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_msg</span> <span class="o">+=</span> <span class="n">bytes_transferred</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span> <span class="o">-=</span> <span class="n">bytes_transferred</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                <span class="n">WriteToSocket</span><span class="p">(</span><span class="n">send_node</span><span class="p">);</span>  <span class="c1">// 递归调用继续发送
-</span></span></span><span class="line"><span class="cl">            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Message sent completely&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h5 id="分片发送">
-<a class="header-anchor" href="#%e5%88%86%e7%89%87%e5%8f%91%e9%80%81"></a>
-分片发送
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">WriteCallBackErr</span><span class="p">(</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">MsgNode</span><span class="o">&gt;</span> <span class="n">msg_node</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">// 判断是否还有未发送的数据
-</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">bytes_transferred</span> <span class="o">+</span> <span class="n">msg_node</span><span class="o">-&gt;</span><span class="n">_cur_len</span> <span class="o">&lt;</span> <span class="n">msg_node</span><span class="o">-&gt;</span><span class="n">_total_len</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="c1">// 更新已发送的字节数
-</span></span></span><span class="line"><span class="cl">        <span class="n">_send_node</span><span class="o">-&gt;</span><span class="n">_cur_len</span> <span class="o">+=</span> <span class="n">bytes_transferred</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="c1">// 继续发送剩余数据
-</span></span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">-&gt;</span><span class="n">_socket</span><span class="o">-&gt;</span><span class="n">async_write_some</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">                <span class="n">_send_node</span><span class="o">-&gt;</span><span class="n">_msg</span> <span class="o">+</span> <span class="n">_send_node</span><span class="o">-&gt;</span><span class="n">_cur_len</span><span class="p">,</span>  <span class="c1">// 剩余数据的起始位置
-</span></span></span><span class="line"><span class="cl">                <span class="n">_send_node</span><span class="o">-&gt;</span><span class="n">_total_len</span> <span class="o">-</span> <span class="n">_send_node</span><span class="o">-&gt;</span><span class="n">_cur_len</span>  <span class="c1">// 剩余数据长度
-</span></span></span><span class="line"><span class="cl">            <span class="p">),</span>
-</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Session</span><span class="o">::</span><span class="n">WriteCallBackErr</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">_1</span><span class="p">,</span> <span class="n">_2</span><span class="p">,</span> <span class="n">_send_node</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">        <span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div>
-        
-        <hr><p>本文2026-07-18首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-18</p>]]>
       </description>
       
     </item>
