@@ -12,12 +12,212 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Fri, 31 Jul 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>202608文章总览</title>
+      <link>http://localhost:1313/post/2026-08-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 01 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>202608文章总览</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="0801">
+<a class="header-anchor" href="#0801"></a>
+0801
+</h1><h2 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h2><h3 id="复合类型">
+<a class="header-anchor" href="#%e5%a4%8d%e5%90%88%e7%b1%bb%e5%9e%8b"></a>
+复合类型
+</h3><h2 id="mysql">
+<a class="header-anchor" href="#mysql"></a>
+MySQL
+</h2><h3 id="sql优化3">
+<a class="header-anchor" href="#sql%e4%bc%98%e5%8c%963"></a>
+SQL优化3
+</h3><h3 id="视图">
+<a class="header-anchor" href="#%e8%a7%86%e5%9b%be"></a>
+视图
+</h3><h2 id="mysql连接池">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+MySQL连接池
+</h2>
+        
+        <hr><p>本文2026-08-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-01</p>]]>
+      </description>
+      
+    </item>
+    
+    
+
+    <item>
+      <title>20260801 总结</title>
+      <link>http://localhost:1313/post/2026-08-01-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Sat, 01 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-01-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260801 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="复合类型">
+<a class="header-anchor" href="#%e5%a4%8d%e5%90%88%e7%b1%bb%e5%9e%8b"></a>
+复合类型
+</h2><ul>
+<li>将多个值放到一个类型里</li>
+</ul>
+<h3 id="元组">
+<a class="header-anchor" href="#%e5%85%83%e7%bb%84"></a>
+元组
+</h3><ul>
+<li>创建了一个元组</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">tup</span>:<span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="kt">f64</span><span class="p">,</span><span class="kt">u8</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mf">6.4</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="获取数组元素">
+<a class="header-anchor" href="#%e8%8e%b7%e5%8f%96%e6%95%b0%e7%bb%84%e5%85%83%e7%b4%a0"></a>
+获取数组元素
+</h4><h5 id="使用模式匹配法">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e6%a8%a1%e5%bc%8f%e5%8c%b9%e9%85%8d%e6%b3%95"></a>
+使用模式匹配法
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">tup</span>:<span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="kt">f64</span><span class="p">,</span><span class="kt">u8</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mf">6.4</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">)</span><span class="o">=</span><span class="n">tup</span><span class="p">;</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">，</span><span class="si">{}</span><span class="s">，</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h6 id="使用点标记法">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e7%82%b9%e6%a0%87%e8%ae%b0%e6%b3%95"></a>
+使用点标记法
+</h6><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">tup</span>:<span class="p">(</span><span class="kt">i32</span><span class="p">,</span><span class="kt">f64</span><span class="p">,</span><span class="kt">u8</span><span class="p">)</span><span class="o">=</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span><span class="mf">6.4</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">，</span><span class="si">{}</span><span class="s">，</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">tup</span><span class="p">.</span><span class="mi">0</span><span class="p">,</span><span class="n">tup</span><span class="p">.</span><span class="mi">1</span><span class="p">,</span><span class="n">tup</span><span class="p">.</span><span class="mi">2</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="数组">
+<a class="header-anchor" href="#%e6%95%b0%e7%bb%84"></a>
+数组
+</h3><ul>
+<li>每个元素类型一致</li>
+<li>长度固定</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>存放数组的数据在栈上</li>
+<li>数组没有vector灵活，和c++一样</li>
+</ul>
+<h4 id="类型">
+<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b"></a>
+类型
+</h4><ul>
+<li>[类型;长度]</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span>:<span class="p">[</span><span class="kt">i32</span><span class="p">;</span><span class="mi">5</span><span class="p">]</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>[值;长度]</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">;</span><span class="mi">5</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>超过范围的使用会报错</li>
+<li>和其他语言一样</li>
+</ul>
+<hr>
+<h1 id="mysql">
+<a class="header-anchor" href="#mysql"></a>
+MySQL
+</h1><h2 id="sql优化3">
+<a class="header-anchor" href="#sql%e4%bc%98%e5%8c%963"></a>
+SQL优化3
+</h2><h3 id="count">
+<a class="header-anchor" href="#count"></a>
+count
+</h3><ul>
+<li>MyISAM会把一个表的总行数存在磁盘上</li>
+<li>InnoDB会在之心count(*)中读出计数</li>
+<li>自己计数</li>
+<li>count()聚合函数</li>
+<li>count()≠NULL,则+1</li>
+</ul>
+<h4 id="count字段">
+<a class="header-anchor" href="#count%e5%ad%97%e6%ae%b5"></a>
+count(字段)
+</h4><ul>
+<li>没有not null有约束，则把整个表的每行字段读出，返回给服务层，判断是否为NULL，不为NULL则计数累加</li>
+<li>有not null约束，每行读出，返回给服务层，直接按行累加</li>
+</ul>
+<h4 id="count1">
+<a class="header-anchor" href="#count1"></a>
+count(1)
+</h4><ul>
+<li>遍历整张表，不取值，放一个数字'1&rsquo;进去，直接按行累加</li>
+</ul>
+<h4 id="count-1">
+<a class="header-anchor" href="#count-1"></a>
+count(*)
+</h4><ul>
+<li>不会全部字段取出，专门做优化，不取值，服务层按行累加</li>
+</ul>
+<h3 id="update">
+<a class="header-anchor" href="#update"></a>
+update
+</h3><ul>
+<li>无索引的情况下使用表锁</li>
+</ul>
+<h2 id="视图">
+<a class="header-anchor" href="#%e8%a7%86%e5%9b%be"></a>
+视图
+</h2><ul>
+<li>一种虚拟存在的表，视图的数据并不在数据库中实际存在</li>
+<li>只是一条预编译的 SQL 语句，每次查询视图时，数据库会动态执行对应的 SELECT 语句，从底层表实时取数。</li>
+</ul>
+<h3 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="p">[</span><span class="k">or</span><span class="w"> </span><span class="k">replace</span><span class="p">]</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="n">view_name</span><span class="p">[(</span><span class="n">list_name</span><span class="p">)]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">select语句</span><span class="w"> </span><span class="p">[</span><span class="k">with</span><span class="w"> </span><span class="p">[</span><span class="k">cascaded</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="k">local</span><span class="p">]</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">option</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div><h3 id="查询">
+<a class="header-anchor" href="#%e6%9f%a5%e8%af%a2"></a>
+查询
+</h3><h4 id="创建语句查询">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e8%af%ad%e5%8f%a5%e6%9f%a5%e8%af%a2"></a>
+创建语句查询
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="k">create</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="n">view_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h4 id="查询数据">
+<a class="header-anchor" href="#%e6%9f%a5%e8%af%a2%e6%95%b0%e6%8d%ae"></a>
+查询数据
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">view_name</span><span class="w">
+</span></span></span></code></pre></div><h4 id="修改">
+<a class="header-anchor" href="#%e4%bf%ae%e6%94%b9"></a>
+修改
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="p">[</span><span class="k">or</span><span class="w"> </span><span class="k">replace</span><span class="p">]</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="n">view_name</span><span class="w"> </span><span class="p">[(</span><span class="n">list_name</span><span class="p">)]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">select语句</span><span class="w"> </span><span class="p">[</span><span class="k">with</span><span class="p">[</span><span class="k">cascaded</span><span class="o">|</span><span class="k">local</span><span class="p">]</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">option</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">alter</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="n">view_name</span><span class="p">[(</span><span class="n">list_name</span><span class="p">)]</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">select语句</span><span class="w"> </span><span class="p">[</span><span class="k">with</span><span class="p">[</span><span class="k">cascaded</span><span class="o">|</span><span class="k">local</span><span class="p">]</span><span class="w"> </span><span class="k">check</span><span class="w"> </span><span class="k">option</span><span class="p">]</span><span class="w">
+</span></span></span></code></pre></div><h4 id="删除">
+<a class="header-anchor" href="#%e5%88%a0%e9%99%a4"></a>
+删除
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">view</span><span class="w"> </span><span class="p">[</span><span class="k">if</span><span class="w"> </span><span class="k">exists</span><span class="p">]</span><span class="w"> </span><span class="n">view_name</span><span class="w"> </span><span class="p">[,</span><span class="n">view_name</span><span class="p">,</span><span class="err">……</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><hr>
+<h1 id="mysql连接池">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+MySQL连接池
+</h1><ul>
+<li>MySQL基于C/S设计</li>
+<li>为此要加一层缓存提高访问效率，增加连接池</li>
+</ul>
+<hr>
+        
+        <hr><p>本文2026-08-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-01</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -124,7 +324,277 @@ isize和usize
 <h1 id="mysql">
 <a class="header-anchor" href="#mysql"></a>
 MySQL
-</h1>
+</h1><h2 id="sql优化2">
+<a class="header-anchor" href="#sql%e4%bc%98%e5%8c%962"></a>
+SQL优化2
+</h2><h3 id="主键优化">
+<a class="header-anchor" href="#%e4%b8%bb%e9%94%ae%e4%bc%98%e5%8c%96"></a>
+主键优化
+</h3><ul>
+<li>表数据根据主键的顺序组织存放的。这种就是索引组织表(IOT)</li>
+</ul>
+<h4 id="页分裂">
+<a class="header-anchor" href="#%e9%a1%b5%e5%88%86%e8%a3%82"></a>
+页分裂
+</h4><ul>
+<li>页可以为任意值，根据主键排列</li>
+<li>数据如果过大，则会有行溢出的</li>
+<li>如果超出的数据页，再插入，则会开辟一个新空间，在50%的位置以后移入新的空间，这是主键乱序插入的现象</li>
+</ul>
+<h4 id="页合并">
+<a class="header-anchor" href="#%e9%a1%b5%e5%90%88%e5%b9%b6"></a>
+页合并
+</h4><ul>
+<li>当删除记录时，会删除索引</li>
+<li>当达到阈值，则会开始找靠近页实现页合并</li>
+</ul>
+<h4 id="设计原则">
+<a class="header-anchor" href="#%e8%ae%be%e8%ae%a1%e5%8e%9f%e5%88%99"></a>
+设计原则
+</h4><ul>
+<li>尽量降低主键长度</li>
+<li>尽量使用顺序插入，尽量选择自增主键</li>
+<li>不用uuid，或者其他自然主键</li>
+<li>尽量避免对主键的操作</li>
+</ul>
+<h3 id="order-by优化">
+<a class="header-anchor" href="#order-by%e4%bc%98%e5%8c%96"></a>
+order by优化
+</h3><ul>
+<li>Using filesort:全表的索引或者扫描全表扫描，读取数据行，然后在排序缓冲区sort buffer中完成排序操作，非直接返回的排序叫filesort</li>
+<li>Using index:通过有序索引顺序扫描，直接返回有序数据，操作效率高</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">list_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">index_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>先升序后倒序之类的会有Using filesort</li>
+</ul>
+<h4 id="查看缓冲区">
+<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b%e7%bc%93%e5%86%b2%e5%8c%ba"></a>
+查看缓冲区
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;sort_buffer_size&#39;</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>如果占满，就会使用磁盘，可以适当提高缓冲区</li>
+</ul>
+<h3 id="group-by分组操作">
+<a class="header-anchor" href="#group-by%e5%88%86%e7%bb%84%e6%93%8d%e4%bd%9c"></a>
+group by分组操作
+</h3><ul>
+<li>满足最左前缀法则</li>
+</ul>
+<h3 id="limit">
+<a class="header-anchor" href="#limit"></a>
+limit
+</h3><ul>
+<li>数据过大时，查询排序的代价过大</li>
+<li>使用覆盖索引加子查询来优化</li>
+</ul>
+<hr>
+<h1 id="vue3">
+<a class="header-anchor" href="#vue3"></a>
+*vue3
+</h1><h2 id="事件修饰符">
+<a class="header-anchor" href="#%e4%ba%8b%e4%bb%b6%e4%bf%ae%e9%a5%b0%e7%ac%a6"></a>
+事件修饰符
+</h2><ul>
+<li>调用event.preventDefault()或者event.stopPropagation()，更好的处理</li>
+<li>使用v-on处理</li>
+</ul>
+<h3 id="prevent">
+<a class="header-anchor" href="#prevent"></a>
+.prevent
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">a</span> <span class="nt">@click.prevent</span><span class="s">=&#34;clickhandle&#34;</span><span class="p"> </span><span class="na">href</span><span class="o">=</span><span class="s">&#34;bilibili.com&#34;</span><span class="p">&gt;</span><span class="nx">哔哩哔哩</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">clickhandle</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;click bilbili&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><ul>
+<li>阻止跳转</li>
+</ul>
+<h3 id="事件冒泡">
+<a class="header-anchor" href="#%e4%ba%8b%e4%bb%b6%e5%86%92%e6%b3%a1"></a>
+事件冒泡
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">@click</span><span class="s">=&#34;clickDiv&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="nt">@click</span><span class="s">=&#34;clickP&#34;</span><span class="p">&gt;</span><span class="na">test</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">clickDiv</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickDiv&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">clickP</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickP&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h4 id="阻止冒泡">
+<a class="header-anchor" href="#%e9%98%bb%e6%ad%a2%e5%86%92%e6%b3%a1"></a>
+阻止冒泡
+</h4><ul>
+<li>使用.stop</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">@click</span><span class="s">=&#34;clickDiv&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="nt">@click.stop</span><span class="s">=&#34;clickP&#34;</span><span class="p">&gt;</span><span class="na">test</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">clickDiv</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickDiv&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">clickP</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickP&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><ul>
+<li>可以阻止div的冒泡</li>
+</ul>
+<h4 id="once一次性事件">
+<a class="header-anchor" href="#once%e4%b8%80%e6%ac%a1%e6%80%a7%e4%ba%8b%e4%bb%b6"></a>
+once一次性事件
+</h4><h2 id="数组变化的侦测">
+<a class="header-anchor" href="#%e6%95%b0%e7%bb%84%e5%8f%98%e5%8c%96%e7%9a%84%e4%be%a6%e6%b5%8b"></a>
+数组变化的侦测
+</h2><ul>
+<li>在被调用是出发相关的更新</li>
+</ul>
+<h3 id="push">
+<a class="header-anchor" href="#push"></a>
+.push
+</h3><ul>
+<li>添加</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;addListHandle&#34;</span><span class="p">&gt;</span><span class="na">添加一个数据</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) of names&#34; :key=&#34;index&#34;</span><span class="p">&gt;{{</span> <span class="na">item</span> <span class="p">}}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">names</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;iwen&#34;</span><span class="p">,</span> <span class="s2">&#34;xzt&#34;</span><span class="p">,</span> <span class="s2">&#34;666&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">addListHandle</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;sakura&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><ul>
+<li>ui会自动的添加一个sakura的</li>
+</ul>
+<h3 id="替换数组">
+<a class="header-anchor" href="#%e6%9b%bf%e6%8d%a2%e6%95%b0%e7%bb%84"></a>
+替换数组
+</h3><ul>
+<li>可以重新赋值使得ui变化</li>
+</ul>
+<h4 id="concat">
+<a class="header-anchor" href="#concat"></a>
+.concat
+</h4><ul>
+<li>合并
+不会引起ui自动更新</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;addconHandle&#34;</span><span class="p">&gt;</span><span class="na">添加一个数据</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) of names&#34; :key=&#34;index&#34;</span><span class="p">&gt;{{</span> <span class="na">item</span> <span class="p">}}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">names</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;iwen&#34;</span><span class="p">,</span> <span class="s2">&#34;xzt&#34;</span><span class="p">,</span> <span class="s2">&#34;666&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">addListHandle</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;sakura&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">addconHandle</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="s2">&#34;sakura&#34;</span><span class="p">]);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h2 id="计算属性">
+<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e5%b1%9e%e6%80%a7"></a>
+计算属性
+</h2><ul>
+<li>和函数类似</li>
+<li>模版中表达式方便</li>
+<li>用计算属性来描述复杂逻辑处理</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{{</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">names</span> <span class="p">}}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">js</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">xxx</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">names</span><span class="o">:</span> <span class="s2">&#34;eeee&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">con</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;qd&#34;</span><span class="p">,</span> <span class="s2">&#34;hd&#34;</span><span class="p">],</span>
+</span></span><span class="line"><span class="cl">      <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">js</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">xxx</span><span class="p">.</span><span class="nx">con</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&#34;YES&#34;</span> <span class="o">:</span> <span class="s2">&#34;NO&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">  <span class="p">},</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span></code></pre></div><ul>
+<li>实现了判断xxx的con是否有数据</li>
+</ul>
+<h3 id="计算属性缓存和方法">
+<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e5%b1%9e%e6%80%a7%e7%bc%93%e5%ad%98%e5%92%8c%e6%96%b9%e6%b3%95"></a>
+计算属性缓存和方法
+</h3><ul>
+<li>计算属性基于响应式去渲染，如果没有变化，则渲染一次</li>
+<li>方法则会每次都计算</li>
+</ul>
+<hr>
         
         <hr><p>本文2026-07-31首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-31</p>]]>
       </description>
@@ -1959,399 +2429,6 @@ cargo.lock会在你构建时，记录cargo.toml下记录
 </h2>
         
         <hr><p>本文2026-07-24首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-24</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260723总结</title>
-      <link>http://localhost:1313/post/2026-07-23-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Thu, 23 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-23-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260723总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <hr>
-<h1 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h1><h2 id="粘包问题">
-<a class="header-anchor" href="#%e7%b2%98%e5%8c%85%e9%97%ae%e9%a2%98"></a>
-粘包问题
-</h2><h3 id="问题">
-<a class="header-anchor" href="#%e9%97%ae%e9%a2%98"></a>
-问题
-</h3><ul>
-<li>多个数据包在服务器收到数据包，导致tcp缓冲区，导致数据粘在一起了</li>
-<li>tcp并不会导致数据包的混乱，tcp会保证数据的准确性和顺序性</li>
-<li>是我们逻辑缓冲区会造成粘包</li>
-</ul>
-<h3 id="原因">
-<a class="header-anchor" href="#%e5%8e%9f%e5%9b%a0"></a>
-原因
-</h3><ul>
-<li>客户端的发送频率高于服务器的接收频率</li>
-<li>tcp底层的安全和效率不允许字节数特别少的小包发送频率过高</li>
-<li>发送缓冲区有上次未发送的数据，或者接收缓冲区有上次未取的数据</li>
-</ul>
-<h3 id="办法">
-<a class="header-anchor" href="#%e5%8a%9e%e6%b3%95"></a>
-办法
-</h3><ul>
-<li>切包的方式处理</li>
-<li>使用tlv协议（消息id+消息长度+消息内容）</li>
-</ul>
-<h1 id="rust">
-<a class="header-anchor" href="#rust"></a>
-RUST
-</h1><h2 id="1环境及配置">
-<a class="header-anchor" href="#1%e7%8e%af%e5%a2%83%e5%8f%8a%e9%85%8d%e7%bd%ae"></a>
-1.环境及配置
-</h2><h3 id="创建项目">
-<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e9%a1%b9%e7%9b%ae"></a>
-创建项目
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo new project-name
-</span></span></code></pre></div><h3 id="srcmainrs">
-<a class="header-anchor" href="#srcmainrs"></a>
-src/main.rs
-</h3><ul>
-<li>rust的源文件代码</li>
-</ul>
-<h3 id="构建">
-<a class="header-anchor" href="#%e6%9e%84%e5%bb%ba"></a>
-构建
-</h3><ul>
-<li>调试构建</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo build
-</span></span></code></pre></div><ul>
-<li>正式构建</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo build --release
-</span></span></code></pre></div><h3 id="运行">
-<a class="header-anchor" href="#%e8%bf%90%e8%a1%8c"></a>
-运行
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cargo run
-</span></span></code></pre></div><h2 id="1变量">
-<a class="header-anchor" href="#1%e5%8f%98%e9%87%8f"></a>
-1.变量
-</h2><h3 id="代码例子">
-<a class="header-anchor" href="#%e4%bb%a3%e7%a0%81%e4%be%8b%e5%ad%90"></a>
-代码例子
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">io</span><span class="p">;</span><span class="c1">//导入
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;guess math!&#34;</span><span class="p">);</span><span class="c1">//打印宏
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;猜一个数&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">String</span>::<span class="n">new</span><span class="p">();</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;无法读取&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;你猜的数是:</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">guess</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h3 id="是否为可变类型">
-<a class="header-anchor" href="#%e6%98%af%e5%90%a6%e4%b8%ba%e5%8f%af%e5%8f%98%e7%b1%bb%e5%9e%8b"></a>
-是否为可变类型
-</h3><ul>
-<li>对比c++，c++也有const作为不可变类型，但多为标记</li>
-<li>rust则是在编译期间会检查是否为不可变量更改数值</li>
-</ul>
-<h4 id="不可变默认变量类型">
-<a class="header-anchor" href="#%e4%b8%8d%e5%8f%af%e5%8f%98%e9%bb%98%e8%ae%a4%e5%8f%98%e9%87%8f%e7%b1%bb%e5%9e%8b"></a>
-不可变(默认变量类型)
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h4 id="可变">
-<a class="header-anchor" href="#%e5%8f%af%e5%8f%98"></a>
-可变
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="c1">//mut为immutable这个英文的缩写
-</span></span></span></code></pre></div><h3 id="类型">
-<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b"></a>
-类型
-</h3><h4 id="string">
-<a class="header-anchor" href="#string"></a>
-String
-</h4><ul>
-<li>字符串</li>
-</ul>
-<h3 id="创建实例方法">
-<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e5%ae%9e%e4%be%8b%e6%96%b9%e6%b3%95"></a>
-创建实例方法
-</h3><ul>
-<li>new(函数)</li>
-<li>使用(变量类型)::new();完成创建</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="o">=</span><span class="n">Strimg</span>::<span class="n">new</span><span class="p">();</span><span class="w">
-</span></span></span></code></pre></div><h3 id="2输入和输出继续看1的例子代码">
-<a class="header-anchor" href="#2%e8%be%93%e5%85%a5%e5%92%8c%e8%be%93%e5%87%ba%e7%bb%a7%e7%bb%ad%e7%9c%8b1%e7%9a%84%e4%be%8b%e5%ad%90%e4%bb%a3%e7%a0%81"></a>
-2.输入和输出（继续看1.的例子代码）
-</h3><h3 id="使用函数">
-<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e5%87%bd%e6%95%b0"></a>
-使用函数
-</h3><ul>
-<li>println!();</li>
-<li>std::io::stdin().read_line(&amp;(是否可变类型名) (变量名)).expect(&quot;&quot;);</li>
-</ul>
-<h4 id="println">
-<a class="header-anchor" href="#println"></a>
-println()
-</h4><ul>
-<li>打印一个宏</li>
-</ul>
-<h4 id="printlnguess">
-<a class="header-anchor" href="#printlnguess"></a>
-println(&quot;{}&quot;，guess)
-</h4><ul>
-<li>此处的花括号为占位符</li>
-<li>会被替换为后面的变量名</li>
-</ul>
-<h4 id="read_line">
-<a class="header-anchor" href="#read_line"></a>
-read_line()
-</h4><ul>
-<li>将用户的输入放到字符串里面</li>
-<li>需要可变类型</li>
-<li>使用引用获取</li>
-<li>保证可以简单安全的使用引用</li>
-<li>返回io::Result(枚举类型)，有两个类型，为ok，err</li>
-</ul>
-<h4 id="expect">
-<a class="header-anchor" href="#expect"></a>
-expect
-</h4><ul>
-<li>返回的是Err中端程序，将字符串程序打印</li>
-<li>返回ok将输入的数据返回</li>
-</ul>
-<h4 id="读取">
-<a class="header-anchor" href="#%e8%af%bb%e5%8f%96"></a>
-读取
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">io</span>::<span class="n">stdin</span><span class="p">().</span><span class="n">read_line</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span><span class="w"> </span><span class="n">guess</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;&#34;</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><h4 id="输出">
-<a class="header-anchor" href="#%e8%be%93%e5%87%ba"></a>
-输出
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="fm">println!</span><span class="p">(</span><span class="s">&#34;</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="n">guess</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div>
-        
-        <hr><p>本文2026-07-23首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-23</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260722总结</title>
-      <link>http://localhost:1313/post/2026-07-22-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Wed, 22 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-22-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260722总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <hr>
-<h1 id="网路编程">
-<a class="header-anchor" href="#%e7%bd%91%e8%b7%af%e7%bc%96%e7%a8%8b"></a>
-网路编程
-</h1><h2 id="异步续2">
-<a class="header-anchor" href="#%e5%bc%82%e6%ad%a5%e7%bb%ad2"></a>
-异步续2
-</h2><h3 id="全双工的异步demo">
-<a class="header-anchor" href="#%e5%85%a8%e5%8f%8c%e5%b7%a5%e7%9a%84%e5%bc%82%e6%ad%a5demo"></a>
-全双工的异步Demo
-</h3><h4 id="数据节点">
-<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e8%8a%82%e7%82%b9"></a>
-数据节点
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MsgNode</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">friend</span> <span class="k">class</span> <span class="nc">Session</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_len</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">max_len</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">		<span class="n">memcpy</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">max_len</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_cur_len</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_max_len</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">char</span><span class="o">*</span> <span class="n">_data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h4 id="其他源码">
-<a class="header-anchor" href="#%e5%85%b6%e4%bb%96%e6%ba%90%e7%a0%81"></a>
-其他源码
-</h4><h5 id="sessionh">
-<a class="header-anchor" href="#sessionh"></a>
-Session.h
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Session</span><span class="o">:</span><span class="k">public</span> <span class="n">enable_shared_from_this</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Session</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span><span class="n">Server</span><span class="o">*</span> <span class="n">server</span><span class="p">)</span><span class="o">:</span><span class="n">_socket</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span><span class="n">_server</span><span class="p">(</span><span class="n">server</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">uuid</span> <span class="n">a_uuid</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">random_generator</span><span class="p">()();</span>
-</span></span><span class="line"><span class="cl">		<span class="n">uuid</span> <span class="o">=</span> <span class="n">boost</span><span class="o">::</span><span class="n">uuids</span><span class="o">::</span><span class="n">to_string</span><span class="p">(</span><span class="n">a_uuid</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&amp;</span> <span class="n">Socket</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="n">_socket</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">string</span><span class="o">&amp;</span> <span class="n">Get_uuid</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="n">uuid</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Send</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">_socket</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="k">enum</span> <span class="p">{</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1024</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">char</span> <span class="n">_data</span><span class="p">[</span><span class="n">max_length</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Server</span><span class="o">*</span> <span class="n">_server</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">string</span> <span class="n">uuid</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	
-</span></span><span class="line"><span class="cl">	<span class="n">queue</span><span class="o">&lt;</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">MsgNode</span><span class="o">&gt;&gt;</span><span class="n">_send_que</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">mutex</span> <span class="n">_send_lock</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"> 
-</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">Server</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">ClearSession</span><span class="p">(</span><span class="n">string</span> <span class="n">uuid</span><span class="p">);</span><span class="c1">//删除Session
-</span></span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="n">start_accept</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">handle_accept</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="p">,</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">io_context</span><span class="o">&amp;</span> <span class="n">_ioc</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">_acceptor</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">map</span><span class="o">&lt;</span><span class="n">string</span><span class="p">,</span> <span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;&gt;</span><span class="n">_session</span><span class="p">;</span><span class="c1">//存放Session
-</span></span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h5 id="sessioncpp">
-<a class="header-anchor" href="#sessioncpp"></a>
-Session.cpp
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;Session.h&#34;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
-</span></span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="k">namespace</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Send</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">int</span> <span class="n">max_length</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">node</span> <span class="o">=</span> <span class="n">make_shared</span><span class="o">&lt;</span><span class="n">MsgNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="n">_send_lock</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_send_que</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// 如果已有正在进行的发送，则直接入队等待
-</span></span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">_send_que</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// 启动异步写；使用 lambda 捕获 shared_ptr 保证对象存活
-</span></span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="n">async_write</span><span class="p">(</span><span class="n">_socket</span><span class="p">,</span> <span class="n">buffer</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">_data</span><span class="p">,</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">_max_len</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">		<span class="p">[</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">self</span><span class="o">-&gt;</span><span class="n">handle_write</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">});</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Start</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">	<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">		<span class="p">[</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">self</span><span class="o">-&gt;</span><span class="n">handle_read</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="p">});</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_read</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// 注意数据可能包含二进制，使用 write 指定长度输出
-</span></span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;server receive data is &#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">cout</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">bytes_transferred</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">// 发送收到的数据（Send 会复制数据并入队）
-</span></span></span><span class="line"><span class="cl">		<span class="n">Send</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">bytes_transferred</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">		<span class="c1">// 准备下一次读取
-</span></span></span><span class="line"><span class="cl">		<span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_length</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_socket</span><span class="p">.</span><span class="n">async_read_some</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="n">max_length</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">			<span class="p">[</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bt</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="n">self</span><span class="o">-&gt;</span><span class="n">handle_read</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">bt</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">			<span class="p">});</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in read,error code is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_server</span><span class="o">-&gt;</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">handle_write</span><span class="p">(</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bytes_transferred</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">MsgNode</span><span class="o">&gt;</span> <span class="n">next</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="n">lock_guard</span><span class="o">&lt;</span><span class="n">mutex</span><span class="o">&gt;</span><span class="n">lock</span><span class="p">(</span><span class="n">_send_lock</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_send_que</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">			<span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="n">_send_que</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">			<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">_send_que</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">			<span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="n">next</span> <span class="o">=</span> <span class="n">_send_que</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">			<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="p">(</span><span class="n">next</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">auto</span> <span class="n">self</span> <span class="o">=</span> <span class="n">shared_from_this</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">			<span class="n">async_write</span><span class="p">(</span><span class="n">_socket</span><span class="p">,</span> <span class="n">buffer</span><span class="p">(</span><span class="n">next</span><span class="o">-&gt;</span><span class="n">_data</span><span class="p">,</span> <span class="n">next</span><span class="o">-&gt;</span><span class="n">_max_len</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">				<span class="p">[</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">size_t</span> <span class="n">bt</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">					<span class="n">self</span><span class="o">-&gt;</span><span class="n">handle_write</span><span class="p">(</span><span class="n">ec</span><span class="p">,</span> <span class="n">bt</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">				<span class="p">});</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;have error in write,error code is &#34;</span> <span class="o">&lt;&lt;</span> <span class="n">error</span><span class="p">.</span><span class="n">value</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_server</span><span class="o">-&gt;</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">Server</span><span class="o">::</span><span class="n">Server</span><span class="p">(</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span> <span class="o">:</span><span class="n">_ioc</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span> <span class="n">_acceptor</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span> <span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span> <span class="n">port</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Server starting&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">start_accept</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="o">=</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_ioc</span><span class="p">,</span><span class="k">this</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">_acceptor</span><span class="p">.</span><span class="n">async_accept</span><span class="p">(</span><span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Socket</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">bind</span><span class="p">(</span><span class="o">&amp;</span><span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="n">new_session</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">		<span class="n">std</span><span class="o">::</span><span class="n">placeholders</span><span class="o">::</span><span class="n">_1</span><span class="p">));</span><span class="c1">//加入this使其变为普通函数对象
-</span></span></span><span class="line"><span class="cl">	<span class="c1">//shared_ptr不会随右括号而关闭
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">handle_accept</span><span class="p">(</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span> <span class="n">new_session</span><span class="p">,</span> <span class="k">const</span> <span class="n">boost_error_code</span><span class="o">&amp;</span> <span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">error</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_session</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="n">new_session</span><span class="o">-&gt;</span><span class="n">Get_uuid</span><span class="p">(),</span> <span class="n">new_session</span><span class="p">));</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">else</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="n">start_accept</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">ClearSession</span><span class="p">(</span><span class="n">string</span> <span class="n">uuid</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="n">_session</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">uuid</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div>
-        
-        <hr><p>本文2026-07-22首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-22</p>]]>
       </description>
       
     </item>
