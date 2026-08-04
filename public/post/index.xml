@@ -40,7 +40,638 @@ RUST
 <li>值传递给函数，要么移动要么复制</li>
 <li>同时传参时将所有权传递给函数内部</li>
 <li>返回值过程中也会发生所有权的转移</li>
+<li>当一个值赋给其他变量是就会发生移动</li>
+<li>当一个包含heap数据的变量离开作用域，他的值就会被drop清理</li>
+<li>让函数使用值，但不获得所有权，可以使用引用</li>
 </ul>
+<h2 id="引用和借用">
+<a class="header-anchor" href="#%e5%bc%95%e7%94%a8%e5%92%8c%e5%80%9f%e7%94%a8"></a>
+引用和借用
+</h2><ul>
+<li>使用&amp;去引用</li>
+<li>引用允许你使用某些值而不使用所有权</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">fnc_name</span><span class="p">(</span><span class="n">s</span>:<span class="kp">&amp;</span><span class="nc">type_name</span><span class="p">)</span>-&gt;<span class="nc">utype_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>将引用作为函数参数的行为叫做借用</li>
+<li>都需要声明类型为可变</li>
+<li>只能有一个可变引用</li>
+<li>不可以同时拥有一个可变引用和一个不变引用</li>
+</ul>
+<h3 id="悬空引用">
+<a class="header-anchor" href="#%e6%82%ac%e7%a9%ba%e5%bc%95%e7%94%a8"></a>
+悬空引用
+</h3><ul>
+<li>和悬空指针类似</li>
+<li>RUST会保证引用在作用域内悬空</li>
+</ul>
+<hr>
+<h1 id="mysql">
+<a class="header-anchor" href="#mysql"></a>
+MySQL
+</h1><h2 id="存储过程">
+<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e8%bf%87%e7%a8%8b"></a>
+存储过程
+</h2><ul>
+<li>事先编译的脚本于数据库里</li>
+</ul>
+<h2 id="存储函数">
+<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e5%87%bd%e6%95%b0"></a>
+存储函数
+</h2><ul>
+<li>有返回值的存储过程，参数必须是in类型</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="k">function</span><span class="w"> </span><span class="n">func_name</span><span class="p">([</span><span class="err">参数</span><span class="p">])</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">retrun</span><span class="w"> </span><span class="k">type</span><span class="w"> </span><span class="p">[</span><span class="n">characteristic</span><span class="p">...]</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">begin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">sql语句</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="p">...;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">end</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h2 id="触发器">
+<a class="header-anchor" href="#%e8%a7%a6%e5%8f%91%e5%99%a8"></a>
+触发器
+</h2><ul>
+<li>表进行操作时触发，自动执行触发器定义的语句集合</li>
+<li>MySQL只支持行级触发器</li>
+<li>触发器有：</li>
+<li>insert型触发器</li>
+<li>update型触发器</li>
+<li>delete型触发器</li>
+</ul>
+<h3 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="k">trigger</span><span class="w"> </span><span class="k">trigger_name</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">brfore</span><span class="o">/</span><span class="k">after</span><span class="w"> </span><span class="k">insert</span><span class="o">/</span><span class="k">update</span><span class="o">/</span><span class="k">delete</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">on</span><span class="w"> </span><span class="n">tb_name</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="k">each</span><span class="w"> </span><span class="k">row</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">begin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">trigger_stmt</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">end</span><span class="w">
+</span></span></span></code></pre></div><h3 id="查看">
+<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b"></a>
+查看
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">triggers</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><h3 id="删除">
+<a class="header-anchor" href="#%e5%88%a0%e9%99%a4"></a>
+删除
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">trigger</span><span class="w"> </span><span class="p">[</span><span class="k">schema_name</span><span class="p">.]</span><span class="k">trigger_name</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>没有指定schema_name默认当前数据库</li>
+</ul>
+<hr>
+<h1 id="mysql连接池">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+MySQL连接池
+</h1><ul>
+<li>通过连接池的tcp连接，server验证，4次挥手等时间节省</li>
+<li>热点数据访问缓存</li>
+</ul>
+<h2 id="一般访问流程">
+<a class="header-anchor" href="#%e4%b8%80%e8%88%ac%e8%ae%bf%e9%97%ae%e6%b5%81%e7%a8%8b"></a>
+一般访问流程
+</h2><ul>
+<li>1.tcp连接</li>
+<li>2.server验证</li>
+<li>3.发出sql请求</li>
+<li>4.返回数据</li>
+<li>5.关闭数据库</li>
+<li>6.tcp4次挥手</li>
+</ul>
+<h2 id="使用连接池">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+使用连接池
+</h2><ul>
+<li>看能否直接从缓存拿出数据，且连接不关闭</li>
+</ul>
+<h2 id="功能">
+<a class="header-anchor" href="#%e5%8a%9f%e8%83%bd"></a>
+功能
+</h2><h3 id="初始连接量">
+<a class="header-anchor" href="#%e5%88%9d%e5%a7%8b%e8%bf%9e%e6%8e%a5%e9%87%8f"></a>
+初始连接量
+</h3><ul>
+<li>服务器事先和MySQLServer创建initSize的connection连接（和线程池的事先创建线程类似）</li>
+</ul>
+<h3 id="最大连接量">
+<a class="header-anchor" href="#%e6%9c%80%e5%a4%a7%e8%bf%9e%e6%8e%a5%e9%87%8f"></a>
+最大连接量
+</h3><ul>
+<li>当并发访问MySQL Server的连接量不够，将会创建新的连接，连接使用完后，再次归还到连接池中维护</li>
+</ul>
+<h3 id="最大空闲时间">
+<a class="header-anchor" href="#%e6%9c%80%e5%a4%a7%e7%a9%ba%e9%97%b2%e6%97%b6%e9%97%b4"></a>
+最大空闲时间
+</h3><ul>
+<li>当并发请求多了，之后再指定的最大空闲里面没有被使用，那么就会被回收，维持initSize的数量</li>
+</ul>
+<h3 id="连接超时">
+<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e8%b6%85%e6%97%b6"></a>
+连接超时
+</h3><ul>
+<li>请求量过大，连接池内的连接数到达最大连接量，则通过阻塞的方式获取连接的时间如果超过connectionTimeout时间，返回获取连接失败，无法访问数据库</li>
+</ul>
+<hr>
+<h1 id="css">
+<a class="header-anchor" href="#css"></a>
+CSS
+</h1><h2 id="选择器和声明块">
+<a class="header-anchor" href="#%e9%80%89%e6%8b%a9%e5%99%a8%e5%92%8c%e5%a3%b0%e6%98%8e%e5%9d%97"></a>
+选择器和声明块
+</h2><ul>
+<li>CSS 规则由 选择器 和 声明块 组成</li>
+</ul>
+<h3 id="使用">
+<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8"></a>
+使用
+</h3><ul>
+<li>在<!-- raw HTML omitted --><!-- raw HTML omitted -->里面包含</li>
+<li>或者在外部的.css的使用，在再<!-- raw HTML omitted --><!-- raw HTML omitted -->里引用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>jst-home注册<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;style.css&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h3 id="属性选择器">
+<a class="header-anchor" href="#%e5%b1%9e%e6%80%a7%e9%80%89%e6%8b%a9%e5%99%a8"></a>
+属性选择器
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">选择器</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="err">属性:</span> <span class="err">值</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li><code>[attr]</code>只要含有该属性</li>
+<li><code>[attr=&quot;val&quot;]</code>属性值精确等于val</li>
+<li><code>[attr~=&quot;val&quot;]</code>属性值是以空格分隔的词列表，包含 val</li>
+<li><code>[attr\=&quot;val&quot;]</code>属性值以 val 开头，且紧跟 - 或正好等于 val</li>
+<li><code>[attr^=&quot;val&quot;]</code>属性值 以 val 开头（前缀匹配）</li>
+<li><code>[attr$=&quot;val&quot;]</code>属性值 以 val 结尾（后缀匹配）</li>
+<li><code>[attr*=&quot;val&quot;]</code>属性值 包含 子串 val（子串匹配）</li>
+</ul>
+<h3 id="伪类选择器">
+<a class="header-anchor" href="#%e4%bc%aa%e7%b1%bb%e9%80%89%e6%8b%a9%e5%99%a8"></a>
+伪类选择器
+</h3><ul>
+<li>伪类用于选择 处于特定状态 的元素，使用单个冒号 :。它不改变 DOM，而是按状态匹配。</li>
+</ul>
+<h4 id="动态伪类">
+<a class="header-anchor" href="#%e5%8a%a8%e6%80%81%e4%bc%aa%e7%b1%bb"></a>
+动态伪类
+</h4><ul>
+<li><code>:link</code>未访问过的链接</li>
+<li><code>:visited</code>已访问过的链接</li>
+<li><code>:hover</code>鼠标悬停时</li>
+<li><code>:active</code>元素被激活（如按下鼠标）时</li>
+<li><code>:focus</code>获得焦点时</li>
+<li><code>:focus-within</code>自身或其子孙获得焦点时</li>
+</ul>
+<h4 id="结构伪类">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84%e4%bc%aa%e7%b1%bb"></a>
+结构伪类
+</h4><ul>
+<li><code>:first-child</code>父元素的第一个子元素</li>
+<li><code>:last-child</code>父元素的最后一个子元素</li>
+<li><code>:nth-child(n)</code>第 n 个子元素（odd/even/2n 等）</li>
+<li><code>:nth-last-child(n)</code>从后往前数的第 n 个子元素</li>
+<li><code>:first-of-type</code>同类型元素中的第一个</li>
+<li><code>:last-of-type</code>同类型元素中的最后一个</li>
+<li><code>:nth-of-type(n)</code>同类型元素中的第 n 个</li>
+<li><code>:only-child</code>唯一的子元素</li>
+<li><code>:not(selector)</code>排除匹配的元素</li>
+<li><code>:empty</code>没有子元素（含文本节点）的元素</li>
+</ul>
+<h4 id="表单状态伪类">
+<a class="header-anchor" href="#%e8%a1%a8%e5%8d%95%e7%8a%b6%e6%80%81%e4%bc%aa%e7%b1%bb"></a>
+表单状态伪类
+</h4><ul>
+<li><code>:checked</code>勾选的 checkbox / radio / option</li>
+<li><code>:disabled</code>禁用的表单控件</li>
+<li><code>:enabled</code>可用的表单控件</li>
+<li><code>:required</code>必填项</li>
+<li><code>:optional</code>选填项</li>
+<li><code>:valid</code>内容校验通过的输入框</li>
+<li><code>:invalid</code>内容校验失败的输入框</li>
+<li><code>:placeholder-shown</code>正在显示 placeholder 的输入框</li>
+</ul>
+<h4 id="其他常用伪类">
+<a class="header-anchor" href="#%e5%85%b6%e4%bb%96%e5%b8%b8%e7%94%a8%e4%bc%aa%e7%b1%bb"></a>
+其他常用伪类
+</h4><ul>
+<li><code>:root</code> — 文档根元素（相当于 html），常用于定义 CSS 变量</li>
+<li><code>:target</code> — 当前被锚点（URL 的 #hash）指向的元素</li>
+<li><code>:is() / :where()</code> — 选择器列表，:where() 优先级永远为 0</li>
+<li><code>:has()</code> — 包含特定子孙元素的父元素（选择器条件）</li>
+</ul>
+<h3 id="伪元素选择器">
+<a class="header-anchor" href="#%e4%bc%aa%e5%85%83%e7%b4%a0%e9%80%89%e6%8b%a9%e5%99%a8"></a>
+伪元素选择器
+</h3><ul>
+<li>伪元素用于选中元素中 并不真实存在的部分 或生成内容，使用双冒号</li>
+<li><code>::before</code>在元素内容之前插入内容</li>
+<li><code>::after</code>在元素内容之后插入内容</li>
+<li><code>::first-letter</code>第一个字符（仅限块级元素）</li>
+<li><code>::first-line</code>第一行文本</li>
+<li>::selection`用户选中的文本</li>
+<li><code>::placeholder</code>输入框的占位提示文字</li>
+<li><code>::marker</code>列表项前面的标记符号</li>
+<li><code>::backdrop</code>全屏元素（如 <!-- raw HTML omitted -->、-video 全屏）背后的背景层</li>
+</ul>
+<h3 id="css-优先级特异性--specificity">
+<a class="header-anchor" href="#css-%e4%bc%98%e5%85%88%e7%ba%a7%e7%89%b9%e5%bc%82%e6%80%a7--specificity"></a>
+CSS 优先级（特异性 / Specificity）
+</h3><ul>
+<li>当多条规则同时选中同一个元素且属性冲突时，浏览器按 优先级 + 先后顺序 决定应用哪条。</li>
+<li>
+<ol>
+<li>优先级计算规则</li>
+</ol>
+</li>
+<li>优先级 = 四个层级的计数 (a, b, c, d)，从高位到低位依次比较：</li>
+<li><code>a</code> 内联样式 style=&quot;&hellip;&quot;</li>
+<li><code>b</code> ID 选择器 #id</li>
+<li><code>c</code> 类、属性选择器、伪类 (.class、[attr]、- :hover）</li>
+<li><code>d</code> 元素、伪元素 (div、::before)</li>
+<li><code>0</code> 通配符 *、&gt;、+、~、:where()</li>
+<li>计数相同则按 源码中出现的先后顺序，后写的覆盖先写的；!important 权重最大，优先于所有普通声明。</li>
+</ul>
+<h4 id="注意点">
+<a class="header-anchor" href="#%e6%b3%a8%e6%84%8f%e7%82%b9"></a>
+注意点
+</h4><ul>
+<li>伪类是类级别：:hover 和 .class 同级，ul li:hover 与 ul li.active 优先级相同，后写的生效。</li>
+<li>伪元素是元素级别：::before 与 li 同级。</li>
+<li>:is() 优先级取内部最高，而 :where() 永远是 0：</li>
+</ul>
+<h3 id="示例">
+<a class="header-anchor" href="#%e7%a4%ba%e4%be%8b"></a>
+示例
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;zh-CN&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>jst-home注册<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">style</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="o">[</span><span class="nt">disabled</span><span class="o">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">opacity</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c">/* 选中 type 为 email 的输入框 */</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&#34;email&#34;</span><span class="o">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-color</span><span class="p">:</span> <span class="kc">blue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c">/* 选中所有外链（https 开头的链接） */</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">a</span><span class="o">[</span><span class="nt">href</span><span class="o">^=</span><span class="s2">&#34;https&#34;</span><span class="o">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">color</span><span class="p">:</span> <span class="kc">green</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c">/* 选中所有图片文件（.png/.jpg 结尾） */</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">img</span><span class="o">[</span><span class="nt">src</span><span class="o">$=</span><span class="s2">&#34;.jpg&#34;</span><span class="o">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">border-radius</span><span class="p">:</span> <span class="mi">8</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c">/* 选中 class 中包含 item 的元素 */</span>
+</span></span><span class="line"><span class="cl">      <span class="o">[</span><span class="nt">class</span><span class="o">*=</span><span class="s2">&#34;item&#34;</span><span class="o">]</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">padding</span><span class="p">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">      <span class="c">/* 可与类选择器等组合：a.foo[href^=&#34;http&#34;] */</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">style</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">header</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>欢迎注册喵<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>sign in<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;/</span><span class="nt">header</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&#34;name&#34;</span><span class="p">&gt;</span>用户名<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;text&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;name&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;name&#34;</span> <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;请输入你的名称喵&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&#34;email&#34;</span><span class="p">&gt;</span>邮箱<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span>
+</span></span><span class="line"><span class="cl">      <span class="na">type</span><span class="o">=</span><span class="s">&#34;email&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="na">name</span><span class="o">=</span><span class="s">&#34;email&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="na">id</span><span class="o">=</span><span class="s">&#34;email&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="na">placeholder</span><span class="o">=</span><span class="s">&#34;请输入你的邮箱喵&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&#34;radio&#34;</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="na">id</span><span class="o">=</span><span class="s">&#34;&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://bilibili.com&#34;</span><span class="p">&gt;</span>bilibili<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></span></code></pre></div><h2 id="盒模型">
+<a class="header-anchor" href="#%e7%9b%92%e6%a8%a1%e5%9e%8b"></a>
+盒模型
+</h2><ul>
+<li>CSS 中每个元素都可以看作一个矩形盒子，由四个部分组成（从内到外）:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">┌─────────────────────────────────────┐
+</span></span><span class="line"><span class="cl">│            margin（外边距）          │
+</span></span><span class="line"><span class="cl">│  ┌───────────────────────────────┐  │
+</span></span><span class="line"><span class="cl">│  │          border（边框）        │  │
+</span></span><span class="line"><span class="cl">│  │  ┌─────────────────────────┐  │  │
+</span></span><span class="line"><span class="cl">│  │  │        padding（内边距） │  │  │
+</span></span><span class="line"><span class="cl">│  │  │  ┌───────────────────┐  │  │  │
+</span></span><span class="line"><span class="cl">│  │  │  │    content（内容） │  │  │  │
+</span></span><span class="line"><span class="cl">│  │  │  └───────────────────┘  │  │  │
+</span></span><span class="line"><span class="cl">│  │  └─────────────────────────┘  │  │
+</span></span><span class="line"><span class="cl">│  └───────────────────────────────┘  │
+</span></span><span class="line"><span class="cl">└─────────────────────────────────────┘
+</span></span></code></pre></div><h3 id="结构">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84"></a>
+结构
+</h3><ul>
+<li><code>content</code>实际内容（文字、图片等），受 width / height 控制</li>
+<li><code>padding</code> 内容与边框之间的内边距，可设 4 个方向</li>
+<li><code>border</code>边框，可设宽度、样式、颜色</li>
+<li><code>margin</code> 盒子与其他元素之间的外边距（在元素外部，不参与元素实际占位计算，但影响布局间距）</li>
+</ul>
+<h3 id="计算总宽高的公式默认-content-box">
+<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e6%80%bb%e5%ae%bd%e9%ab%98%e7%9a%84%e5%85%ac%e5%bc%8f%e9%bb%98%e8%ae%a4-content-box"></a>
+计算总宽高的公式（默认 content-box）:
+</h3><ul>
+<li>元素总宽度 = width + padding-left + padding-right + border-left + border-right</li>
+<li>元素总高度 = height + padding-top + padding-bottom + border-top + border-bottom</li>
+<li>margin 不包含在元素自身尺寸内，但会影响它在布局中占用的空间：
+占用空间 = 元素总尺寸 + margin</li>
+</ul>
+<h3 id="border-boxie-怪异盒模型">
+<a class="header-anchor" href="#border-boxie-%e6%80%aa%e5%bc%82%e7%9b%92%e6%a8%a1%e5%9e%8b"></a>
+border-box（IE 怪异盒模型）
+</h3><ul>
+<li>width / height 包含 content + padding + border</li>
+<li>即：width 就是元素最终渲染的宽度，padding 和 border 会从内部挤压内容区</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">div</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border</span><span class="p">:</span> <span class="mi">5</span><span class="kt">px</span> <span class="kc">solid</span> <span class="mh">#000</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c">/* 实际总宽度 = 200px（就是声明的 width） */</span>
+</span></span><span class="line"><span class="cl"><span class="c">/* 内容区宽度 = 200 - 20×2 - 5×2 = 150px */</span>
+</span></span></code></pre></div><h3 id="对比图">
+<a class="header-anchor" href="#%e5%af%b9%e6%af%94%e5%9b%be"></a>
+对比图
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">content-box（width: 200px）        border-box（width: 200px）
+</span></span><span class="line"><span class="cl">┌─────────── 250px ───────────┐   ┌────────── 200px ──────────┐
+</span></span><span class="line"><span class="cl">│ margin                      │   │ margin                    │
+</span></span><span class="line"><span class="cl">│ ┌───────── 250px ─────────┐ │   │ ┌──────── 200px ────────┐ │
+</span></span><span class="line"><span class="cl">│ │   border 5px           │ │   │ │ border │ padding │     │ │
+</span></span><span class="line"><span class="cl">│ │ ┌────── 200px ──────┐  │ │   │ │  ┌──── 150px ────┐   │ │ │
+</span></span><span class="line"><span class="cl">│ │ │  padding 20px     │  │ │   │ │  │ content      │   │ │ │
+</span></span><span class="line"><span class="cl">│ │ │ ┌── 160px ──┐     │  │ │   │ │  └──────────────┘   │ │ │
+</span></span><span class="line"><span class="cl">│ │ │ │ content  │     │  │ │   │ └──────────────────────┘ │ │
+</span></span><span class="line"><span class="cl">│ │ │ └──────────┘     │  │ │   │ └────────────────────────┘ │
+</span></span><span class="line"><span class="cl">│ │ └──────────────────┘  │ │   └────────────────────────────┘
+</span></span><span class="line"><span class="cl">│ └───────────────────────┘ │
+</span></span><span class="line"><span class="cl">└───────────────────────────┘
+</span></span></code></pre></div><ul>
+<li>使用border-box：</li>
+<li>心智负担小：设置 width: 200px 就是最终宽度，不用反复加减 padding 和 border。</li>
+<li>响应式布局更安全：配合百分比宽度时（如 width: 50%），不会因为 padding 导致溢出换行。</li>
+<li>与框架一致：Bootstrap、Tailwind 等主流框架都默认使用 border-box。</li>
+</ul>
+<h3 id="margin-的特殊性">
+<a class="header-anchor" href="#margin-%e7%9a%84%e7%89%b9%e6%ae%8a%e6%80%a7"></a>
+margin 的特殊性
+</h3><ul>
+<li>margin 不参与 box-sizing 计算，但它有两个常见坑：</li>
+</ul>
+<h4 id="外边距合并margin-collapsing">
+<a class="header-anchor" href="#%e5%a4%96%e8%be%b9%e8%b7%9d%e5%90%88%e5%b9%b6margin-collapsing"></a>
+外边距合并（Margin Collapsing）
+</h4><ul>
+<li>垂直相邻元素的 margin 会取较大值</li>
+</ul>
+<h4 id="父子-margin-传递">
+<a class="header-anchor" href="#%e7%88%b6%e5%ad%90-margin-%e4%bc%a0%e9%80%92"></a>
+父子 margin 传递
+</h4><ul>
+<li>父元素没有 padding / border / overflow 时，子元素的 margin-top 会&quot;传&quot;给父元素，用给父元素加 padding、border、overflow: hidden，或改用 padding</li>
+</ul>
+<h4 id="margin-正数--负数--百分比">
+<a class="header-anchor" href="#margin-%e6%ad%a3%e6%95%b0--%e8%b4%9f%e6%95%b0--%e7%99%be%e5%88%86%e6%af%94"></a>
+margin 正数 / 负数 / 百分比
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* 正数：把元素推离正常位置或挤压其他元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">element</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-top</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 向下移 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin-left</span><span class="p">:</span> <span class="mi">-10</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 向左溢出，实现重叠效果 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* 百分比：相对于父元素的宽度（left/right）或高度（top/bottom）计算 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">element</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">margin</span><span class="p">:</span> <span class="mi">10</span><span class="kt">%</span><span class="p">;</span> <span class="c">/* 上下左右都是父宽度的 10% */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="css单位">
+<a class="header-anchor" href="#css%e5%8d%95%e4%bd%8d"></a>
+CSS单位
+</h2><h3 id="px绝对单位">
+<a class="header-anchor" href="#px%e7%bb%9d%e5%af%b9%e5%8d%95%e4%bd%8d"></a>
+px——绝对单位
+</h3><ul>
+<li>固定像素，不随父元素/根元素字号变化</li>
+<li>适合边框、固定尺寸的 UI</li>
+</ul>
+<h3 id="em相对父元素字号">
+<a class="header-anchor" href="#em%e7%9b%b8%e5%af%b9%e7%88%b6%e5%85%83%e7%b4%a0%e5%ad%97%e5%8f%b7"></a>
+em——相对父元素字号
+</h3><ul>
+<li><code>1em = 父元素 font-size</code></li>
+<li>嵌套会累乘，不直观：2em 的孙子可能是 8em 的效果</li>
+</ul>
+<h3 id="rem相对根元素-html-字号">
+<a class="header-anchor" href="#rem%e7%9b%b8%e5%af%b9%e6%a0%b9%e5%85%83%e7%b4%a0-html-%e5%ad%97%e5%8f%b7"></a>
+rem——相对根元素 html 字号
+</h3><ul>
+<li><code>1rem = html 的 font-size</code>（默认通常 16px）</li>
+<li>不受嵌套层级影响，计算直观</li>
+<li>修改 html 的 font-size 可全站等比缩放</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">html</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">title</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">2</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c">/* = 32px */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">btn</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mi">1</span><span class="kt">rem</span> <span class="mi">2</span><span class="kt">rem</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="c">/* = 16px 32px */</span>
+</span></span></code></pre></div><h3 id="vw--vh视口单位">
+<a class="header-anchor" href="#vw--vh%e8%a7%86%e5%8f%a3%e5%8d%95%e4%bd%8d"></a>
+vw / vh——视口单位
+</h3><ul>
+<li><code>1vw = 视口宽度的 1%</code>，<code>1vh = 视口高度的 1%</code></li>
+<li><code>vmin</code> = 视口宽高中较小者，<code>vmax</code> = 较大者</li>
+<li>适合全屏 banner、首屏大标题（字体大小随视口变化）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">hero</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vw</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">height</span><span class="p">:</span> <span class="mi">100</span><span class="kt">vh</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">big-title</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">8</span><span class="kt">vw</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="百分比">
+<a class="header-anchor" href="#%e7%99%be%e5%88%86%e6%af%94"></a>
+%——百分比
+</h3><ul>
+<li>width/height 相对父元素对应值</li>
+<li>padding/margin 都相对<strong>父元素的宽度</strong>（垂直方向上也是宽度！）</li>
+<li>font-size 相对父元素字号</li>
+<li>⚠️ 父元素没设高度时，子元素 <code>height: 100%</code> 无效</li>
+</ul>
+<h3 id="单位速查表">
+<a class="header-anchor" href="#%e5%8d%95%e4%bd%8d%e9%80%9f%e6%9f%a5%e8%a1%a8"></a>
+单位速查表
+</h3><table>
+  <thead>
+      <tr>
+          <th>单位</th>
+          <th>类型</th>
+          <th>相对谁</th>
+          <th>典型用途</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>px</td>
+          <td>绝对</td>
+          <td>—</td>
+          <td>边框、固定尺寸</td>
+      </tr>
+      <tr>
+          <td>em</td>
+          <td>相对</td>
+          <td>父元素字号</td>
+          <td>组件内部局部间距</td>
+      </tr>
+      <tr>
+          <td>rem</td>
+          <td>相对</td>
+          <td>根元素字号</td>
+          <td>全局字号、间距系统</td>
+      </tr>
+      <tr>
+          <td>vw/vh</td>
+          <td>相对</td>
+          <td>视口</td>
+          <td>全屏、首屏、大标题</td>
+      </tr>
+      <tr>
+          <td>%</td>
+          <td>相对</td>
+          <td>父元素尺寸</td>
+          <td>流式布局宽高</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="bfc块级格式化上下文">
+<a class="header-anchor" href="#bfc%e5%9d%97%e7%ba%a7%e6%a0%bc%e5%bc%8f%e5%8c%96%e4%b8%8a%e4%b8%8b%e6%96%87"></a>
+BFC（块级格式化上下文）
+</h2><h3 id="什么是-bfc">
+<a class="header-anchor" href="#%e4%bb%80%e4%b9%88%e6%98%af-bfc"></a>
+什么是 BFC
+</h3><ul>
+<li>BFC 是一个独立布局区域，内部元素布局不影响外部，外部也不影响内部</li>
+<li>常用于解决 margin 塌陷、浮动高度塌陷</li>
+</ul>
+<h3 id="触发方式">
+<a class="header-anchor" href="#%e8%a7%a6%e5%8f%91%e6%96%b9%e5%bc%8f"></a>
+触发方式
+</h3><ul>
+<li><code>float: left/right</code></li>
+<li><code>position: absolute/fixed</code></li>
+<li><code>overflow: hidden/auto/scroll</code>（最常用）</li>
+<li><code>display: flow-root</code>（推荐，无副作用）</li>
+<li><code>display: flex/grid/inline-block</code></li>
+<li>根元素 html 自动</li>
+</ul>
+<h3 id="解决父子-margin-塌陷">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3%e7%88%b6%e5%ad%90-margin-%e5%a1%8c%e9%99%b7"></a>
+解决父子 margin 塌陷
+</h3><ul>
+<li>父元素没有 padding / border / overflow 时，子元素 margin-top 会&quot;传&quot;给父元素</li>
+<li>解法：
+<ol>
+<li>父元素加 <code>overflow: hidden</code> 或 <code>display: flow-root</code> 创建 BFC</li>
+<li>父元素直接加 <code>padding-top</code>（推荐）</li>
+<li>改用 flex/grid + gap 控制间距（终极方案）</li>
+</ol>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">parent</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span> <span class="c">/* 创建 BFC，隔离子元素 margin */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c">/* 或 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">parent</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">flex-direction</span><span class="p">:</span> <span class="kc">column</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">gap</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 告别 margin 合并 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="解决兄弟元素-margin-合并">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3%e5%85%84%e5%bc%9f%e5%85%83%e7%b4%a0-margin-%e5%90%88%e5%b9%b6"></a>
+解决兄弟元素 margin 合并
+</h3><ul>
+<li>相邻元素垂直 margin 取较大值（30px + 20px = 30px）</li>
+<li>解法：将元素包在 BFC 容器内，或只用单方向 margin / gap</li>
+</ul>
+<h3 id="解决浮动高度塌陷">
+<a class="header-anchor" href="#%e8%a7%a3%e5%86%b3%e6%b5%ae%e5%8a%a8%e9%ab%98%e5%ba%a6%e5%a1%8c%e9%99%b7"></a>
+解决浮动高度塌陷
+</h3><ul>
+<li>子元素 float 后父元素高度为 0</li>
+<li>父元素创建 BFC 后，高度计算包含浮动元素</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">parent</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">overflow</span><span class="p">:</span> <span class="kc">hidden</span><span class="p">;</span> <span class="c">/* BFC 高度包含浮动子元素 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c">/* 或 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">parent</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="k">flow</span><span class="o">-</span><span class="n">root</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="c">/* 或 ::after 清除浮动 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">parent</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">content</span><span class="p">:</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">clear</span><span class="p">:</span> <span class="kc">both</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h3 id="推荐全局写法">
+<a class="header-anchor" href="#%e6%8e%a8%e8%8d%90%e5%85%a8%e5%b1%80%e5%86%99%e6%b3%95"></a>
+推荐全局写法
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* 统一盒模型 */</span>
+</span></span><span class="line"><span class="cl"><span class="o">*,</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="p">::</span><span class="nd">before</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl"><span class="o">*</span><span class="p">::</span><span class="nd">after</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">border-box</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* BFC 工具类 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">bfc</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="k">flow</span><span class="o">-</span><span class="n">root</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="html">
+<a class="header-anchor" href="#html"></a>
+html
+</h1><h2 id="实现一个页面框架">
+<a class="header-anchor" href="#%e5%ae%9e%e7%8e%b0%e4%b8%80%e4%b8%aa%e9%a1%b5%e9%9d%a2%e6%a1%86%e6%9e%b6"></a>
+实现一个页面框架
+</h2><hr>
+<h1 id="c的小问题">
+<a class="header-anchor" href="#c%e7%9a%84%e5%b0%8f%e9%97%ae%e9%a2%98"></a>
+c++的小问题
+</h1><h2 id="设置控制台">
+<a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e6%8e%a7%e5%88%b6%e5%8f%b0"></a>
+设置控制台
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;widows&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="n">SetConsoleOutputCP</span><span class="p">(</span><span class="n">CP_UTF8</span><span class="p">);</span>
+</span></span></code></pre></div><ul>
+<li>实现了将windows的powershell改成了utf-8编码</li>
+</ul>
+<hr>
         
         <hr><p>本文2026-08-04首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-04</p>]]>
       </description>
@@ -739,6 +1370,49 @@ input
 <a class="header-anchor" href="#proto"></a>
 proto
 </h2><hr>
+<h1 id="0804">
+<a class="header-anchor" href="#0804"></a>
+0804
+</h1><h2 id="rust-2">
+<a class="header-anchor" href="#rust-2"></a>
+RUST
+</h2><h3 id="所有权与函数">
+<a class="header-anchor" href="#%e6%89%80%e6%9c%89%e6%9d%83%e4%b8%8e%e5%87%bd%e6%95%b0"></a>
+所有权与函数
+</h3><h3 id="引用和借用">
+<a class="header-anchor" href="#%e5%bc%95%e7%94%a8%e5%92%8c%e5%80%9f%e7%94%a8"></a>
+引用和借用
+</h3><h2 id="mysql-2">
+<a class="header-anchor" href="#mysql-2"></a>
+MySQL
+</h2><h3 id="存储过程">
+<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e8%bf%87%e7%a8%8b"></a>
+存储过程
+</h3><h3 id="存储函数">
+<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e5%87%bd%e6%95%b0"></a>
+存储函数
+</h3><h3 id="触发器">
+<a class="header-anchor" href="#%e8%a7%a6%e5%8f%91%e5%99%a8"></a>
+触发器
+</h3><h2 id="mysql连接池-1">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-1"></a>
+MySQL连接池
+</h2><h2 id="css">
+<a class="header-anchor" href="#css"></a>
+CSS
+</h2><h3 id="选择器和声明块">
+<a class="header-anchor" href="#%e9%80%89%e6%8b%a9%e5%99%a8%e5%92%8c%e5%a3%b0%e6%98%8e%e5%9d%97"></a>
+选择器和声明块
+</h3><h3 id="css-优先级特异性--specificity">
+<a class="header-anchor" href="#css-%e4%bc%98%e5%85%88%e7%ba%a7%e7%89%b9%e5%bc%82%e6%80%a7--specificity"></a>
+CSS 优先级（特异性 / Specificity）
+</h3><h2 id="c的小问题1">
+<a class="header-anchor" href="#c%e7%9a%84%e5%b0%8f%e9%97%ae%e9%a2%981"></a>
+c++的小问题1
+</h2><h3 id="设置控制台">
+<a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e6%8e%a7%e5%88%b6%e5%8f%b0"></a>
+设置控制台
+</h3><hr>
 <h1 id="08计划">
 <a class="header-anchor" href="#08%e8%ae%a1%e5%88%92"></a>
 08计划
@@ -767,9 +1441,9 @@ vue3/html/js/css 20天纯前端计划（每天1-2h）
 <a class="header-anchor" href="#%e7%ac%ac3%e5%a4%a9css-%e9%80%89%e6%8b%a9%e5%99%a8%e4%b8%8e%e7%9b%92%e6%a8%a1%e5%9e%8b1-2h"></a>
 第3天：CSS 选择器与盒模型（1-2h）
 </h3><ul>
-<li><input disabled="" type="checkbox"> 基础/属性/伪类/伪元素选择器与优先级 <code> [CSS]</code> → 📝 任务：用 5 种选择器给同一元素写样式验证优先级</li>
-<li><input disabled="" type="checkbox"> 盒模型（content、padding、border、margin）与 box-sizing <code> [CSS]</code> → 📝 任务：DevTools 查看盒子模型，对比 border-box 差异</li>
-<li><input disabled="" type="checkbox"> 单位（px、em、rem、vw、vh、%）与 BFC 解决 margin 塌陷 <code> [CSS]</code> → 📝 任务：用 overflow:hidden 实现 BFC</li>
+<li><input checked="" disabled="" type="checkbox"> 基础/属性/伪类/伪元素选择器与优先级 <code> [CSS]</code> → 📝 任务：用 5 种选择器给同一元素写样式验证优先级</li>
+<li><input checked="" disabled="" type="checkbox"> 盒模型（content、padding、border、margin）与 box-sizing <code> [CSS]</code> → 📝 任务：DevTools 查看盒子模型，对比 border-box 差异</li>
+<li><input checked="" disabled="" type="checkbox"> 单位（px、em、rem、vw、vh、%）与 BFC 解决 margin 塌陷 <code> [CSS]</code> → 📝 任务：用 overflow:hidden 实现 BFC</li>
 <li><input disabled="" type="checkbox"> 练习：卡片组件样式 <code> [CSS]</code> → 📝 任务：头像 + 标题 + 描述 + 按钮的卡片</li>
 </ul>
 <h3 id="第4天css-定位与-flex-布局1-2h">
