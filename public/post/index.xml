@@ -30,7 +30,8 @@
       <description>
         <![CDATA[<h1>20260804 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
         
-          <h1 id="rust">
+          <hr>
+<h1 id="rust">
 <a class="header-anchor" href="#rust"></a>
 RUST
 </h1><h2 id="所有权与函数">
