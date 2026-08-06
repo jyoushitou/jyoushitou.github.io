@@ -12,12 +12,971 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Tue, 04 Aug 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 06 Aug 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260806 总结</title>
+      <link>http://localhost:1313/post/2026-08-06-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Thu, 06 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-06-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260806 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="切片">
+<a class="header-anchor" href="#%e5%88%87%e7%89%87"></a>
+切片
+</h2><ul>
+<li>不持有所有权的数据类型</li>
+<li>指向字符串一部分的引用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">hello</span><span class="o">=&amp;</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="mi">5</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>相当于c++的strsub</li>
+<li>前面不写默认为0，后面不写默认到结尾</li>
+<li>字符串字面值被直接存储在二进制程序中</li>
+<li>如果切片，则字符串不可变</li>
+<li>使用&amp;str作为参数类型，就可以同时接收string和&amp;str类型了：这样可以使得api更加通用，也不会有功能损失</li>
+</ul>
+<h2 id="struct">
+<a class="header-anchor" href="#struct"></a>
+struct
+</h2><ul>
+<li>结构体</li>
+<li>自定义数据类型</li>
+</ul>
+<h3 id="定义">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
+定义
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">User</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">username</span>:<span class="nb">String</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">email</span>:<span class="nb">String</span>
+</span></span><span class="line"><span class="cl">    <span class="err">……</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>和json类似</li>
+</ul>
+<h3 id="取值">
+<a class="header-anchor" href="#%e5%8f%96%e5%80%bc"></a>
+取值
+</h3><ul>
+<li>用点标法</li>
+</ul>
+<h3 id="赋值">
+<a class="header-anchor" href="#%e8%b5%8b%e5%80%bc"></a>
+赋值
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">user1</span><span class="p">.</span><span class="n">email</span><span class="o">=</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;.....@....com&#34;</span><span class="p">)</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>实例有一个可变则整个字段可变</li>
+</ul>
+<h3 id="更新语法">
+<a class="header-anchor" href="#%e6%9b%b4%e6%96%b0%e8%af%ad%e6%b3%95"></a>
+更新语法
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">user2</span><span class="o">=</span><span class="n">User</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">user1</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="tup-struct">
+<a class="header-anchor" href="#tup-struct"></a>
+tup struct
+</h3><ul>
+<li>定义类似tuple的struct</li>
+<li>整体有名，元素无名</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">tup_struct_name</span><span class="p">(</span><span class="n">type_name</span><span class="p">,</span><span class="n">type_name</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>即使类型相同则也是两个结构体</li>
+</ul>
+<h3 id="unit-like-struct">
+<a class="header-anchor" href="#unit-like-struct"></a>
+Unit-Like Struct
+</h3><ul>
+<li>空结构体</li>
+</ul>
+<h3 id="所有权">
+<a class="header-anchor" href="#%e6%89%80%e6%9c%89%e6%9d%83"></a>
+所有权
+</h3><ul>
+<li>struct拥有其所有的数据</li>
+<li>当String不是&amp;str时，只要struct实例有效，则字段数据也是有效的</li>
+<li>strcut也可以引用，但是需要使用生命周期</li>
+</ul>
+<hr>
+<h1 id="mysql连接池">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+MySQL连接池
+</h1><h2 id="功能描述">
+<a class="header-anchor" href="#%e5%8a%9f%e8%83%bd%e6%8f%8f%e8%bf%b0"></a>
+功能描述
+</h2><ul>
+<li>需要一个Connection和ConnectionPool</li>
+</ul>
+<h2 id="设计思路">
+<a class="header-anchor" href="#%e8%ae%be%e8%ae%a1%e6%80%9d%e8%b7%af"></a>
+设计思路
+</h2><ul>
+<li>用queue管理连接</li>
+<li>使用epoll+多线程的形式</li>
+</ul>
+<hr>
+<h1 id="unity">
+<a class="header-anchor" href="#unity"></a>
+unity
+</h1><h2 id="项目">
+<a class="header-anchor" href="#%e9%a1%b9%e7%9b%ae"></a>
+项目
+</h2><h3 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h3><ul>
+<li>直接在hub新建</li>
+<li>然后选择模版</li>
+</ul>
+<h3 id="结构">
+<a class="header-anchor" href="#%e7%bb%93%e6%9e%84"></a>
+结构
+</h3><ul>
+<li>**Assets：工程资源（美术资源和脚本）</li>
+<li>Library：库文件夹</li>
+<li>Logs：日志</li>
+<li>obj：中间产物</li>
+<li>Packages：包配置信息</li>
+<li>ProjectSetting:工程设置信息</li>
+</ul>
+<hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="服务器">
+<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8"></a>
+服务器
+</h2><ul>
+<li>头文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#pragma once
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;utility&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;deque&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;atomic&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">Messaging</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">MAX_LEN</span><span class="o">=</span><span class="mi">1024</span><span class="o">*</span><span class="mi">1024</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">HEAD_LEN</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">constexpr</span> <span class="kt">int</span> <span class="n">HEAD_ID_LEN</span><span class="o">=</span><span class="mi">4</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//消息体的缓存类
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造消息体
+</span></span></span><span class="line"><span class="cl">        <span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//析构消息体
+</span></span></span><span class="line"><span class="cl">        <span class="k">virtual</span> <span class="o">~</span><span class="n">MsgNode</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//清空缓存
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取缓冲区指针
+</span></span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="nf">GetBuf</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">buf</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取缓冲区总长度
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetTotalLen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">total_len</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取当前读取位置
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetCurLen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cur_len</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 设置当前读取位置
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">SetCurLen</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span> <span class="n">cur_len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//禁用拷贝构造函数
+</span></span></span><span class="line"><span class="cl">        <span class="n">MsgNode</span><span class="p">(</span><span class="k">const</span> <span class="n">MsgNode</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//禁用拷贝赋值函数
+</span></span></span><span class="line"><span class="cl">        <span class="n">MsgNode</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">MsgNode</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">buf</span><span class="p">;</span><span class="c1">//消息体缓存
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">total_len</span><span class="p">;</span><span class="c1">//缓存数据大小
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">cur_len</span><span class="p">;</span><span class="c1">//当前读取到的位置
+</span></span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//读取类
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">RecvNode</span><span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">RecvNode</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetID</span><span class="p">()</span><span class="k">const</span><span class="p">{</span><span class="k">return</span> <span class="n">msg_id</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//消息ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">SendNode</span><span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SendNode</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetID</span><span class="p">()</span><span class="k">const</span><span class="p">{</span><span class="k">return</span> <span class="n">msg_id</span><span class="p">;}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//消息ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//处理连接
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Session</span><span class="o">:</span><span class="k">public</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_shared_from_this</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="c1">//具体读写措施类
+</span></span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">        <span class="n">Session</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">socket</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">:</span><span class="n">ioc</span><span class="p">(</span><span class="n">ioc</span><span class="p">),</span><span class="n">stop</span><span class="p">(</span><span class="nb">false</span><span class="p">),</span><span class="n">sock</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">socket</span><span class="p">)){}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//外部启动函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//停止关闭函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Stop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步读函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读消息体函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">ReadBody</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//异步写函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Write</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//执行发送队列
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">DoSend</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//工作函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Work</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                <span class="c1">//io_context引用（用于跨线程投递停止任务）
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存是否退出状态（原子变量，防止跨线程数据竞争）
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">atomic</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">stop</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存socket
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读节点
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span> <span class="n">recv_node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//写节点
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//发送队列
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">deque</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;&gt;</span> <span class="n">send_queue</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//是否正在发送
+</span></span></span><span class="line"><span class="cl">        <span class="kt">bool</span> <span class="n">is_sending</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//头部长度
+</span></span></span><span class="line"><span class="cl">        <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">HEADER_LENGTH</span><span class="o">=</span><span class="n">HEAD_ID_LEN</span><span class="o">+</span><span class="n">HEAD_LEN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//服务器主程序，分配Session
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Server</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造Server
+</span></span></span><span class="line"><span class="cl">        <span class="n">Server</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//Server停止函数（可在任意线程调用，内部会投递到io_context线程执行）
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Stop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取io_context
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">GetIoc</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">ioc</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//分配Session
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//io_context引用（用于跨线程投递停止任务）
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//连接的accept
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//管理连接socket
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//管理Session的连接
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;&gt;</span> <span class="n">sessions</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">//启动命令
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">start</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li>实现</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;messaging.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">Messaging</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">    <span class="n">MsgNode</span><span class="o">::</span><span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//计算出缓存空间
+</span></span></span><span class="line"><span class="cl">        <span class="n">total_len</span><span class="o">=</span><span class="n">max_len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//设定指针
+</span></span></span><span class="line"><span class="cl">        <span class="n">cur_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//申请缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">buf</span><span class="o">=</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//给最后一个空间为&#39;\0&#39;避免超出空间
+</span></span></span><span class="line"><span class="cl">        <span class="n">buf</span><span class="p">[</span><span class="n">total_len</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//析构函数
+</span></span></span><span class="line"><span class="cl">    <span class="n">MsgNode</span><span class="o">::~</span><span class="n">MsgNode</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//直接删除动态函数
+</span></span></span><span class="line"><span class="cl">        <span class="k">delete</span><span class="p">[]</span> <span class="n">buf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//清空缓存
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">MsgNode</span><span class="o">::</span><span class="n">Clear</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//给缓存赋值为&#39;\0&#39;
+</span></span></span><span class="line"><span class="cl">        <span class="o">::</span><span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="sc">&#39;\0&#39;</span><span class="p">,</span><span class="n">total_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//移动指针复位
+</span></span></span><span class="line"><span class="cl">        <span class="n">cur_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//接收节点
+</span></span></span><span class="line"><span class="cl">    <span class="n">RecvNode</span><span class="o">::</span><span class="n">RecvNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">_msg_id</span><span class="p">)</span><span class="o">:</span><span class="n">MsgNode</span><span class="p">(</span><span class="n">max_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获得ID
+</span></span></span><span class="line"><span class="cl">        <span class="n">msg_id</span><span class="o">=</span><span class="n">_msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//发送节点
+</span></span></span><span class="line"><span class="cl">    <span class="n">SendNode</span><span class="o">::</span><span class="n">SendNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">_msg_id</span><span class="p">)</span><span class="o">:</span><span class="n">MsgNode</span><span class="p">(</span><span class="n">max_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//发送ID
+</span></span></span><span class="line"><span class="cl">        <span class="n">msg_id</span><span class="o">=</span><span class="n">_msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//Session调用的启动函数
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Start</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//停止发送函数（线程安全：可在任意线程调用，内部会投递到io_context线程执行关闭检查）
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Stop</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//原子写停止标志（任意线程安全）
+</span></span></span><span class="line"><span class="cl">            <span class="n">stop</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//捕获自身，防止投递的任务执行时对象已被销毁
+</span></span></span><span class="line"><span class="cl">            <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//投递关闭检查到io_context线程，避免跨线程访问socket和队列
+</span></span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">post</span><span class="p">(</span><span class="n">ioc</span><span class="p">,[</span><span class="n">self</span><span class="p">,</span><span class="k">this</span><span class="p">](){</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//若发送队列为空且没有正在发送，则立即关闭连接
+</span></span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">send_queue</span><span class="p">.</span><span class="n">empty</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">is_sending</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//读数据
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">ReadHead</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//先读取到头部的消息ID和消息长度
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">HEADER_LENGTH</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//初始化缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保活
+</span></span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读取数据
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_read</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//判断是否有错误
+</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span><span class="p">(</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//有，输出错误并返回
+</span></span></span><span class="line"><span class="cl">                            <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;error in run , value is : &#34;</span><span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//判断是否为关闭状态
+</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span><span class="p">(</span><span class="n">stop</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//提示仍收到消息
+</span></span></span><span class="line"><span class="cl">                            <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;closing,but recive message&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//回发送提示（入队，发送完毕后再关闭）
+</span></span></span><span class="line"><span class="cl">                            <span class="n">Write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#34;server is closing,please not connect&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//获取读缓存指针
+</span></span></span><span class="line"><span class="cl">                        <span class="kt">char</span><span class="o">*</span> <span class="n">header</span> <span class="o">=</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//获取信息ID和信息长度
+</span></span></span><span class="line"><span class="cl">                        <span class="kt">int</span> <span class="n">msg_id</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="kt">int</span> <span class="n">msg_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                        <span class="c1">//将信息ID和信息长度，读出缓存
+</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg_id</span><span class="p">,</span><span class="n">header</span><span class="p">,</span><span class="n">HEAD_ID_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg_len</span><span class="p">,</span><span class="n">header</span><span class="o">+</span><span class="n">HEAD_ID_LEN</span><span class="p">,</span><span class="n">HEAD_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//转换成c++字节序
+</span></span></span><span class="line"><span class="cl">                        <span class="n">msg_id</span><span class="o">=</span><span class="n">ntohl</span><span class="p">(</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">msg_len</span> <span class="o">=</span> <span class="n">ntohl</span><span class="p">(</span><span class="n">msg_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//判断消息是否合法
+</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span><span class="p">(</span><span class="n">msg_len</span><span class="o">&gt;</span><span class="n">MAX_LEN</span><span class="o">||</span><span class="n">msg_len</span><span class="o">&lt;</span><span class="mi">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//回发送提示（入队）
+</span></span></span><span class="line"><span class="cl">                            <span class="n">Write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#34;recive message , but Length is error&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//停止接收后续数据，发完队列中的提示后由DoSend自动关闭连接
+</span></span></span><span class="line"><span class="cl">                            <span class="n">stop</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//打印提示
+</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;recviced message ,ID: &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_id</span><span class="o">&lt;&lt;</span><span class="s">&#34; and len : &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_len</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//调用读信息函数
+</span></span></span><span class="line"><span class="cl">                        <span class="n">ReadBody</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">msg_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步读消息体
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">ReadBody</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span><span class="kt">int</span> <span class="n">msg_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//创建读缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg_len</span><span class="p">,</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//清空创建缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_read</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">,</span><span class="n">msg_id</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//判断是否有错误
+</span></span></span><span class="line"><span class="cl">                                <span class="k">if</span><span class="p">(</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//有，输出错误并返回
+</span></span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;error in run , value is : &#34;</span><span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//设置读的长度
+</span></span></span><span class="line"><span class="cl">                                <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">SetCurLen</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//获得消息
+</span></span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetCurLen</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;recivced id : &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_id</span><span class="o">&lt;&lt;</span><span class="s">&#34; message is :&#34;</span><span class="o">&lt;&lt;</span><span class="n">msg</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//调用工作函数
+</span></span></span><span class="line"><span class="cl">                                <span class="n">Work</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">msg</span><span class="p">);</span>    
+</span></span><span class="line"><span class="cl">                                <span class="k">if</span><span class="p">(</span><span class="n">stop</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                                    <span class="c1">//提示仍收到消息
+</span></span></span><span class="line"><span class="cl">                                    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;closing,but recive message&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                    <span class="c1">//回发送提示（入队，发送完毕后再关闭）
+</span></span></span><span class="line"><span class="cl">                                    <span class="n">Write</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="s">&#34;server is closing,please not connect&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                                <span class="k">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                    <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//工作函数
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Work</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="o">=</span><span class="s">&#34;recivced message&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Write</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步写函数（将消息压入发送队列）
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Write</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//计算发送缓存大小
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">total_len</span><span class="o">=</span><span class="n">HEADER_LENGTH</span><span class="o">+</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//创建发送缓存
+</span></span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">total_len</span><span class="p">,</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取创建的缓存指针
+</span></span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">buf</span> <span class="o">=</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取消息体长度
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">value_len</span><span class="o">=</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//改成网络字节序
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int32_t</span> <span class="n">net_msg_id</span> <span class="o">=</span> <span class="n">htonl</span><span class="p">(</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int32_t</span> <span class="n">net_msg_len</span> <span class="o">=</span> <span class="n">htonl</span><span class="p">(</span><span class="n">value_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将msg_id拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="o">&amp;</span><span class="n">net_msg_id</span><span class="p">,</span><span class="n">HEAD_ID_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将msg_len拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="n">HEAD_ID_LEN</span><span class="p">,</span><span class="o">&amp;</span><span class="n">net_msg_len</span><span class="p">,</span><span class="n">HEAD_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将消息拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="n">HEADER_LENGTH</span><span class="p">,</span><span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="n">value_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//设置发送体的长度
+</span></span></span><span class="line"><span class="cl">        <span class="n">node</span><span class="o">-&gt;</span><span class="n">SetCurLen</span><span class="p">(</span><span class="n">total_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//压入发送队列
+</span></span></span><span class="line"><span class="cl">        <span class="n">send_queue</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">node</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//如果当前没有正在发送，则启动发送
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">is_sending</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">DoSend</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//执行发送队列中的消息
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">DoSend</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//队列为空则结束发送
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">send_queue</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">is_sending</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//若处于停止状态且队列已清空（此分支即队列为空），关闭连接
+</span></span></span><span class="line"><span class="cl">        <span class="k">if</span><span class="p">(</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="n">send_queue</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//标记正在发送
+</span></span></span><span class="line"><span class="cl">        <span class="n">is_sending</span><span class="o">=</span><span class="nb">true</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//取队头节点作为当前发送节点
+</span></span></span><span class="line"><span class="cl">        <span class="n">send_node</span><span class="o">=</span><span class="n">send_queue</span><span class="p">.</span><span class="n">front</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保活
+</span></span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步发送
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_write</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span><span class="p">(</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;send error : &#34;</span><span class="o">&lt;&lt;</span><span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//清空发送队列并复位发送状态
+</span></span></span><span class="line"><span class="cl">                    <span class="n">send_queue</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">is_sending</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//发送失败，关闭连接
+</span></span></span><span class="line"><span class="cl">                    <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">close_ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">close_ec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;sended message&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//弹出已发送的队头节点
+</span></span></span><span class="line"><span class="cl">                <span class="n">send_queue</span><span class="p">.</span><span class="n">pop_front</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//若停止状态且队列已空，关闭连接
+</span></span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="n">send_queue</span><span class="p">.</span><span class="n">empty</span><span class="p">()){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sock</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//继续发送队列中的下一条消息
+</span></span></span><span class="line"><span class="cl">                <span class="n">DoSend</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//初始化Server
+</span></span></span><span class="line"><span class="cl">    <span class="n">Server</span><span class="o">::</span><span class="n">Server</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">_ioc</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">:</span><span class="n">ioc</span><span class="p">(</span><span class="n">_ioc</span><span class="p">),</span><span class="n">acceptor</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span><span class="n">port</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//Server停止函数（线程安全：可在任意线程调用，内部会投递到io_context线程执行）
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">Stop</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//投递关闭操作到io_context线程，避免跨线程访问asio对象
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">post</span><span class="p">(</span><span class="n">ioc</span><span class="p">,[</span><span class="k">this</span><span class="p">](){</span>
+</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span> <span class="n">ec</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">acceptor</span><span class="p">.</span><span class="n">close</span><span class="p">(</span><span class="n">ec</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">            <span class="c1">//遍历并通知所有管理的会话
+</span></span></span><span class="line"><span class="cl">            <span class="k">for</span><span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">session</span><span class="p">:</span><span class="n">sessions</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">session</span><span class="o">-&gt;</span><span class="n">Stop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//清理所有的会话
+</span></span></span><span class="line"><span class="cl">            <span class="n">sessions</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//为连接创建Session
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">To_Session</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步读
+</span></span></span><span class="line"><span class="cl">        <span class="n">acceptor</span><span class="p">.</span><span class="n">async_accept</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">socket</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;conncet client&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">auto</span> <span class="n">session</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">socket</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sessions</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">session</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">//继续接受下一个连接
+</span></span></span><span class="line"><span class="cl">                <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">start</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">io</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Server</span> <span class="n">server</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">signal_set</span> <span class="n">sinals</span><span class="p">(</span><span class="n">io</span><span class="p">,</span><span class="n">SIGINT</span><span class="p">,</span><span class="n">SIGTERM</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sinals</span><span class="p">.</span><span class="n">async_wait</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="o">&amp;</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span><span class="kt">int</span> <span class="n">signal_number</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="o">&lt;&lt;</span><span class="s">&#34;reciv close key :&#34;</span><span class="o">&lt;&lt;</span><span class="n">signal_number</span><span class="o">&lt;&lt;</span><span class="s">&#34;, closing! worked after close!&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//停服任务已投递到io_context线程执行
+</span></span></span><span class="line"><span class="cl">                    <span class="n">server</span><span class="p">.</span><span class="n">Stop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">//注意：不能在此处调用io.stop()，
+</span></span></span><span class="line"><span class="cl">                    <span class="c1">//否则server.Stop()里post的任务来不及执行，io.run()会立即返回
+</span></span></span><span class="line"><span class="cl">                    <span class="c1">//正确做法：让io.run()在处理完所有投递任务后自然退出
+</span></span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;listend&#34;</span><span class="o">&lt;&lt;</span><span class="n">port</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ul>
+<li>实现了优雅的退出</li>
+</ul>
+<hr>
+        
+        <hr><p>本文2026-08-06首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-06</p>]]>
+      </description>
+      
+    </item>
+    
+    
+
+    <item>
+      <title>20260805 总结</title>
+      <link>http://localhost:1313/post/2026-08-05-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 05 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-05-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260805 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <hr>
+<h1 id="cpp">
+<a class="header-anchor" href="#cpp"></a>
+cpp
+</h1><h2 id="一些小问题2">
+<a class="header-anchor" href="#%e4%b8%80%e4%ba%9b%e5%b0%8f%e9%97%ae%e9%a2%982"></a>
+一些小问题2
+</h2><h3 id="explicit">
+<a class="header-anchor" href="#explicit"></a>
+explicit
+</h3><ul>
+<li>取消默认的隐式构造</li>
+</ul>
+<h3 id="heading">
+<a class="header-anchor" href="#heading"></a>
+[](){}
+</h3><ul>
+<li>[]中是 lambda 表达式的捕获列表（capture clause），用来指定 lambda 内部可以用哪些外部变量。</li>
+</ul>
+<hr>
+<h1 id="网络编程">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
+网络编程
+</h1><h2 id="分类">
+<a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
+分类
+</h2><ul>
+<li>Server会分配Session的连接</li>
+<li>Session具体读写</li>
+<li>MsgNode数据的缓存节点</li>
+</ul>
+<h2 id="一些问题的记录">
+<a class="header-anchor" href="#%e4%b8%80%e4%ba%9b%e9%97%ae%e9%a2%98%e7%9a%84%e8%ae%b0%e5%bd%95"></a>
+一些问题的记录
+</h2><ul>
+<li>Q:一个socket为什么有多个Session？</li>
+<li>因为一个连接会有多个对话</li>
+<li>Q:为什么socket必须要move</li>
+<li>因为socket的连接在一次连接只能有一次</li>
+<li>static_cast 是 C++ 里用于<strong>显式类型转换</strong>的运算符，写法是 <code>static_cast&lt;目标类型&gt;(表达式)</code>。它表示“在编译期按已知类型信息进行转换”，适用于类型之间本来就有明确转换关系的场景，比如数值转换、空指针转换、基类/派生类指针转换、调用 explicit 构造函数等。</li>
+<li><code>std::string::c_str()</code> 和 <code>std::string::data()</code> 在 C++11 之前有本质区别：<code>c_str()</code> 返回以 <code>\0</code> 结尾的 <code>const char*</code>，而 <code>data()</code> 返回的缓冲区<strong>不保证</strong>以 <code>\0</code> 结尾，只能当普通字符数组用。C++11 之后两者行为统一了：<code>data()</code> 也返回以 <code>\0</code> 结尾的 <code>const char*</code>，所以对 <code>std::string</code> 来说基本可以混用。唯一需要注意的是自 C++17 起，<code>data()</code> 还有一个非 <code>const</code> 重载，返回 <code>char*</code>，允许你直接修改字符串内容；而 <code>c_str()</code> 仍然只返回 <code>const char*</code>。至于 <code>std::string_view</code>，它只有 <code>data()</code>，且不保证 null 结尾，也没有 <code>c_str()</code>。</li>
+</ul>
+<h2 id="匿名函数实现的一个读取和写入">
+<a class="header-anchor" href="#%e5%8c%bf%e5%90%8d%e5%87%bd%e6%95%b0%e5%ae%9e%e7%8e%b0%e7%9a%84%e4%b8%80%e4%b8%aa%e8%af%bb%e5%8f%96%e5%92%8c%e5%86%99%e5%85%a5"></a>
+匿名函数实现的一个读取和写入
+</h2><ul>
+<li>头文件</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;boost/asio.hpp&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;cstring&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="cp">#define MAX_LEN 1024*2
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define HEAD_LEN 4
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define HEAD_ID_LEN 4
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">Messaging</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//消息体的缓存类
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造消息体
+</span></span></span><span class="line"><span class="cl">        <span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//析构消息体
+</span></span></span><span class="line"><span class="cl">        <span class="o">~</span><span class="n">MsgNode</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//清空缓存
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取缓冲区指针
+</span></span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="nf">GetBuf</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">buf</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取缓冲区总长度
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetTotalLen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">total_len</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 获取当前读取位置
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="nf">GetCurLen</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">cur_len</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 设置当前读取位置
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">SetCurLen</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span><span class="p">)</span> <span class="p">{</span> <span class="n">cur_len</span> <span class="o">=</span> <span class="n">len</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="k">protected</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">buf</span><span class="p">;</span><span class="c1">//消息体缓存
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">total_len</span><span class="p">;</span><span class="c1">//缓存数据大小
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">cur_len</span><span class="p">;</span><span class="c1">//当前读取到的位置
+</span></span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//读取类
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">RecvNode</span><span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">RecvNode</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="kt">int</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//消息ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">SendNode</span><span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">SendNode</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//消息ID
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//处理连接
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Session</span><span class="o">:</span><span class="k">public</span> <span class="n">std</span><span class="o">::</span><span class="n">enable_shared_from_this</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="c1">//具体读写措施类
+</span></span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">        <span class="k">explicit</span> <span class="n">Session</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">socket</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//外部启动函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步读函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读消息体函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">ReadBody</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步写函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Write</span><span class="p">(</span><span class="kt">int</span> <span class="p">,</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//工作函数
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="nf">Work</span><span class="p">(</span><span class="kt">int</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//保存socket
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读节点
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span> <span class="n">recv_node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//写节点
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span> <span class="n">send_node</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//头部长度
+</span></span></span><span class="line"><span class="cl">        <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">HEADER_LENGTH</span><span class="o">=</span><span class="n">HEAD_ID_LEN</span><span class="o">+</span><span class="n">HEAD_LEN</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//服务器主程序，分配Session
+</span></span></span><span class="line"><span class="cl">    <span class="k">class</span> <span class="nc">Server</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">public</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//构造Server
+</span></span></span><span class="line"><span class="cl">        <span class="n">Server</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="k">private</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//分配Session
+</span></span></span><span class="line"><span class="cl">        <span class="kt">void</span> <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">        <span class="c1">//连接的accept
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">acceptor</span> <span class="n">acceptor</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//管理连接socket
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span><span class="o">&gt;</span> <span class="n">sock</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//管理Session的连接
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;&gt;</span> <span class="n">sessions</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">};</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">start</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">s</span>
+</span></span></code></pre></div><ul>
+<li>实现</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&#34;messaging.h&#34;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="n">Messaging</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//构造函数
+</span></span></span><span class="line"><span class="cl">    <span class="n">MsgNode</span><span class="o">::</span><span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//计算出缓存空间
+</span></span></span><span class="line"><span class="cl">        <span class="n">total_len</span><span class="o">=</span><span class="n">max_len</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//设定指针
+</span></span></span><span class="line"><span class="cl">        <span class="n">cur_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//申请缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">buf</span><span class="o">=</span><span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">total_len</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//给最后一个空间为&#39;\0&#39;避免超出空间
+</span></span></span><span class="line"><span class="cl">        <span class="n">buf</span><span class="p">[</span><span class="n">total_len</span><span class="p">]</span><span class="o">=</span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//析构函数
+</span></span></span><span class="line"><span class="cl">    <span class="n">MsgNode</span><span class="o">::~</span><span class="n">MsgNode</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//直接删除动态函数
+</span></span></span><span class="line"><span class="cl">        <span class="k">delete</span><span class="p">[]</span> <span class="n">buf</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;deleted buf&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//清空缓存
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">MsgNode</span><span class="o">::</span><span class="n">Clear</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//给缓存赋值为&#39;\0&#39;
+</span></span></span><span class="line"><span class="cl">        <span class="o">::</span><span class="n">memset</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="sc">&#39;\0&#39;</span><span class="p">,</span><span class="n">total_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//移动指针复位
+</span></span></span><span class="line"><span class="cl">        <span class="n">cur_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;cleared buf&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//接收节点
+</span></span></span><span class="line"><span class="cl">    <span class="n">RecvNode</span><span class="o">::</span><span class="n">RecvNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">_msg_id</span><span class="p">)</span><span class="o">:</span><span class="n">MsgNode</span><span class="p">(</span><span class="n">max_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获得ID
+</span></span></span><span class="line"><span class="cl">        <span class="n">msg_id</span><span class="o">=</span><span class="n">_msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//发送节点
+</span></span></span><span class="line"><span class="cl">    <span class="n">SendNode</span><span class="o">::</span><span class="n">SendNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">,</span><span class="kt">int</span> <span class="n">_msg_id</span><span class="p">)</span><span class="o">:</span><span class="n">MsgNode</span><span class="p">(</span><span class="n">max_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//发送ID
+</span></span></span><span class="line"><span class="cl">        <span class="n">msg_id</span><span class="o">=</span><span class="n">_msg_id</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//构造Session
+</span></span></span><span class="line"><span class="cl">    <span class="n">Session</span><span class="o">::</span><span class="n">Session</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">socket</span><span class="p">)</span><span class="o">:</span><span class="n">sock</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">socket</span><span class="p">))</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//Session调用的启动函数
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Start</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//读数据
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">ReadHead</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//先读取到头部的消息ID和消息长度
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">HEADER_LENGTH</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//初始化缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保活
+</span></span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//读取数据
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_read</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//判断是否有错误
+</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span><span class="p">(</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                            <span class="c1">//有，输出错误并返回
+</span></span></span><span class="line"><span class="cl">                            <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;error in run , value is : &#34;</span><span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//获取读缓存指针
+</span></span></span><span class="line"><span class="cl">                        <span class="kt">char</span><span class="o">*</span> <span class="n">header</span> <span class="o">=</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//获取信息ID和信息长度
+</span></span></span><span class="line"><span class="cl">                        <span class="kt">int</span> <span class="n">msg_id</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="kt">int</span> <span class="n">msg_len</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">                        <span class="c1">//将信息ID和信息长度，读出缓存
+</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg_id</span><span class="p">,</span><span class="n">header</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg_len</span><span class="p">,</span><span class="n">header</span><span class="o">+</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//打印提示
+</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;recviced message ,ID: &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_id</span><span class="o">&lt;&lt;</span><span class="s">&#34; and len : &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_len</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">//调用读信息函数
+</span></span></span><span class="line"><span class="cl">                        <span class="n">ReadBody</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">msg_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//异步读消息体
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">ReadBody</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span><span class="kt">int</span> <span class="n">msg_len</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//创建读缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">RecvNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg_len</span><span class="p">,</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//清空创建缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">Clear</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_read</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">,</span><span class="n">msg_id</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//判断是否有错误
+</span></span></span><span class="line"><span class="cl">                                <span class="k">if</span><span class="p">(</span><span class="n">ec</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//有，输出错误并返回
+</span></span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;error in run , value is : &#34;</span><span class="o">&lt;&lt;</span> <span class="n">ec</span><span class="p">.</span><span class="n">message</span><span class="p">()</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                    <span class="k">return</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//设置读的长度
+</span></span></span><span class="line"><span class="cl">                                <span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">SetCurLen</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//获得消息
+</span></span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">msg</span><span class="p">(</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">recv_node</span><span class="o">-&gt;</span><span class="n">GetCurLen</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">                                <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;recivced id : &#34;</span><span class="o">&lt;&lt;</span><span class="n">msg_id</span><span class="o">&lt;&lt;</span><span class="s">&#34; message is :&#34;</span><span class="o">&lt;&lt;</span><span class="n">msg</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                                <span class="c1">//调用工作函数
+</span></span></span><span class="line"><span class="cl">                                <span class="n">Work</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">msg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//工作函数
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Work</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">str</span><span class="o">=</span><span class="s">&#34;recivced message&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Write</span><span class="p">(</span><span class="n">msg_id</span><span class="p">,</span><span class="n">str</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//异步写函数
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Session</span><span class="o">::</span><span class="n">Write</span><span class="p">(</span><span class="kt">int</span> <span class="n">msg_id</span><span class="p">,</span> <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">msg</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//计算发送缓存大小
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">total_len</span><span class="o">=</span><span class="n">HEADER_LENGTH</span><span class="o">+</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//创建发送换存
+</span></span></span><span class="line"><span class="cl">        <span class="n">send_node</span><span class="o">=</span><span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">SendNode</span><span class="o">&gt;</span><span class="p">(</span><span class="n">total_len</span><span class="p">,</span><span class="n">msg_id</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取创建的缓存指针
+</span></span></span><span class="line"><span class="cl">        <span class="kt">char</span><span class="o">*</span> <span class="n">buf</span> <span class="o">=</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//获取消息体长度
+</span></span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">value_len</span><span class="o">=</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将msg_id拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="o">&amp;</span><span class="n">msg_id</span><span class="p">,</span><span class="n">HEAD_ID_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将msg_len拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="n">HEAD_ID_LEN</span><span class="p">,</span><span class="o">&amp;</span><span class="n">value_len</span><span class="p">,</span><span class="n">HEAD_LEN</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//将消息拷贝进缓存
+</span></span></span><span class="line"><span class="cl">        <span class="n">std</span><span class="o">::</span><span class="n">memcpy</span><span class="p">(</span><span class="n">buf</span><span class="o">+</span><span class="n">HEADER_LENGTH</span><span class="p">,</span><span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">(),</span><span class="n">value_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//设置发送体的长度
+</span></span></span><span class="line"><span class="cl">        <span class="n">send_node</span><span class="o">-&gt;</span><span class="n">SetCurLen</span><span class="p">(</span><span class="n">total_len</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//保活
+</span></span></span><span class="line"><span class="cl">        <span class="k">auto</span> <span class="n">self</span><span class="o">=</span><span class="n">shared_from_this</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步发送
+</span></span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">async_write</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sock</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">buffer</span><span class="p">(</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">GetBuf</span><span class="p">(),</span><span class="n">send_node</span><span class="o">-&gt;</span><span class="n">GetTotalLen</span><span class="p">()),</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">,</span><span class="n">self</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span><span class="n">std</span><span class="o">::</span><span class="n">size_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">ec</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="o">&lt;&lt;</span><span class="s">&#34;sended message&#34;</span><span class="o">&lt;&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">ReadHead</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//初始化Server
+</span></span></span><span class="line"><span class="cl">    <span class="n">Server</span><span class="o">::</span><span class="n">Server</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span><span class="o">&amp;</span> <span class="n">ioc</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">:</span><span class="n">acceptor</span><span class="p">(</span><span class="n">ioc</span><span class="p">,</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">endpoint</span><span class="p">(</span><span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">v4</span><span class="p">(),</span><span class="n">port</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">//为连接创建Session
+</span></span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="n">Server</span><span class="o">::</span><span class="n">To_Session</span><span class="p">(){</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//异步读
+</span></span></span><span class="line"><span class="cl">        <span class="n">acceptor</span><span class="p">.</span><span class="n">async_accept</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">            <span class="p">[</span><span class="k">this</span><span class="p">](</span><span class="k">const</span> <span class="n">boost</span><span class="o">::</span><span class="n">system</span><span class="o">::</span><span class="n">error_code</span><span class="o">&amp;</span> <span class="n">ec</span><span class="p">,</span> <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">ip</span><span class="o">::</span><span class="n">tcp</span><span class="o">::</span><span class="n">socket</span> <span class="n">socket</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">ec</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;客户端已连接</span><span class="se">\n</span><span class="s">&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">                <span class="k">auto</span> <span class="n">session</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Session</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">socket</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sessions</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">session</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">                <span class="n">session</span><span class="o">-&gt;</span><span class="n">Start</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">//继续接受下一个连接
+</span></span></span><span class="line"><span class="cl">            <span class="n">To_Session</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">            <span class="p">});</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">start</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">port</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">        <span class="n">boost</span><span class="o">::</span><span class="n">asio</span><span class="o">::</span><span class="n">io_context</span> <span class="n">io</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">Server</span> <span class="n">server</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">port</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">io</span><span class="p">.</span><span class="n">run</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><hr>
+        
+        <hr><p>本文2026-08-05首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-05</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -1421,6 +2380,41 @@ c++的小问题1
 </h2><h3 id="设置控制台">
 <a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e6%8e%a7%e5%88%b6%e5%8f%b0"></a>
 设置控制台
+</h3><hr>
+<h1 id="0805">
+<a class="header-anchor" href="#0805"></a>
+0805
+</h1><h2 id="cpp">
+<a class="header-anchor" href="#cpp"></a>
+cpp
+</h2><h3 id="heading">
+<a class="header-anchor" href="#heading"></a>
+[](){}
+</h3><h3 id="explicit">
+<a class="header-anchor" href="#explicit"></a>
+explicit
+</h3><h2 id="网络编程-1">
+<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b-1"></a>
+网络编程
+</h2><h3 id="分类">
+<a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
+分类
+</h3><h3 id="匿名函数的实现">
+<a class="header-anchor" href="#%e5%8c%bf%e5%90%8d%e5%87%bd%e6%95%b0%e7%9a%84%e5%ae%9e%e7%8e%b0"></a>
+匿名函数的实现
+</h3><hr>
+<h1 id="0806">
+<a class="header-anchor" href="#0806"></a>
+0806
+</h1><h2 id="rust-3">
+<a class="header-anchor" href="#rust-3"></a>
+RUST
+</h2><h2 id="mysql连接池-2">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-2"></a>
+MySQL连接池
+</h2><h3 id="功能描述">
+<a class="header-anchor" href="#%e5%8a%9f%e8%83%bd%e6%8f%8f%e8%bf%b0"></a>
+功能描述
 </h3><hr>
 <h1 id="08计划">
 <a class="header-anchor" href="#08%e8%ae%a1%e5%88%92"></a>
@@ -3183,517 +4177,6 @@ v-for
 </span></span></code></pre></div><hr>
         
         <hr><p>本文2026-07-29首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-29</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260728 总结</title>
-      <link>http://localhost:1313/post/2026-07-28-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Tue, 28 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-28-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260728 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <hr>
-<h1 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h1><h2 id="服务器逻辑层的架构设计">
-<a class="header-anchor" href="#%e6%9c%8d%e5%8a%a1%e5%99%a8%e9%80%bb%e8%be%91%e5%b1%82%e7%9a%84%e6%9e%b6%e6%9e%84%e8%ae%be%e8%ae%a1"></a>
-服务器逻辑层的架构设计
-</h2><h3 id="不使用逻辑">
-<a class="header-anchor" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8%e9%80%bb%e8%be%91"></a>
-不使用逻辑
-</h3><ul>
-<li>Session层注册一个读事件</li>
-<li>asio网络层io_context获取事件，再用对应的操作系统注册模型</li>
-<li>然后放入回调函数队列</li>
-<li>再返回给对端</li>
-</ul>
-<h3 id="将处理剥离">
-<a class="header-anchor" href="#%e5%b0%86%e5%a4%84%e7%90%86%e5%89%a5%e7%a6%bb"></a>
-将处理剥离
-</h3><ul>
-<li>将数据投递逻辑队列</li>
-<li>逻辑系统获取数据</li>
-<li>返回结果</li>
-</ul>
-<h4 id="优势">
-<a class="header-anchor" href="#%e4%bc%98%e5%8a%bf"></a>
-优势
-</h4><h5 id="不使用">
-<a class="header-anchor" href="#%e4%b8%8d%e4%bd%bf%e7%94%a8"></a>
-不使用:
-</h5><ul>
-<li>减小单线程的阻塞时间，避免无法处理新线程，形成伪阻塞影响并发</li>
-<li>多线程下，回调函数后，会减轻队列阻塞压力</li>
-</ul>
-<h3 id="tlv">
-<a class="header-anchor" href="#tlv"></a>
-tlv
-</h3><h4 id="定义消息节点">
-<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
-定义消息节点
-</h4><ul>
-<li>加入消息id</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">MsgNode</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="k">friend</span> <span class="k">class</span> <span class="nc">Session</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">MsgNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">max_len</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_total_len</span> <span class="o">=</span> <span class="n">max_len</span> <span class="o">+</span> <span class="n">HEAD_LEN</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_cur_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="p">[</span><span class="n">_total_len</span> <span class="o">+</span> <span class="mi">1</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_data</span><span class="p">[</span><span class="n">_total_len</span><span class="p">]</span> <span class="o">=</span> <span class="sc">&#39;\0&#39;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="o">~</span><span class="n">MsgNode</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">delete</span><span class="p">[]</span> <span class="n">_data</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">		<span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&#34;Msg is delete.&#34;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">void</span> <span class="nf">Clear</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="o">::</span><span class="n">memset</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">_total_len</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">		<span class="n">_cur_len</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="k">protected</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_cur_len</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">int</span> <span class="n">_total_len</span><span class="p">{</span><span class="mi">0</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">char</span><span class="o">*</span> <span class="n">_data</span><span class="p">{</span><span class="k">nullptr</span><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><h4 id="接收消息节点">
-<a class="header-anchor" href="#%e6%8e%a5%e6%94%b6%e6%b6%88%e6%81%af%e8%8a%82%e7%82%b9"></a>
-接收消息节点
-</h4><ul>
-<li>head</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">RecvNode</span> <span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">RecvNode</span><span class="p">(</span><span class="kt">short</span> <span class="n">max_len</span><span class="p">,</span> <span class="kt">short</span> <span class="n">msg_id</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">short</span> <span class="n">_msg_id</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><ul>
-<li>source</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"></code></pre></div><h4 id="发送节点">
-<a class="header-anchor" href="#%e5%8f%91%e9%80%81%e8%8a%82%e7%82%b9"></a>
-发送节点
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">SendNode</span> <span class="o">:</span><span class="k">public</span> <span class="n">MsgNode</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl"><span class="k">public</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="n">SendNode</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">short</span> <span class="n">max_len</span><span class="p">,</span> <span class="kt">short</span> <span class="n">msg_id</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="k">private</span><span class="o">:</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">short</span> <span class="n">_msg_id</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span></code></pre></div><ul>
-<li>source</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">SendNode</span><span class="o">::</span><span class="n">SendNode</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">msg</span><span class="p">,</span> <span class="kt">short</span> <span class="n">max_len</span><span class="p">,</span> <span class="kt">short</span> <span class="n">msg_id</span><span class="p">)</span> <span class="o">:</span><span class="n">MsgNode</span><span class="p">(</span><span class="n">max_len</span><span class="o">+</span><span class="n">HEAD_TOTAL</span><span class="p">),</span><span class="n">_msg_id</span><span class="p">(</span><span class="n">msg_id</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="kt">short</span> <span class="n">msg_id_host</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">socket_ops</span><span class="o">::</span><span class="n">host_to_network_short</span><span class="p">(</span><span class="n">msg_id</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">memcpy</span><span class="p">(</span><span class="n">_data</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">msg_id_host</span><span class="p">,</span> <span class="n">HEAD_ID_LEN</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="kt">short</span> <span class="n">max_len_host</span> <span class="o">=</span> <span class="n">detail</span><span class="o">::</span><span class="n">socket_ops</span><span class="o">::</span><span class="n">host_to_network_short</span><span class="p">(</span><span class="n">max_len</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">memcpy</span><span class="p">(</span><span class="n">_data</span> <span class="o">+</span> <span class="n">HEAD_ID_LEN</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">max_len_host</span><span class="p">,</span> <span class="n">HEAD_DATA_LEN</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	<span class="n">memcpy</span><span class="p">(</span><span class="n">_data</span> <span class="o">+</span> <span class="n">HEAD_TOTAL</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">max_len</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h1 id="mysql">
-<a class="header-anchor" href="#mysql"></a>
-mysql
-</h1><h2 id="索引3">
-<a class="header-anchor" href="#%e7%b4%a2%e5%bc%953"></a>
-索引3
-</h2><h3 id="创建索引">
-<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e7%b4%a2%e5%bc%95"></a>
-创建索引
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="p">(</span><span class="n">row_name</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>能显著提升查询效率</li>
-</ul>
-<h3 id="最左前缀法则">
-<a class="header-anchor" href="#%e6%9c%80%e5%b7%a6%e5%89%8d%e7%bc%80%e6%b3%95%e5%88%99"></a>
-最左前缀法则
-</h3><ul>
-<li>联合索引就要最左前缀，从索引的最左列开始，且不跳过索引的列</li>
-</ul>
-<h3 id="索引失效">
-<a class="header-anchor" href="#%e7%b4%a2%e5%bc%95%e5%a4%b1%e6%95%88"></a>
-索引失效
-</h3><h4 id="模糊查询失效">
-<a class="header-anchor" href="#%e6%a8%a1%e7%b3%8a%e6%9f%a5%e8%af%a2%e5%a4%b1%e6%95%88"></a>
-模糊查询失效
-</h4><ul>
-<li>模糊索引的左侧不能模糊，不然不使用索引</li>
-</ul>
-<h4 id="or连接的条件">
-<a class="header-anchor" href="#or%e8%bf%9e%e6%8e%a5%e7%9a%84%e6%9d%a1%e4%bb%b6"></a>
-or连接的条件
-</h4><ul>
-<li>必须要查询的两列都得有索引不然设计的索引都不会用到</li>
-</ul>
-<h4 id="数据分部影响">
-<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e5%88%86%e9%83%a8%e5%bd%b1%e5%93%8d"></a>
-数据分部影响
-</h4><ul>
-<li>MySQL评估使用索引比全表扫描慢，则不使用索引</li>
-</ul>
-<h3 id="sql提示">
-<a class="header-anchor" href="#sql%e6%8f%90%e7%a4%ba"></a>
-SQL提示
-</h3><ul>
-<li>认为提示达到优化操作目的</li>
-</ul>
-<h4 id="use-index">
-<a class="header-anchor" href="#use-index"></a>
-use index
-</h4><ul>
-<li>使用哪个索引</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">tb_user</span><span class="w"> </span><span class="n">use</span><span class="w"> </span><span class="k">index</span><span class="p">(</span><span class="n">idx_name</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">row_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s2">&#34;%&#34;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h4 id="ignore-index">
-<a class="header-anchor" href="#ignore-index"></a>
-ignore index
-</h4><ul>
-<li>不使用哪个索引</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">tb_user</span><span class="w"> </span><span class="k">ignore</span><span class="w"> </span><span class="k">index</span><span class="p">(</span><span class="n">idx_name</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">row_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s2">&#34;%&#34;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h4 id="force-index">
-<a class="header-anchor" href="#force-index"></a>
-force index
-</h4><ul>
-<li>必须使用的索引</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">tb_user</span><span class="w"> </span><span class="k">force</span><span class="w"> </span><span class="k">index</span><span class="p">(</span><span class="n">idx_name</span><span class="p">)</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">row_name</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s2">&#34;%&#34;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><hr>
-<h1 id="vue3">
-<a class="header-anchor" href="#vue3"></a>
-vue3
-</h1><h2 id="模版插值">
-<a class="header-anchor" href="#%e6%a8%a1%e7%89%88%e6%8f%92%e5%80%bc"></a>
-模版插值
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">test</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">msg</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">hello</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">msg</span><span class="o">:</span> <span class="s2">&#34;magic&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">hello</span><span class="o">:</span> <span class="s2">&#34;hello world&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>如上实现了插入了p3标签&quot;test&quot;和键值对&quot;msg&quot;与&quot;hello&quot;的插入网页</li>
-<li>花括号仅支持单一表达式，即一段可以被求值的js代码，（可以通过能否合法的写在return后面，必须要return的结果）（if else不行，因为要单行的）</li>
-</ul>
-<h2 id="运算">
-<a class="header-anchor" href="#%e8%bf%90%e7%ae%97"></a>
-运算
-</h2><ul>
-<li>三目(?:)</li>
-<li>:键值对</li>
-<li>{{}}插值</li>
-</ul>
-<h3 id="原始html">
-<a class="header-anchor" href="#%e5%8e%9f%e5%a7%8bhtml"></a>
-原始html
-</h3><ul>
-<li>双花括号将数据插值为纯文本，而非html</li>
-<li>想插入html你需要使用v-html指令</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">test</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span> <span class="nt">v-html</span><span class="o">=</span><span class="s">&#34;rawhtml&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">rawhtml</span><span class="o">:</span> <span class="sb">`&lt;a href=&#39;src/test.html&#39;&gt;testweb&lt;/a&gt;`</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>如实现了一个跳转test.html的方法</li>
-<li>PS:test.html的文件源码</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="c">&lt;!--test.html的文件源码--&gt;</span>&gt;
-</span></span><span class="line"><span class="cl"><span class="cp">&lt;!DOCTYPE html&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&#34;CN&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&#34;UTF-8&#34;</span> <span class="p">/&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0&#34;</span> <span class="p">/&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>test html<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>test<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h3 id="属性的绑定">
-<a class="header-anchor" href="#%e5%b1%9e%e6%80%a7%e7%9a%84%e7%bb%91%e5%ae%9a"></a>
-属性的绑定
-</h3><ul>
-<li>双大括号不能再HTML的attributes（属性）中使用，响应式的绑定一个attribute，应使用v-bind</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">msg</span><span class="o">:</span><span class="s2">&#34;active&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="na">v</span><span class="nt">-bind:class</span><span class="o">=</span><span class="s">&#34;msg&#34;</span><span class="p">&gt;</span><span class="nx">测试</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>实现了将msg的值绑定到了标签上</li>
-<li>所有的属性都可以使用v-bind:attributes_name实现</li>
-<li>如果绑定值为null和undefined，那么该属性将会从渲染的元素上移除</li>
-</ul>
-<h4 id="简写">
-<a class="header-anchor" href="#%e7%ae%80%e5%86%99"></a>
-简写
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="nt">:attributes_name</span><span class="o">=</span><span class="s">&#34;key&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>如上为一种绑定简写的形式</li>
-</ul>
-<h4 id="布尔型">
-<a class="header-anchor" href="#%e5%b8%83%e5%b0%94%e5%9e%8b"></a>
-布尔型
-</h4><ul>
-<li>根据是否true/false来决定是否应该存在于该元素上</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">test</span><span class="o">:</span><span class="kc">true</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">:disabled</span><span class="o">=</span><span class="s">&#34;test&#34;</span><span class="p">&gt;</span><span class="nx">test</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>实现了一个不可点击的按钮</li>
-</ul>
-<h4 id="动态绑定多个值">
-<a class="header-anchor" href="#%e5%8a%a8%e6%80%81%e7%bb%91%e5%ae%9a%e5%a4%9a%e4%b8%aa%e5%80%bc"></a>
-动态绑定多个值
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">(){</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">obj</span><span class="o">:</span><span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">test</span><span class="o">:</span><span class="nx">aaa</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">dis</span><span class="o">:</span><span class="nx">red</span>
-</span></span><span class="line"><span class="cl">      <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">v-bind</span><span class="o">=</span><span class="s">&#34;obj&#34;</span><span class="p">&gt;</span><span class="na">测试</span><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>实现多个属性的动态绑定</li>
-</ul>
-<hr>
-        
-        <hr><p>本文2026-07-28首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-28</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260727总结</title>
-      <link>http://localhost:1313/post/2026-07-27-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Mon, 27 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-27-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260727总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <hr>
-<h1 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h1><h2 id="asio的粘包处理">
-<a class="header-anchor" href="#asio%e7%9a%84%e7%b2%98%e5%8c%85%e5%a4%84%e7%90%86"></a>
-asio的粘包处理
-</h2><h3 id="async_read">
-<a class="header-anchor" href="#async_read"></a>
-async_read
-</h3><ul>
-<li>对比async_read_some,async_read这个函数指定读取字节数只有读完才调用回调函数</li>
-<li>使用HandleReadHEAD读取同步，再用HandleReadMsg去读</li>
-<li>再在start()改为读头的回调函数</li>
-</ul>
-<hr>
-<h1 id="mysql">
-<a class="header-anchor" href="#mysql"></a>
-MySQL
-</h1><h2 id="索引2">
-<a class="header-anchor" href="#%e7%b4%a2%e5%bc%952"></a>
-索引2
-</h2><h3 id="索引语法">
-<a class="header-anchor" href="#%e7%b4%a2%e5%bc%95%e8%af%ad%e6%b3%95"></a>
-索引语法
-</h3><h4 id="创建">
-<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
-创建
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">create</span><span class="w"> </span><span class="p">[</span><span class="k">unique</span><span class="p">][</span><span class="n">fulltext</span><span class="p">]</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="n">taable_name</span><span class="w"> </span><span class="p">(</span><span class="n">index_col_name</span><span class="p">);</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>创建一个唯一/联合索引</li>
-</ul>
-<h4 id="查看">
-<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b"></a>
-查看
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>查看表中的所有索引</li>
-</ul>
-<h4 id="删除索引">
-<a class="header-anchor" href="#%e5%88%a0%e9%99%a4%e7%b4%a2%e5%bc%95"></a>
-删除索引
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">drop</span><span class="w"> </span><span class="k">index</span><span class="w"> </span><span class="n">index_name</span><span class="w"> </span><span class="k">on</span><span class="w"> </span><span class="k">table_name</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h3 id="sql性能分析">
-<a class="header-anchor" href="#sql%e6%80%a7%e8%83%bd%e5%88%86%e6%9e%90"></a>
-sql性能分析
-</h3><h4 id="sql执行频率">
-<a class="header-anchor" href="#sql%e6%89%a7%e8%a1%8c%e9%a2%91%e7%8e%87"></a>
-sql执行频率
-</h4><h5 id="查看服务状态">
-<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b%e6%9c%8d%e5%8a%a1%e7%8a%b6%e6%80%81"></a>
-查看服务状态
-</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="k">global</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="s1">&#39;com________&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>value值记录了使用语句次数</li>
-</ul>
-<h4 id="慢查询日志">
-<a class="header-anchor" href="#%e6%85%a2%e6%9f%a5%e8%af%a2%e6%97%a5%e5%bf%97"></a>
-慢查询日志
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"></code></pre></div><ul>
-<li>记录了所有执行时间超过指定参数的索引sql日志</li>
-<li>默认关闭</li>
-</ul>
-<h4 id="profile">
-<a class="header-anchor" href="#profile"></a>
-profile
-</h4><ul>
-<li>查看是否支持</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">select</span><span class="w"> </span><span class="o">@@</span><span class="n">have_profiling</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>设置</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">set</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><h5 id="使用">
-<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8"></a>
-使用
-</h5><ul>
-<li>耗时</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">profile</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>各语句的事务</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">profile</span><span class="w"> </span><span class="p">[</span><span class="n">cpu</span><span class="p">]</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="n">id</span><span class="w">
-</span></span></span></code></pre></div><h3 id="explain执行计划">
-<a class="header-anchor" href="#explain%e6%89%a7%e8%a1%8c%e8%ae%a1%e5%88%92"></a>
-explain执行计划
-</h3><ul>
-<li>查询</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="n">explanin</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="err">……</span><span class="w">
-</span></span></span></code></pre></div><h4 id="id">
-<a class="header-anchor" href="#id"></a>
-id
-</h4><ul>
-<li>执行顺序</li>
-</ul>
-<h4 id="slecet_table">
-<a class="header-anchor" href="#slecet_table"></a>
-slecet_table
-</h4><ul>
-<li>表示selectr类型</li>
-</ul>
-<h4 id="type">
-<a class="header-anchor" href="#type"></a>
-type
-</h4><ul>
-<li>表示连接类型</li>
-</ul>
-<h4 id="possible_keys">
-<a class="header-anchor" href="#possible_keys"></a>
-possible_keys
-</h4><ul>
-<li>可能用到的索引</li>
-</ul>
-<h4 id="key">
-<a class="header-anchor" href="#key"></a>
-key
-</h4><ul>
-<li>实际用的索引</li>
-</ul>
-<h4 id="key_len">
-<a class="header-anchor" href="#key_len"></a>
-key_len
-</h4><ul>
-<li>索引的最大长度</li>
-</ul>
-<h4 id="rows">
-<a class="header-anchor" href="#rows"></a>
-rows
-</h4><ul>
-<li>预估查询的行数</li>
-</ul>
-<h4 id="filtered">
-<a class="header-anchor" href="#filtered"></a>
-filtered
-</h4><ul>
-<li>返回的行数和查询行数的百分比</li>
-</ul>
-<hr>
-<h1 id="vue3">
-<a class="header-anchor" href="#vue3"></a>
-vue3
-</h1><h2 id="结构">
-<a class="header-anchor" href="#%e7%bb%93%e6%9e%84"></a>
-结构
-</h2><ul>
-<li>pubilc:标签页图标</li>
-<li>src:源码</li>
-<li>index.html:入口的html</li>
-<li>pakge.json描述信息</li>
-<li>vit.config.json配置文件夹</li>
-</ul>
-<hr>
-        
-        <hr><p>本文2026-07-27首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-27</p>]]>
       </description>
       
     </item>
