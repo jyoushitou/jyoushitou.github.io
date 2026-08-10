@@ -12,12 +12,93 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Sat, 08 Aug 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 10 Aug 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260810 总结</title>
+      <link>http://localhost:1313/post/2026-08-10-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Mon, 10 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-10-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260810 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="枚举">
+<a class="header-anchor" href="#%e6%9e%9a%e4%b8%be"></a>
+枚举
+</h2><ul>
+<li>自定义数据类型</li>
+<li>允许我们列举所有值</li>
+<li>允许直接附加到结构体中</li>
+<li>常用于ip地址</li>
+</ul>
+<h3 id="定义">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
+定义
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">enum</span> <span class="nc">IpAddrKind</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">v4</span><span class="p">,</span><span class="n">v6</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">four</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IpAddrKind</span>::<span class="n">v4</span><span class="p">;</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>也可以用impl为枚举定义方法</li>
+</ul>
+<h3 id="option">
+<a class="header-anchor" href="#option"></a>
+option
+</h3><ul>
+<li>定义于标注库</li>
+<li>Rust没有NULL，所以提供了Option<!-- raw HTML omitted -->的枚举</li>
+<li>可直接使用</li>
+<li>想使用Option[<!-- raw HTML omitted -->]，必须显示化T</li>
+</ul>
+<h3 id="match">
+<a class="header-anchor" href="#match"></a>
+match
+</h3><ul>
+<li>运行时，值和代码模式匹配</li>
+<li>可以作为模式的返回值继续返回</li>
+<li>匹配时必须穷举所有的可能型</li>
+</ul>
+<h4 id="绑定值">
+<a class="header-anchor" href="#%e7%bb%91%e5%ae%9a%e5%80%bc"></a>
+绑定值
+</h4><ul>
+<li>匹配分支可以匹配对象的部分值</li>
+</ul>
+<h3 id="if-let">
+<a class="header-anchor" href="#if-let"></a>
+if let
+</h3><ul>
+<li>针对一种模式匹配</li>
+</ul>
+<h1 id="连接池">
+<a class="header-anchor" href="#%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
+连接池
+</h1><h2 id="单例的线程安全的">
+<a class="header-anchor" href="#%e5%8d%95%e4%be%8b%e7%9a%84%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84"></a>
+单例的线程安全的
+</h2><h3 id="线程安全的方式有">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e6%96%b9%e5%bc%8f%e6%9c%89"></a>
+线程安全的方式有：
+</h3><h4 id="1-互斥锁-stdmutex--stdlock_guard">
+<a class="header-anchor" href="#1-%e4%ba%92%e6%96%a5%e9%94%81-stdmutex--stdlock_guard"></a>
+1. 互斥锁 <code>std::mutex</code> + <code>std::lock_guard</code>
+</h4><p>最基础、最常用。保护一段临界区代码，同一时刻只有一个线程能进入。</p>
+        
+        <hr><p>本文2026-08-10首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-10</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -3508,6 +3589,47 @@ CSS
 </h2><h3 id="css-定位与-flex-布局">
 <a class="header-anchor" href="#css-%e5%ae%9a%e4%bd%8d%e4%b8%8e-flex-%e5%b8%83%e5%b1%80"></a>
 CSS 定位与 Flex 布局
+</h3><h2 id="unity">
+<a class="header-anchor" href="#unity"></a>
+unity
+</h2><h3 id="界面">
+<a class="header-anchor" href="#%e7%95%8c%e9%9d%a2"></a>
+界面
+</h3><hr>
+<h1 id="0809">
+<a class="header-anchor" href="#0809"></a>
+0809
+</h1><h2 id="修复了收发端">
+<a class="header-anchor" href="#%e4%bf%ae%e5%a4%8d%e4%ba%86%e6%94%b6%e5%8f%91%e7%ab%af"></a>
+修复了收发端
+</h2><h2 id="玩了一天mc">
+<a class="header-anchor" href="#%e7%8e%a9%e4%ba%86%e4%b8%80%e5%a4%a9mc"></a>
+玩了一天mc
+</h2><hr>
+<h1 id="0810">
+<a class="header-anchor" href="#0810"></a>
+0810
+</h1><h2 id="rust-5">
+<a class="header-anchor" href="#rust-5"></a>
+Rust
+</h2><h2 id="mysql连接池-4">
+<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-4"></a>
+MySQL连接池
+</h2><h3 id="线程安全的方法">
+<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e6%96%b9%e6%b3%95"></a>
+线程安全的方法
+</h3><h2 id="grid-与响应式设计">
+<a class="header-anchor" href="#grid-%e4%b8%8e%e5%93%8d%e5%ba%94%e5%bc%8f%e8%ae%be%e8%ae%a1"></a>
+Grid 与响应式设计
+</h2><h2 id="unity-1">
+<a class="header-anchor" href="#unity-1"></a>
+unity
+</h2><h3 id="game窗口">
+<a class="header-anchor" href="#game%e7%aa%97%e5%8f%a3"></a>
+Game窗口
+</h3><h3 id="project窗口">
+<a class="header-anchor" href="#project%e7%aa%97%e5%8f%a3"></a>
+Project窗口
 </h3><hr>
 <h1 id="08计划">
 <a class="header-anchor" href="#08%e8%ae%a1%e5%88%92"></a>
@@ -3546,27 +3668,27 @@ vue3/html/js/css 20天纯前端计划（每天1-2h）
 <a class="header-anchor" href="#%e7%ac%ac4%e5%a4%a9css-%e5%ae%9a%e4%bd%8d%e4%b8%8e-flex-%e5%b8%83%e5%b1%801-2h"></a>
 第4天：CSS 定位与 Flex 布局（1-2h）
 </h3><ul>
-<li><input disabled="" type="checkbox"> position（static、relative、absolute、fixed、sticky）与 z-index <code> [CSS]</code> → 📝 任务：实现吸顶导航（sticky）+ 悬浮返回按钮（fixed）</li>
-<li><input disabled="" type="checkbox"> Flex 容器属性（direction、wrap、justify-content、align-items） <code> [CSS]</code> → 📝 任务：Flex 实现水平垂直居中</li>
-<li><input disabled="" type="checkbox"> Flex 项目属性（grow、shrink、basis、order） <code> [CSS]</code> → 📝 任务：3 列等宽卡片 + 某个项目放大</li>
+<li><input checked="" disabled="" type="checkbox"> position（static、relative、absolute、fixed、sticky）与 z-index <code> [CSS]</code> → 📝 任务：实现吸顶导航（sticky）+ 悬浮返回按钮（fixed）</li>
+<li><input checked="" disabled="" type="checkbox"> Flex 容器属性（direction、wrap、justify-content、align-items） <code> [CSS]</code> → 📝 任务：Flex 实现水平垂直居中</li>
+<li><input checked="" disabled="" type="checkbox"> Flex 项目属性（grow、shrink、basis、order） <code> [CSS]</code> → 📝 任务：3 列等宽卡片 + 某个项目放大</li>
 <li><input disabled="" type="checkbox"> 练习：导航栏 + 卡片列表 <code> [CSS]</code> → 📝 任务：制作你博客的导航菜单 + 文章卡片流</li>
 </ul>
 <h3 id="第5天grid-与响应式设计1-2h">
 <a class="header-anchor" href="#%e7%ac%ac5%e5%a4%a9grid-%e4%b8%8e%e5%93%8d%e5%ba%94%e5%bc%8f%e8%ae%be%e8%ae%a11-2h"></a>
 第5天：Grid 与响应式设计（1-2h）
 </h3><ul>
-<li><input disabled="" type="checkbox"> Grid 容器属性（template-columns/rows、gap、areas） <code> [CSS]</code> → 📝 任务：grid-template-areas 画页面布局</li>
-<li><input disabled="" type="checkbox"> Grid 项目属性（column/row 范围、area 命名） <code> [CSS]</code> → 📝 任务：实现跨行跨列网格</li>
-<li><input disabled="" type="checkbox"> 媒体查询 + viewport + rem 移动端适配 <code> [CSS]</code> → 📝 任务：在 3 个断点调整布局</li>
+<li><input checked="" disabled="" type="checkbox"> Grid 容器属性（template-columns/rows、gap、areas） <code> [CSS]</code> → 📝 任务：grid-template-areas 画页面布局</li>
+<li><input checked="" disabled="" type="checkbox"> Grid 项目属性（column/row 范围、area 命名） <code> [CSS]</code> → 📝 任务：实现跨行跨列网格</li>
+<li><input checked="" disabled="" type="checkbox"> 媒体查询 + viewport + rem 移动端适配 <code> [CSS]</code> → 📝 任务：在 3 个断点调整布局</li>
 <li><input disabled="" type="checkbox"> 练习：响应式九宫格 + 圣杯布局 <code> [CSS]</code> → 📝 任务：手机 2 列、桌面 3 列</li>
 </ul>
 <h3 id="第6天css-过渡与动画1-2h">
 <a class="header-anchor" href="#%e7%ac%ac6%e5%a4%a9css-%e8%bf%87%e6%b8%a1%e4%b8%8e%e5%8a%a8%e7%94%bb1-2h"></a>
 第6天：CSS 过渡与动画（1-2h）
 </h3><ul>
-<li><input disabled="" type="checkbox"> transition 过渡属性（property、duration、timing-function） <code> [CSS]</code> → 📝 任务：按钮 hover 变色 + 宽度过渡</li>
-<li><input disabled="" type="checkbox"> transform 变换（translate、rotate、scale） <code> [CSS]</code> → 📝 任务：卡片悬停上浮 + 旋转图标</li>
-<li><input disabled="" type="checkbox"> animation 关键帧动画 <code> [CSS]</code> → 📝 任务：@keyframes 写 loading 转圈</li>
+<li><input checked="" disabled="" type="checkbox"> transition 过渡属性（property、duration、timing-function） <code> [CSS]</code> → 📝 任务：按钮 hover 变色 + 宽度过渡</li>
+<li><input checked="" disabled="" type="checkbox"> transform 变换（translate、rotate、scale） <code> [CSS]</code> → 📝 任务：卡片悬停上浮 + 旋转图标</li>
+<li><input checked="" disabled="" type="checkbox"> animation 关键帧动画 <code> [CSS]</code> → 📝 任务：@keyframes 写 loading 转圈</li>
 <li><input disabled="" type="checkbox"> 练习：按钮 hover 动效 + 加载动画 <code> [CSS]</code> → 📝 任务：组合 transition + animation 完整演示</li>
 </ul>
 <h3 id="第7天静态页面综合实战1-2h">
@@ -4048,388 +4170,6 @@ class绑定
 </span></span></code></pre></div><hr>
         
         <hr><p>本文2026-08-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-01</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>20260731 总结</title>
-      <link>http://localhost:1313/post/2026-07-31--%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Fri, 31 Jul 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-07-31--%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>20260731 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h1><h2 id="多线程">
-<a class="header-anchor" href="#%e5%a4%9a%e7%ba%bf%e7%a8%8b"></a>
-多线程
-</h2><ul>
-<li>为每个io_context分配一个线程里</li>
-</ul>
-<hr>
-<h1 id="rust">
-<a class="header-anchor" href="#rust"></a>
-RUST
-</h1><h2 id="数据类型">
-<a class="header-anchor" href="#%e6%95%b0%e6%8d%ae%e7%b1%bb%e5%9e%8b"></a>
-数据类型
-</h2><h3 id="标量和复合类型">
-<a class="header-anchor" href="#%e6%a0%87%e9%87%8f%e5%92%8c%e5%a4%8d%e5%90%88%e7%b1%bb%e5%9e%8b"></a>
-标量和复合类型
-</h3><ul>
-<li>rust和c++一样是编译型语言</li>
-<li>需要在编译时知道他的具体类型</li>
-<li>如果类型较多则必须添加类型的标注，不然编译不过</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">   </span><span class="kd">let</span><span class="w"> </span><span class="n">guess</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&#34;42&#34;</span><span class="p">.</span><span class="n">parse</span><span class="p">().</span><span class="n">expect</span><span class="p">(</span><span class="s">&#34;not a num&#34;</span><span class="p">);</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>实现了一个编译器无法判定类型</li>
-</ul>
-<h3 id="标量类型">
-<a class="header-anchor" href="#%e6%a0%87%e9%87%8f%e7%b1%bb%e5%9e%8b"></a>
-标量类型
-</h3><h4 id="整数类型">
-<a class="header-anchor" href="#%e6%95%b4%e6%95%b0%e7%b1%bb%e5%9e%8b"></a>
-整数类型
-</h4><ul>
-<li>没有小数部分</li>
-<li>占据32位空间</li>
-<li>u开头为无符号</li>
-<li>i开头为有符号</li>
-<li>有符号范围为2^n-1~2^(n-1)-1</li>
-<li>无符号范围：0~2^n-1</li>
-</ul>
-<h4 id="isize和usize">
-<a class="header-anchor" href="#isize%e5%92%8cusize"></a>
-isize和usize
-</h4><ul>
-<li>由计算机架构决定</li>
-<li>64位为u64和i64，32位为u32和i32</li>
-<li>多为对某种集合的索引</li>
-</ul>
-<h4 id="字面值">
-<a class="header-anchor" href="#%e5%ad%97%e9%9d%a2%e5%80%bc"></a>
-字面值
-</h4><ul>
-<li>除了byte以外，索引数值后面都运行类型后缀</li>
-<li>整数默认为i32</li>
-<li>调试模式下，溢出程序就会panic，终止，发布模式下会变为一般的从0开始</li>
-</ul>
-<h4 id="浮点类型">
-<a class="header-anchor" href="#%e6%b5%ae%e7%82%b9%e7%b1%bb%e5%9e%8b"></a>
-浮点类型
-</h4><ul>
-<li>f32(c/c++的float)</li>
-<li>f64(c/c++的double)</li>
-<li>f64为默认类型</li>
-</ul>
-<h4 id="数值操作">
-<a class="header-anchor" href="#%e6%95%b0%e5%80%bc%e6%93%8d%e4%bd%9c"></a>
-数值操作
-</h4><ul>
-<li>与其他语言一致</li>
-</ul>
-<h4 id="布尔类型">
-<a class="header-anchor" href="#%e5%b8%83%e5%b0%94%e7%b1%bb%e5%9e%8b"></a>
-布尔类型
-</h4><ul>
-<li>单字节</li>
-</ul>
-<h4 id="字符类型">
-<a class="header-anchor" href="#%e5%ad%97%e7%ac%a6%e7%b1%bb%e5%9e%8b"></a>
-字符类型
-</h4><ul>
-<li>char类型</li>
-<li>占用4字节</li>
-<li>使用单引号</li>
-<li>是unicode的标量值</li>
-<li>unicode中没有字符</li>
-</ul>
-<hr>
-<h1 id="mysql">
-<a class="header-anchor" href="#mysql"></a>
-MySQL
-</h1><h2 id="sql优化2">
-<a class="header-anchor" href="#sql%e4%bc%98%e5%8c%962"></a>
-SQL优化2
-</h2><h3 id="主键优化">
-<a class="header-anchor" href="#%e4%b8%bb%e9%94%ae%e4%bc%98%e5%8c%96"></a>
-主键优化
-</h3><ul>
-<li>表数据根据主键的顺序组织存放的。这种就是索引组织表(IOT)</li>
-</ul>
-<h4 id="页分裂">
-<a class="header-anchor" href="#%e9%a1%b5%e5%88%86%e8%a3%82"></a>
-页分裂
-</h4><ul>
-<li>页可以为任意值，根据主键排列</li>
-<li>数据如果过大，则会有行溢出的</li>
-<li>如果超出的数据页，再插入，则会开辟一个新空间，在50%的位置以后移入新的空间，这是主键乱序插入的现象</li>
-</ul>
-<h4 id="页合并">
-<a class="header-anchor" href="#%e9%a1%b5%e5%90%88%e5%b9%b6"></a>
-页合并
-</h4><ul>
-<li>当删除记录时，会删除索引</li>
-<li>当达到阈值，则会开始找靠近页实现页合并</li>
-</ul>
-<h4 id="设计原则">
-<a class="header-anchor" href="#%e8%ae%be%e8%ae%a1%e5%8e%9f%e5%88%99"></a>
-设计原则
-</h4><ul>
-<li>尽量降低主键长度</li>
-<li>尽量使用顺序插入，尽量选择自增主键</li>
-<li>不用uuid，或者其他自然主键</li>
-<li>尽量避免对主键的操作</li>
-</ul>
-<h3 id="order-by优化">
-<a class="header-anchor" href="#order-by%e4%bc%98%e5%8c%96"></a>
-order by优化
-</h3><ul>
-<li>Using filesort:全表的索引或者扫描全表扫描，读取数据行，然后在排序缓冲区sort buffer中完成排序操作，非直接返回的排序叫filesort</li>
-<li>Using index:通过有序索引顺序扫描，直接返回有序数据，操作效率高</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">explain</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="n">list_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">order</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">index_name</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>先升序后倒序之类的会有Using filesort</li>
-</ul>
-<h4 id="查看缓冲区">
-<a class="header-anchor" href="#%e6%9f%a5%e7%9c%8b%e7%bc%93%e5%86%b2%e5%8c%ba"></a>
-查看缓冲区
-</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-sql" data-lang="sql"><span class="line"><span class="cl"><span class="k">show</span><span class="w"> </span><span class="n">variables</span><span class="w"> </span><span class="k">like</span><span class="w"> </span><span class="s1">&#39;sort_buffer_size&#39;</span><span class="p">;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>如果占满，就会使用磁盘，可以适当提高缓冲区</li>
-</ul>
-<h3 id="group-by分组操作">
-<a class="header-anchor" href="#group-by%e5%88%86%e7%bb%84%e6%93%8d%e4%bd%9c"></a>
-group by分组操作
-</h3><ul>
-<li>满足最左前缀法则</li>
-</ul>
-<h3 id="limit">
-<a class="header-anchor" href="#limit"></a>
-limit
-</h3><ul>
-<li>数据过大时，查询排序的代价过大</li>
-<li>使用覆盖索引加子查询来优化</li>
-</ul>
-<hr>
-<h1 id="vue3">
-<a class="header-anchor" href="#vue3"></a>
-*vue3
-</h1><h2 id="事件修饰符">
-<a class="header-anchor" href="#%e4%ba%8b%e4%bb%b6%e4%bf%ae%e9%a5%b0%e7%ac%a6"></a>
-事件修饰符
-</h2><ul>
-<li>调用event.preventDefault()或者event.stopPropagation()，更好的处理</li>
-<li>使用v-on处理</li>
-</ul>
-<h3 id="prevent">
-<a class="header-anchor" href="#prevent"></a>
-.prevent
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">a</span> <span class="nt">@click.prevent</span><span class="s">=&#34;clickhandle&#34;</span><span class="p"> </span><span class="na">href</span><span class="o">=</span><span class="s">&#34;bilibili.com&#34;</span><span class="p">&gt;</span><span class="nx">哔哩哔哩</span><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">clickhandle</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;click bilbili&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>阻止跳转</li>
-</ul>
-<h3 id="事件冒泡">
-<a class="header-anchor" href="#%e4%ba%8b%e4%bb%b6%e5%86%92%e6%b3%a1"></a>
-事件冒泡
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">@click</span><span class="s">=&#34;clickDiv&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="nt">@click</span><span class="s">=&#34;clickP&#34;</span><span class="p">&gt;</span><span class="na">test</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">clickDiv</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickDiv&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">clickP</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickP&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h4 id="阻止冒泡">
-<a class="header-anchor" href="#%e9%98%bb%e6%ad%a2%e5%86%92%e6%b3%a1"></a>
-阻止冒泡
-</h4><ul>
-<li>使用.stop</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span><span class="nx">事件修饰符</span><span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="nt">@click</span><span class="s">=&#34;clickDiv&#34;</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">p</span> <span class="nt">@click.stop</span><span class="s">=&#34;clickP&#34;</span><span class="p">&gt;</span><span class="na">test</span><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">clickDiv</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickDiv&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">clickP</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;clickP&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>可以阻止div的冒泡</li>
-</ul>
-<h4 id="once一次性事件">
-<a class="header-anchor" href="#once%e4%b8%80%e6%ac%a1%e6%80%a7%e4%ba%8b%e4%bb%b6"></a>
-once一次性事件
-</h4><h2 id="数组变化的侦测">
-<a class="header-anchor" href="#%e6%95%b0%e7%bb%84%e5%8f%98%e5%8c%96%e7%9a%84%e4%be%a6%e6%b5%8b"></a>
-数组变化的侦测
-</h2><ul>
-<li>在被调用是出发相关的更新</li>
-</ul>
-<h3 id="push">
-<a class="header-anchor" href="#push"></a>
-.push
-</h3><ul>
-<li>添加</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;addListHandle&#34;</span><span class="p">&gt;</span><span class="na">添加一个数据</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) of names&#34; :key=&#34;index&#34;</span><span class="p">&gt;{{</span> <span class="na">item</span> <span class="p">}}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">names</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;iwen&#34;</span><span class="p">,</span> <span class="s2">&#34;xzt&#34;</span><span class="p">,</span> <span class="s2">&#34;666&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">addListHandle</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;sakura&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>ui会自动的添加一个sakura的</li>
-</ul>
-<h3 id="替换数组">
-<a class="header-anchor" href="#%e6%9b%bf%e6%8d%a2%e6%95%b0%e7%bb%84"></a>
-替换数组
-</h3><ul>
-<li>可以重新赋值使得ui变化</li>
-</ul>
-<h4 id="concat">
-<a class="header-anchor" href="#concat"></a>
-.concat
-</h4><ul>
-<li>合并
-不会引起ui自动更新</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">button</span> <span class="nt">@click</span><span class="s">=&#34;addconHandle&#34;</span><span class="p">&gt;</span><span class="na">添加一个数据</span><span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">ul</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">&lt;</span><span class="nt">li</span> <span class="nt">v-for</span><span class="o">=</span><span class="s">&#34;(item, index) of names&#34; :key=&#34;index&#34;</span><span class="p">&gt;{{</span> <span class="na">item</span> <span class="p">}}&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">names</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;iwen&#34;</span><span class="p">,</span> <span class="s2">&#34;xzt&#34;</span><span class="p">,</span> <span class="s2">&#34;666&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">methods</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">addListHandle</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="s2">&#34;sakura&#34;</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">addconHandle</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="p">.</span><span class="nx">names</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">names</span><span class="p">.</span><span class="nx">concat</span><span class="p">([</span><span class="s2">&#34;sakura&#34;</span><span class="p">]);</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><h2 id="计算属性">
-<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e5%b1%9e%e6%80%a7"></a>
-计算属性
-</h2><ul>
-<li>和函数类似</li>
-<li>模版中表达式方便</li>
-<li>用计算属性来描述复杂逻辑处理</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-vue" data-lang="vue"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;{{</span> <span class="nx">xxx</span><span class="p">.</span><span class="nx">names</span> <span class="p">}}&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;{{</span> <span class="nx">js</span> <span class="p">}}&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">template</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span><span class="line"><span class="cl"><span class="kr">export</span> <span class="k">default</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">data</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nx">xxx</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">names</span><span class="o">:</span> <span class="s2">&#34;eeee&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="nx">con</span><span class="o">:</span> <span class="p">[</span><span class="s2">&#34;qd&#34;</span><span class="p">,</span> <span class="s2">&#34;hd&#34;</span><span class="p">],</span>
-</span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">    <span class="p">};</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">computed</span><span class="o">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nx">js</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">xxx</span><span class="p">.</span><span class="nx">con</span><span class="p">.</span><span class="nx">length</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="s2">&#34;YES&#34;</span> <span class="o">:</span> <span class="s2">&#34;NO&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl"><span class="p">};</span>
-</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</span></span></code></pre></div><ul>
-<li>实现了判断xxx的con是否有数据</li>
-</ul>
-<h3 id="计算属性缓存和方法">
-<a class="header-anchor" href="#%e8%ae%a1%e7%ae%97%e5%b1%9e%e6%80%a7%e7%bc%93%e5%ad%98%e5%92%8c%e6%96%b9%e6%b3%95"></a>
-计算属性缓存和方法
-</h3><ul>
-<li>计算属性基于响应式去渲染，如果没有变化，则渲染一次</li>
-<li>方法则会每次都计算</li>
-</ul>
-<hr>
-        
-        <hr><p>本文2026-07-31首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-07-31</p>]]>
       </description>
       
     </item>
