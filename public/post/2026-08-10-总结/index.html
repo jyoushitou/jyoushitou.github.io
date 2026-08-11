@@ -252,7 +252,7 @@
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">61</div>
+    <div>文章</div><div class="sidebar-state-number">62</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
@@ -538,7 +538,7 @@ Grid 概述
 <li>由**容器（container）<strong>和</strong>项目（item）**组成，通过 <code>display: grid</code> 启用</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="k">grid</span><span class="p">;</span>   <span class="c">/* 块级网格 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">display</span><span class="p">:</span> <span class="k">grid</span><span class="p">;</span> <span class="c">/* 块级网格 */</span>
 </span></span><span class="line"><span class="cl">  <span class="c">/* display: inline-grid;  行内网格 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><hr>
@@ -553,8 +553,8 @@ Grid 容器属性
 <li>常用单位：<code>px</code>、<code>%</code>、<code>fr</code>（剩余空间分配）、<code>auto</code>、<code>repeat()</code>、<code>minmax()</code></li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span> <span class="mi">200</span><span class="kt">px</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>        <span class="c">/* 固定 + 自适应 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-template-rows</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>                  <span class="c">/* 头部 + 剩余占满 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">100</span><span class="kt">px</span> <span class="mi">200</span><span class="kt">px</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span> <span class="c">/* 固定 + 自适应 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-rows</span><span class="p">:</span> <span class="mi">80</span><span class="kt">px</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span> <span class="c">/* 头部 + 剩余占满 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="repeat-简化重复轨道">
 <a class="header-anchor" href="#repeat-%e7%ae%80%e5%8c%96%e9%87%8d%e5%a4%8d%e8%bd%a8%e9%81%93"></a>
@@ -578,7 +578,7 @@ Grid 容器属性
 <a class="header-anchor" href="#2-%e9%97%b4%e8%b7%9dgap%e7%ae%80%e5%86%99-row-gap--column-gap"></a>
 2. 间距：<code>gap</code>（简写 <code>row-gap</code> + <code>column-gap</code>）
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">gap</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>   <span class="c">/* 行间距 20px，列间距 30px */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">gap</span><span class="p">:</span> <span class="mi">20</span><span class="kt">px</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 行间距 20px，列间距 30px */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="3-区域的合并写法grid-template-areas">
 <a class="header-anchor" href="#3-%e5%8c%ba%e5%9f%9f%e7%9a%84%e5%90%88%e5%b9%b6%e5%86%99%e6%b3%95grid-template-areas"></a>
@@ -639,8 +639,8 @@ Grid 容器属性
 <li>项目数量超出显式定义的行列时，用 <code>grid-auto-*</code> 兜底</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-auto-rows</span><span class="p">:</span> <span class="nf">minmax</span><span class="p">(</span><span class="mi">100</span><span class="kt">px</span><span class="p">,</span> <span class="kc">auto</span><span class="p">);</span>  <span class="c">/* 隐式行高兜底 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-auto-flow</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span>   <span class="c">/* 默认：按行排列，满了换行 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-auto-rows</span><span class="p">:</span> <span class="nf">minmax</span><span class="p">(</span><span class="mi">100</span><span class="kt">px</span><span class="p">,</span> <span class="kc">auto</span><span class="p">);</span> <span class="c">/* 隐式行高兜底 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-auto-flow</span><span class="p">:</span> <span class="kc">row</span><span class="p">;</span> <span class="c">/* 默认：按行排列，满了换行 */</span>
 </span></span><span class="line"><span class="cl">  <span class="c">/* grid-auto-flow: column;  按列排列 */</span>
 </span></span><span class="line"><span class="cl">  <span class="c">/* grid-auto-flow: dense;   密集排列，尽量不留空洞 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -652,22 +652,30 @@ Grid 项目属性
 <a class="header-anchor" href="#1-%e5%ae%9a%e4%bd%8dgrid-column--grid-row%e7%ba%bf%e7%bc%96%e5%8f%b7%e4%bb%8e-1-%e5%bc%80%e5%a7%8b"></a>
 1. 定位：<code>grid-column</code> / <code>grid-row</code>（线编号从 1 开始）
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>   <span class="c">/* 从第 1 条线到第 3 条线（占 2 列） */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-row</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>      <span class="c">/* 占 1 行 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span> <span class="c">/* 从第 1 条线到第 3 条线（占 2 列） */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-row</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span> <span class="c">/* 占 1 行 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>简写常用法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">-1</span><span class="p">;</span>   <span class="c">/* -1 代表最后一条线：一行占满 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-row</span><span class="p">:</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">span</span> <span class="mi">2</span><span class="p">;</span>  <span class="c">/* 从第 2 行开始，跨越 2 行 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="n">span</span> <span class="mi">3</span><span class="p">;</span>   <span class="c">/* 跨 3 列（从当前自动位置开始） */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">-1</span><span class="p">;</span> <span class="c">/* -1 代表最后一条线：一行占满 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-row</span><span class="p">:</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">span</span> <span class="mi">2</span><span class="p">;</span> <span class="c">/* 从第 2 行开始，跨越 2 行 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-column</span><span class="p">:</span> <span class="n">span</span> <span class="mi">3</span><span class="p">;</span> <span class="c">/* 跨 3 列（从当前自动位置开始） */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="2-命名区域grid-area">
 <a class="header-anchor" href="#2-%e5%91%bd%e5%90%8d%e5%8c%ba%e5%9f%9fgrid-area"></a>
 2. 命名区域：<code>grid-area</code>
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">header</span>  <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">header</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">sidebar</span> <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">sidebar</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">main</span>    <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">main</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">footer</span>  <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">footer</span><span class="p">;</span> <span class="p">}</span>
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">header</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">header</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">sidebar</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">sidebar</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">main</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">main</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">footer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">footer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>也可以一行写完四条线（row-start / column-start / row-end / column-end）：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">/</span> <span class="mi">3</span><span class="p">;</span>
@@ -677,9 +685,9 @@ Grid 项目属性
 3. 项目自身对齐：<code>justify-self</code> / <code>align-self</code> / <code>place-self</code>
 </h3><p>覆盖容器上的 <code>justify-items / align-items</code></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">item</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">justify-self</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>  <span class="c">/* 自己在格子内水平居中 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">align-self</span><span class="p">:</span> <span class="kc">end</span><span class="p">;</span>       <span class="c">/* 垂直靠底 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">place-self</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>    <span class="c">/* 简写：水平垂直都居中 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">justify-self</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span> <span class="c">/* 自己在格子内水平居中 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">align-self</span><span class="p">:</span> <span class="kc">end</span><span class="p">;</span> <span class="c">/* 垂直靠底 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">place-self</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span> <span class="c">/* 简写：水平垂直都居中 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="4-order-排序">
 <a class="header-anchor" href="#4-order-%e6%8e%92%e5%ba%8f"></a>
@@ -699,10 +707,18 @@ Grid 项目属性
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;sidebar main&#34;</span>
 </span></span><span class="line"><span class="cl">    <span class="s2">&#34;footer footer&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">header</span>  <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">header</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">sidebar</span> <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">sidebar</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">main</span>    <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">main</span><span class="p">;</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">footer</span>  <span class="p">{</span> <span class="k">grid-area</span><span class="p">:</span> <span class="n">footer</span><span class="p">;</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">header</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">header</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">sidebar</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">sidebar</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">main</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">main</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">layout</span> <span class="p">.</span><span class="nc">footer</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-area</span><span class="p">:</span> <span class="n">footer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;layout&#34;</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;header&#34;</span><span class="p">&gt;</span>顶部导航<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;sidebar&#34;</span><span class="p">&gt;</span>侧边栏<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -717,7 +733,10 @@ Grid 项目属性
 <a class="header-anchor" href="#1-viewport-%e8%a7%86%e5%8f%a3%e8%ae%be%e7%bd%ae"></a>
 1. viewport 视口设置
 </h3><p>移动端适配的<strong>前提</strong>：不写 viewport，手机上页面会按 PC 宽度缩小显示。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span> <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&#34;</span><span class="p">&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">meta</span>
+</span></span><span class="line"><span class="cl">  <span class="na">name</span><span class="o">=</span><span class="s">&#34;viewport&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="na">content</span><span class="o">=</span><span class="s">&#34;width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="p">/&gt;</span>
 </span></span></code></pre></div><table>
   <thead>
       <tr>
@@ -746,7 +765,7 @@ Grid 项目属性
 </h3><p>根据<strong>屏幕宽度</strong>（或其他媒体特性）应用不同样式，是响应式的核心手段。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* 默认：手机优先（min-width 从小到大写） */</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">container</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span>   <span class="c">/* 手机：单列 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">grid-template-columns</span><span class="p">:</span> <span class="mi">1</span><span class="n">fr</span><span class="p">;</span> <span class="c">/* 手机：单列 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c">/* ≥ 768px：平板 */</span>
@@ -763,10 +782,18 @@ Grid 项目属性
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>其他常用写法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">767px</span><span class="o">)</span> <span class="p">{</span> <span class="c">/* 小于等于 767px */</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">768px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1023px</span><span class="o">)</span> <span class="p">{</span> <span class="c">/* 区间 */</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">orientation</span><span class="o">:</span> <span class="nt">landscape</span><span class="o">)</span> <span class="p">{</span> <span class="c">/* 横屏 */</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">prefers-color-scheme</span><span class="o">:</span> <span class="nt">dark</span><span class="o">)</span> <span class="p">{</span> <span class="c">/* 深色模式 */</span> <span class="p">}</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">767px</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c">/* 小于等于 767px */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">768px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">1023px</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c">/* 区间 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">orientation</span><span class="o">:</span> <span class="nt">landscape</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c">/* 横屏 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">media</span> <span class="o">(</span><span class="nt">prefers-color-scheme</span><span class="o">:</span> <span class="nt">dark</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="c">/* 深色模式 */</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="常见断点breakpoints">
 <a class="header-anchor" href="#%e5%b8%b8%e8%a7%81%e6%96%ad%e7%82%b9breakpoints"></a>
 常见断点（Breakpoints）
@@ -804,11 +831,11 @@ Grid 项目属性
 <li>思路：用 JS 按屏幕宽度动态设置根字号，页面所有尺寸都用 <code>rem</code>，实现等比缩放</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">html</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span>   <span class="c">/* 基准：1rem = 16px */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">font-size</span><span class="p">:</span> <span class="mi">16</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 基准：1rem = 16px */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">rem</span><span class="p">;</span>      <span class="c">/* = 160px */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mf">0.5</span><span class="kt">rem</span><span class="p">;</span>   <span class="c">/* = 8px */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">width</span><span class="p">:</span> <span class="mi">10</span><span class="kt">rem</span><span class="p">;</span> <span class="c">/* = 160px */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">padding</span><span class="p">:</span> <span class="mf">0.5</span><span class="kt">rem</span><span class="p">;</span> <span class="c">/* = 8px */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h4 id="经典动态设置配合-flexiblejs-思想">
 <a class="header-anchor" href="#%e7%bb%8f%e5%85%b8%e5%8a%a8%e6%80%81%e8%ae%be%e7%bd%ae%e9%85%8d%e5%90%88-flexiblejs-%e6%80%9d%e6%83%b3"></a>
@@ -817,10 +844,10 @@ Grid 项目属性
 </span></span><span class="line"><span class="cl">  <span class="kd">function</span> <span class="nx">setRem</span><span class="p">()</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kd">var</span> <span class="nx">width</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">clientWidth</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="cm">/* 设计稿宽 750，1rem = width / 10 */</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">width</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">+</span> <span class="s1">&#39;px&#39;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">document</span><span class="p">.</span><span class="nx">documentElement</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">fontSize</span> <span class="o">=</span> <span class="nx">width</span> <span class="o">/</span> <span class="mi">10</span> <span class="o">+</span> <span class="s2">&#34;px&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="nx">setRem</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;resize&#39;</span><span class="p">,</span> <span class="nx">setRem</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">window</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&#34;resize&#34;</span><span class="p">,</span> <span class="nx">setRem</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">})();</span>
 </span></span></code></pre></div><p>效果：设计稿上的 <code>75px</code> → 写 <code>75/75 = 1rem</code>（如果以 750 设计稿、<code>width/10</code> 为基准，则 <code>1rem = 75px</code>，直接除以 75 即可换算）。</p>
 <blockquote>
@@ -977,15 +1004,15 @@ transform 变换
 </span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">-5</span><span class="kt">px</span><span class="p">)</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">2</span><span class="kt">deg</span><span class="p">);</span>  <span class="c">/* 多个变换空格分隔，从右往左应用 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">-5</span><span class="kt">px</span><span class="p">)</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">)</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">2</span><span class="kt">deg</span><span class="p">);</span> <span class="c">/* 多个变换空格分隔，从右往左应用 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="变换原点-transform-origin">
 <a class="header-anchor" href="#%e5%8f%98%e6%8d%a2%e5%8e%9f%e7%82%b9-transform-origin"></a>
 变换原点 transform-origin
 </h3><p>默认以元素<strong>中心</strong>为原点（<code>50% 50%</code>），可改为左上角、底部等。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">box</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">transform-origin</span><span class="p">:</span> <span class="kc">left</span> <span class="kc">top</span><span class="p">;</span>      <span class="c">/* 以左上角为轴旋转 */</span>
-</span></span><span class="line"><span class="cl">  <span class="k">transform-origin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>        <span class="c">/* 左下角 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform-origin</span><span class="p">:</span> <span class="kc">left</span> <span class="kc">top</span><span class="p">;</span> <span class="c">/* 以左上角为轴旋转 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform-origin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span> <span class="c">/* 左下角 */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">rotate</span><span class="p">(</span><span class="mi">30</span><span class="kt">deg</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="3d-变换配合-perspective">
@@ -997,10 +1024,10 @@ transform 变换
 <li><code>translateZ</code>：沿 Z 轴移动（景深）</li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">scene</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">perspective</span><span class="p">:</span> <span class="mi">800</span><span class="kt">px</span><span class="p">;</span>   <span class="c">/* 视距：数值越小 3D 效果越强 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">perspective</span><span class="p">:</span> <span class="mi">800</span><span class="kt">px</span><span class="p">;</span> <span class="c">/* 视距：数值越小 3D 效果越强 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">card</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateY</span><span class="p">(</span><span class="mi">60</span><span class="kt">deg</span><span class="p">);</span>   <span class="c">/* 绕 Y 轴翻转 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">rotateY</span><span class="p">(</span><span class="mi">60</span><span class="kt">deg</span><span class="p">);</span> <span class="c">/* 绕 Y 轴翻转 */</span>
 </span></span><span class="line"><span class="cl">  <span class="k">transform-style</span><span class="p">:</span> <span class="kc">preserve-3d</span><span class="p">;</span> <span class="c">/* 让子元素保持 3D 空间 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><blockquote>
@@ -1015,15 +1042,27 @@ animation 关键帧动画
 @keyframes 定义
 </h3><p>用<strong>关键帧</strong>描述动画过程，无需触发条件，加载后自动播放。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">@</span><span class="k">keyframes</span> <span class="nt">动画名</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">from</span> <span class="p">{</span> <span class="k">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">20</span><span class="kt">px</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">to</span>   <span class="p">{</span> <span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">from</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">20</span><span class="kt">px</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">to</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">opacity</span><span class="p">:</span> <span class="mi">1</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">translateY</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c">/* 或用百分比控制中间帧 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">keyframes</span> <span class="nt">loading</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">0</span><span class="o">%</span>   <span class="p">{</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">50</span><span class="o">%</span>  <span class="p">{</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.5</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">0</span><span class="o">%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">50</span><span class="o">%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.5</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="animation-子属性">
 <a class="header-anchor" href="#animation-%e5%ad%90%e5%b1%9e%e6%80%a7"></a>
@@ -1100,7 +1139,8 @@ animation 子属性
 </span></span></code></pre></div><h3 id="简写顺序">
 <a class="header-anchor" href="#%e7%ae%80%e5%86%99%e9%a1%ba%e5%ba%8f"></a>
 简写顺序
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">animation</span><span class="o">:</span> <span class="nt">name</span> <span class="nt">duration</span> <span class="nt">timing-function</span> <span class="nt">delay</span> <span class="nt">iteration-count</span> <span class="nt">direction</span> <span class="nt">fill-mode</span><span class="o">;</span>
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="nt">animation</span><span class="o">:</span> <span class="nt">name</span> <span class="nt">duration</span> <span class="nt">timing-function</span> <span class="nt">delay</span> <span class="nt">iteration-count</span> <span class="nt">direction</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">fill-mode</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl"><span class="c">/*             ↓        ↓          ↓       ↓             ↓          ↓        ↓        */</span>
 </span></span><span class="line"><span class="cl"><span class="nt">animation</span><span class="o">:</span> <span class="nt">loading</span> <span class="nt">1s</span> <span class="nt">ease</span> <span class="nt">0s</span> <span class="nt">infinite</span> <span class="nt">alternate</span> <span class="nt">both</span><span class="o">;</span>
 </span></span><span class="line"><span class="cl">
@@ -1152,7 +1192,9 @@ transition vs animation 对比
 <a class="header-anchor" href="#%e7%bb%84%e5%90%88%e7%a4%ba%e4%be%8bhover-%e6%94%be%e5%a4%a7--%e9%98%b4%e5%bd%b1--%e6%8c%81%e7%bb%ad%e5%91%bc%e5%90%b8"></a>
 组合示例：hover 放大 + 阴影 + 持续呼吸
 </h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="p">.</span><span class="nc">btn</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span> <span class="k">transform</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">,</span> <span class="k">box-shadow</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span>  <span class="c">/* 用过渡做交互动效 */</span>
+</span></span><span class="line"><span class="cl">  <span class="k">transition</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="k">box-shadow</span> <span class="mf">0.3</span><span class="kt">s</span><span class="p">;</span> <span class="c">/* 用过渡做交互动效 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">btn</span><span class="p">:</span><span class="nd">hover</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.05</span><span class="p">);</span>
@@ -1161,8 +1203,13 @@ transition vs animation 对比
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c">/* 持续循环的呼吸效果用动画 */</span>
 </span></span><span class="line"><span class="cl"><span class="p">@</span><span class="k">keyframes</span> <span class="nt">breath</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">0</span><span class="o">%,</span> <span class="nt">100</span><span class="o">%</span> <span class="p">{</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span> <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">50</span><span class="o">%</span>      <span class="p">{</span> <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.08</span><span class="p">);</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">0</span><span class="o">%,</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">100</span><span class="o">%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">50</span><span class="o">%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">transform</span><span class="p">:</span> <span class="nb">scale</span><span class="p">(</span><span class="mf">1.08</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">badge</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">animation</span><span class="p">:</span> <span class="n">breath</span> <span class="mi">2</span><span class="kt">s</span> <span class="kc">ease-in-out</span> <span class="kc">infinite</span><span class="p">;</span>
@@ -1242,6 +1289,18 @@ Project窗口
         ></a>
         <div class="article-nav-caption">前一篇</div>
         <h3 class="article-nav-title">20260808 总结</h3>
+      </div><div class="article-nav-link-wrap right"><img
+              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
+              data-sizes="auto"
+              alt="20260811 总结"
+              class="lazyload"
+            /><a
+          href="/post/2026-08-11-%E6%80%BB%E7%BB%93/"
+          aria-label="后一篇:20260811 总结"
+          title="后一篇:20260811 总结"
+        ></a>
+        <div class="article-nav-caption">后一篇</div>
+        <h3 class="article-nav-title">20260811 总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -1263,10 +1322,10 @@ Project窗口
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;63.2k</span
+          >&nbsp;63.8k</span
         >
         &nbsp;|&nbsp;
-        <span class="icon-coffee">&nbsp;02:44</span>
+        <span class="icon-coffee">&nbsp;02:46</span>
       </div><div>
         <span class="icon-eye"></span>
         <span id="busuanzi_container_site_pv"
@@ -1407,7 +1466,7 @@ Project窗口
 </div>
 <div class="sidebar-state">
   <div class="sidebar-state-article">
-    <div>文章</div><div class="sidebar-state-number">61</div>
+    <div>文章</div><div class="sidebar-state-number">62</div>
   </div>
   <a class="sidebar-state-category" href="/categories/" aria-label="sidebar-state-category-link">
     <div>分类</div>
