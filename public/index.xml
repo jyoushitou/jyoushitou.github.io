@@ -12,12 +12,210 @@
     
     <copyright>本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！</copyright>
     
-    <lastBuildDate>Tue, 11 Aug 2026 21:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 12 Aug 2026 21:00:00 +0800</lastBuildDate>
     
     
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss&#43;xml" />
     
 
+    
+    
+
+    <item>
+      <title>20260812 总结</title>
+      <link>http://localhost:1313/post/2026-08-12-%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Wed, 12 Aug 2026 08:00:00 &#43;0800</pubDate>
+      <author>xxx@example.com (D-Sketon)</author>
+      <guid>http://localhost:1313/post/2026-08-12-%E6%80%BB%E7%BB%93/</guid>
+      <description>
+        <![CDATA[<h1>20260812 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
+        
+          <h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+rust
+</h1><h2 id="常用集合">
+<a class="header-anchor" href="#%e5%b8%b8%e7%94%a8%e9%9b%86%e5%90%88"></a>
+常用集合
+</h2><ul>
+<li>堆上的</li>
+</ul>
+<h3 id="vector">
+<a class="header-anchor" href="#vector"></a>
+vector
+</h3><h4 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">v</span>:<span class="nb">Vec</span><span class="o">&lt;</span><span class="n">typ_name</span><span class="o">&gt;=</span><span class="nb">Vec</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">v</span><span class="o">=</span><span class="fm">vec!</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><h4 id="放入元素">
+<a class="header-anchor" href="#%e6%94%be%e5%85%a5%e5%85%83%e7%b4%a0"></a>
+放入元素
+</h4><ul>
+<li>需要定义mut后才可以修改</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">v</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="删除">
+<a class="header-anchor" href="#%e5%88%a0%e9%99%a4"></a>
+删除
+</h4><ul>
+<li>离开作用域后会被清理掉</li>
+</ul>
+<h4 id="读数据">
+<a class="header-anchor" href="#%e8%af%bb%e6%95%b0%e6%8d%ae"></a>
+读数据
+</h4><ul>
+<li>索引</li>
+<li>get()</li>
+</ul>
+<h4 id="作用域">
+<a class="header-anchor" href="#%e4%bd%9c%e7%94%a8%e5%9f%9f"></a>
+作用域
+</h4><ul>
+<li>不可变的不能变可变的</li>
+</ul>
+<h4 id="遍历">
+<a class="header-anchor" href="#%e9%81%8d%e5%8e%86"></a>
+遍历
+</h4><ul>
+<li>for循环去遍历</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="o">&amp;</span><span class="n">t</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>修改也是，不过要加mut</li>
+</ul>
+<h3 id="string">
+<a class="header-anchor" href="#string"></a>
+String
+</h3><ul>
+<li>倾向暴露可能的错误</li>
+<li>utf-8编码</li>
+<li>基于byte的集合</li>
+<li>只提供字符串切片str/&amp;str</li>
+<li>来自标准库(还包含OsString/OsStr,CString/CStr)</li>
+<li>是Vec<!-- raw HTML omitted -->的封装</li>
+</ul>
+<h4 id="创建-1">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba-1"></a>
+创建
+</h4><ul>
+<li>vec的操作适用于String</li>
+<li>to_String()也可以实现</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="o">=</span><span class="nb">String</span>::<span class="n">from</span><span class="p">(</span><span class="s">&#34;String_value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="添加">
+<a class="header-anchor" href="#%e6%b7%bb%e5%8a%a0"></a>
+添加
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">s</span><span class="p">.</span><span class="n">push_str</span><span class="p">(</span><span class="s">&#34;String_value&#34;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>不会转移所有权</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">s</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="na">&#39;</span><span class="err">单个字符</span><span class="na">&#39;</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>-</li>
+<li>其中一个变为引用就可以了</li>
+<li>不用借用的话，所有权会把所有权到新变量</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s3</span><span class="o">=</span><span class="n">s2</span><span class="o">+&amp;</span><span class="n">s1</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>format</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">s</span><span class="o">=</span><span class="n">format</span><span class="p">{</span><span class="s">&#34;{}-{}-{}&#34;</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span><span class="p">,</span><span class="n">s3</span><span class="p">};</span><span class="w">
+</span></span></span></code></pre></div><h4 id="访问">
+<a class="header-anchor" href="#%e8%ae%bf%e9%97%ae"></a>
+访问
+</h4><ul>
+<li>&amp;String_type[String_key];会拒绝这样的访问</li>
+</ul>
+<h4 id="函数">
+<a class="header-anchor" href="#%e5%87%bd%e6%95%b0"></a>
+函数
+</h4><ul>
+<li>bytes()字节数</li>
+<li>chars()unicode标量</li>
+</ul>
+<h4 id="切割">
+<a class="header-anchor" href="#%e5%88%87%e5%89%b2"></a>
+切割
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">String_name1</span><span class="o">=&amp;</span><span class="n">String_name2</span><span class="p">[</span><span class="n">key1</span><span class="p">,</span><span class="n">key2</span><span class="p">];</span><span class="w">
+</span></span></span></code></pre></div><h3 id="hasmapkv">
+<a class="header-anchor" href="#hasmapkv"></a>
+HasMap&lt;K,V&gt;
+</h3><ul>
+<li>键值对</li>
+<li>c++的unordered_map</li>
+</ul>
+<h4 id="创建添加">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba%e6%b7%bb%e5%8a%a0"></a>
+创建/添加
+</h4><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">Map_name</span><span class="o">=</span><span class="n">HashMap</span><span class="p">(</span><span class="o">&lt;</span><span class="n">type_name</span><span class="o">&gt;</span><span class="p">)</span>::<span class="n">new</span><span class="p">();</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">Map_name</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">String2_name</span><span class="p">,</span><span class="n">String_len</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>vec/tup</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="kd">let</span><span class="w"> </span><span class="n">Map_name</span>:<span class="nc">HasMap</span><span class="o">&lt;</span><span class="n">_</span><span class="p">,</span><span class="n">_</span><span class="o">&gt;=</span><span class="n">vec_name1</span><span class="p">.</span><span class="n">iter</span><span class="p">().</span><span class="n">zip</span><span class="p">(</span><span class="n">Vec_name2</span><span class="p">.</span><span class="n">iter</span><span class="p">()).</span><span class="n">collect</span><span class="p">()</span><span class="w">
+</span></span></span></code></pre></div><h4 id="所有权">
+<a class="header-anchor" href="#%e6%89%80%e6%9c%89%e6%9d%83"></a>
+所有权
+</h4><ul>
+<li>copy trait,值会复制到HasMap</li>
+<li>值移动，所有权也移动给HasMap</li>
+<li>值插入Map，其所有权不变</li>
+<li>HasMap有效期间，引用值也得有效</li>
+</ul>
+<h4 id="访问-1">
+<a class="header-anchor" href="#%e8%ae%bf%e9%97%ae-1"></a>
+访问
+</h4><ul>
+<li>get方法</li>
+</ul>
+<h4 id="更新修改">
+<a class="header-anchor" href="#%e6%9b%b4%e6%96%b0%e4%bf%ae%e6%94%b9"></a>
+更新/修改
+</h4><ul>
+<li>一个K对应一个V</li>
+</ul>
+<h5 id="用现有值v">
+<a class="header-anchor" href="#%e7%94%a8%e7%8e%b0%e6%9c%89%e5%80%bcv"></a>
+用现有值V
+</h5><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">map</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h5 id="添加v">
+<a class="header-anchor" href="#%e6%b7%bb%e5%8a%a0v"></a>
+添加V
+</h5><ul>
+<li>entry判断是否存在</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="n">map_name</span><span class="p">.</span><span class="n">entry</span><span class="p">(</span><span class="n">Key</span><span class="p">).</span><span class="n">or_insert</span><span class="p">(</span><span class="n">value</span><span class="p">);</span><span class="w">
+</span></span></span></code></pre></div><h4 id="切换函数">
+<a class="header-anchor" href="#%e5%88%87%e6%8d%a2%e5%87%bd%e6%95%b0"></a>
+切换函数
+</h4><ul>
+<li>可以切换hasn的方法</li>
+</ul>
+<hr>
+<h1 id="unity">
+<a class="header-anchor" href="#unity"></a>
+unity
+</h1><h2 id="保存提示">
+<a class="header-anchor" href="#%e4%bf%9d%e5%ad%98%e6%8f%90%e7%a4%ba"></a>
+保存提示
+</h2><ul>
+<li>会在有改动的文件上加*</li>
+</ul>
+<h2 id="对象的父子关系">
+<a class="header-anchor" href="#%e5%af%b9%e8%b1%a1%e7%9a%84%e7%88%b6%e5%ad%90%e5%85%b3%e7%b3%bb"></a>
+对象的父子关系
+</h2><ul>
+<li>类似windows的父子关系</li>
+<li>父对象改变，则子对象也会改变</li>
+<li>子对象的transform是 相对于父对象</li>
+<li>父子对象一起移动则会计算其中心点的transform</li>
+</ul>
+<hr>
+        
+        <hr><p>本文2026-08-12首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-12</p>]]>
+      </description>
+      
+    </item>
     
     
 
@@ -3570,444 +3768,6 @@ other
 </span></span></code></pre></div><hr>
         
         <hr><p>本文2026-08-02首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-02</p>]]>
-      </description>
-      
-    </item>
-    
-    
-
-    <item>
-      <title>202608文章总览</title>
-      <link>http://localhost:1313/post/2026-08-%E6%80%BB%E7%BB%93/</link>
-      <pubDate>Sat, 01 Aug 2026 08:00:00 &#43;0800</pubDate>
-      <author>xxx@example.com (D-Sketon)</author>
-      <guid>http://localhost:1313/post/2026-08-%E6%80%BB%E7%BB%93/</guid>
-      <description>
-        <![CDATA[<h1>202608文章总览</h1><p>作者：D-Sketon（xxx@example.com）</p>
-        
-          <h1 id="0801">
-<a class="header-anchor" href="#0801"></a>
-0801
-</h1><h2 id="rust">
-<a class="header-anchor" href="#rust"></a>
-RUST
-</h2><h3 id="复合类型">
-<a class="header-anchor" href="#%e5%a4%8d%e5%90%88%e7%b1%bb%e5%9e%8b"></a>
-复合类型
-</h3><h2 id="mysql">
-<a class="header-anchor" href="#mysql"></a>
-MySQL
-</h2><h3 id="sql优化3">
-<a class="header-anchor" href="#sql%e4%bc%98%e5%8c%963"></a>
-SQL优化3
-</h3><h3 id="视图">
-<a class="header-anchor" href="#%e8%a7%86%e5%9b%be"></a>
-视图
-</h3><h2 id="mysql连接池">
-<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0"></a>
-MySQL连接池
-</h2><h2 id="vue3">
-<a class="header-anchor" href="#vue3"></a>
-vue3
-</h2><h3 id="class绑定">
-<a class="header-anchor" href="#class%e7%bb%91%e5%ae%9a"></a>
-class绑定
-</h3><hr>
-<h1 id="0802">
-<a class="header-anchor" href="#0802"></a>
-0802
-</h1><h2 id="html">
-<a class="header-anchor" href="#html"></a>
-html
-</h2><h3 id="基本框架">
-<a class="header-anchor" href="#%e5%9f%ba%e6%9c%ac%e6%a1%86%e6%9e%b6"></a>
-基本框架
-</h3><h2 id="迭代了napcatpython">
-<a class="header-anchor" href="#%e8%bf%ad%e4%bb%a3%e4%ba%86napcatpython"></a>
-迭代了napcat+python
-</h2><hr>
-<h1 id="0803">
-<a class="header-anchor" href="#0803"></a>
-0803
-</h1><h2 id="rust-1">
-<a class="header-anchor" href="#rust-1"></a>
-RUST
-</h2><h3 id="函数">
-<a class="header-anchor" href="#%e5%87%bd%e6%95%b0"></a>
-函数
-</h3><h3 id="注释">
-<a class="header-anchor" href="#%e6%b3%a8%e9%87%8a"></a>
-注释
-</h3><h3 id="控制流">
-<a class="header-anchor" href="#%e6%8e%a7%e5%88%b6%e6%b5%81"></a>
-控制流
-</h3><h2 id="网络编程">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b"></a>
-网络编程
-</h2><h2 id="mysql-1">
-<a class="header-anchor" href="#mysql-1"></a>
-MySQL
-</h2><h3 id="视图2">
-<a class="header-anchor" href="#%e8%a7%86%e5%9b%be2"></a>
-视图2
-</h3><h2 id="html-1">
-<a class="header-anchor" href="#html-1"></a>
-html
-</h2><h3 id="表单元素与-label-的绑定">
-<a class="header-anchor" href="#%e8%a1%a8%e5%8d%95%e5%85%83%e7%b4%a0%e4%b8%8e-label-%e7%9a%84%e7%bb%91%e5%ae%9a"></a>
-表单元素与 label 的绑定
-</h3><h3 id="input">
-<a class="header-anchor" href="#input"></a>
-input
-</h3><h2 id="proto">
-<a class="header-anchor" href="#proto"></a>
-proto
-</h2><hr>
-<h1 id="0804">
-<a class="header-anchor" href="#0804"></a>
-0804
-</h1><h2 id="rust-2">
-<a class="header-anchor" href="#rust-2"></a>
-RUST
-</h2><h3 id="所有权与函数">
-<a class="header-anchor" href="#%e6%89%80%e6%9c%89%e6%9d%83%e4%b8%8e%e5%87%bd%e6%95%b0"></a>
-所有权与函数
-</h3><h3 id="引用和借用">
-<a class="header-anchor" href="#%e5%bc%95%e7%94%a8%e5%92%8c%e5%80%9f%e7%94%a8"></a>
-引用和借用
-</h3><h2 id="mysql-2">
-<a class="header-anchor" href="#mysql-2"></a>
-MySQL
-</h2><h3 id="存储过程">
-<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e8%bf%87%e7%a8%8b"></a>
-存储过程
-</h3><h3 id="存储函数">
-<a class="header-anchor" href="#%e5%ad%98%e5%82%a8%e5%87%bd%e6%95%b0"></a>
-存储函数
-</h3><h3 id="触发器">
-<a class="header-anchor" href="#%e8%a7%a6%e5%8f%91%e5%99%a8"></a>
-触发器
-</h3><h2 id="mysql连接池-1">
-<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-1"></a>
-MySQL连接池
-</h2><h2 id="css">
-<a class="header-anchor" href="#css"></a>
-CSS
-</h2><h3 id="选择器和声明块">
-<a class="header-anchor" href="#%e9%80%89%e6%8b%a9%e5%99%a8%e5%92%8c%e5%a3%b0%e6%98%8e%e5%9d%97"></a>
-选择器和声明块
-</h3><h3 id="css-优先级特异性--specificity">
-<a class="header-anchor" href="#css-%e4%bc%98%e5%85%88%e7%ba%a7%e7%89%b9%e5%bc%82%e6%80%a7--specificity"></a>
-CSS 优先级（特异性 / Specificity）
-</h3><h2 id="c的小问题1">
-<a class="header-anchor" href="#c%e7%9a%84%e5%b0%8f%e9%97%ae%e9%a2%981"></a>
-c++的小问题1
-</h2><h3 id="设置控制台">
-<a class="header-anchor" href="#%e8%ae%be%e7%bd%ae%e6%8e%a7%e5%88%b6%e5%8f%b0"></a>
-设置控制台
-</h3><hr>
-<h1 id="0805">
-<a class="header-anchor" href="#0805"></a>
-0805
-</h1><h2 id="cpp">
-<a class="header-anchor" href="#cpp"></a>
-cpp
-</h2><h3 id="heading">
-<a class="header-anchor" href="#heading"></a>
-[](){}
-</h3><h3 id="explicit">
-<a class="header-anchor" href="#explicit"></a>
-explicit
-</h3><h2 id="网络编程-1">
-<a class="header-anchor" href="#%e7%bd%91%e7%bb%9c%e7%bc%96%e7%a8%8b-1"></a>
-网络编程
-</h2><h3 id="分类">
-<a class="header-anchor" href="#%e5%88%86%e7%b1%bb"></a>
-分类
-</h3><h3 id="匿名函数的实现">
-<a class="header-anchor" href="#%e5%8c%bf%e5%90%8d%e5%87%bd%e6%95%b0%e7%9a%84%e5%ae%9e%e7%8e%b0"></a>
-匿名函数的实现
-</h3><hr>
-<h1 id="0806">
-<a class="header-anchor" href="#0806"></a>
-0806
-</h1><h2 id="rust-3">
-<a class="header-anchor" href="#rust-3"></a>
-RUST
-</h2><h2 id="mysql连接池-2">
-<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-2"></a>
-MySQL连接池
-</h2><h3 id="功能描述">
-<a class="header-anchor" href="#%e5%8a%9f%e8%83%bd%e6%8f%8f%e8%bf%b0"></a>
-功能描述
-</h3><hr>
-<h1 id="0807">
-<a class="header-anchor" href="#0807"></a>
-0807
-</h1><h2 id="rust-4">
-<a class="header-anchor" href="#rust-4"></a>
-RUST
-</h2><h3 id="struct2">
-<a class="header-anchor" href="#struct2"></a>
-struct2
-</h3><h2 id="mysql连接池-3">
-<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-3"></a>
-MySQL连接池
-</h2><h3 id="c-api">
-<a class="header-anchor" href="#c-api"></a>
-C API
-</h3><h2 id="css-1">
-<a class="header-anchor" href="#css-1"></a>
-CSS
-</h2><h3 id="css-定位与-flex-布局">
-<a class="header-anchor" href="#css-%e5%ae%9a%e4%bd%8d%e4%b8%8e-flex-%e5%b8%83%e5%b1%80"></a>
-CSS 定位与 Flex 布局
-</h3><h2 id="unity">
-<a class="header-anchor" href="#unity"></a>
-unity
-</h2><h3 id="界面">
-<a class="header-anchor" href="#%e7%95%8c%e9%9d%a2"></a>
-界面
-</h3><hr>
-<h1 id="0809">
-<a class="header-anchor" href="#0809"></a>
-0809
-</h1><h2 id="修复了收发端">
-<a class="header-anchor" href="#%e4%bf%ae%e5%a4%8d%e4%ba%86%e6%94%b6%e5%8f%91%e7%ab%af"></a>
-修复了收发端
-</h2><h2 id="玩了一天mc">
-<a class="header-anchor" href="#%e7%8e%a9%e4%ba%86%e4%b8%80%e5%a4%a9mc"></a>
-玩了一天mc
-</h2><hr>
-<h1 id="0810">
-<a class="header-anchor" href="#0810"></a>
-0810
-</h1><h2 id="rust-5">
-<a class="header-anchor" href="#rust-5"></a>
-Rust
-</h2><h2 id="mysql连接池-4">
-<a class="header-anchor" href="#mysql%e8%bf%9e%e6%8e%a5%e6%b1%a0-4"></a>
-MySQL连接池
-</h2><h3 id="线程安全的方法">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e5%ae%89%e5%85%a8%e7%9a%84%e6%96%b9%e6%b3%95"></a>
-线程安全的方法
-</h3><h2 id="grid-与响应式设计">
-<a class="header-anchor" href="#grid-%e4%b8%8e%e5%93%8d%e5%ba%94%e5%bc%8f%e8%ae%be%e8%ae%a1"></a>
-Grid 与响应式设计
-</h2><h2 id="unity-1">
-<a class="header-anchor" href="#unity-1"></a>
-unity
-</h2><h3 id="game窗口">
-<a class="header-anchor" href="#game%e7%aa%97%e5%8f%a3"></a>
-Game窗口
-</h3><h3 id="project窗口">
-<a class="header-anchor" href="#project%e7%aa%97%e5%8f%a3"></a>
-Project窗口
-</h3><hr>
-<h1 id="0811">
-<a class="header-anchor" href="#0811"></a>
-0811
-</h1><h2 id="rust-6">
-<a class="header-anchor" href="#rust-6"></a>
-RUST
-</h2><h3 id="package">
-<a class="header-anchor" href="#package"></a>
-package
-</h3><h2 id="unity-2">
-<a class="header-anchor" href="#unity-2"></a>
-unity
-</h2><h3 id="窗口">
-<a class="header-anchor" href="#%e7%aa%97%e5%8f%a3"></a>
-窗口
-</h3><hr>
-<h1 id="08计划">
-<a class="header-anchor" href="#08%e8%ae%a1%e5%88%92"></a>
-08计划
-</h1><h2 id="vue3htmljscss-20天纯前端计划每天1-2h">
-<a class="header-anchor" href="#vue3htmljscss-20%e5%a4%a9%e7%ba%af%e5%89%8d%e7%ab%af%e8%ae%a1%e5%88%92%e6%af%8f%e5%a4%a91-2h"></a>
-vue3/html/js/css 20天纯前端计划（每天1-2h）
-</h2><h3 id="第1天html-文档结构与语义化1-2h">
-<a class="header-anchor" href="#%e7%ac%ac1%e5%a4%a9html-%e6%96%87%e6%a1%a3%e7%bb%93%e6%9e%84%e4%b8%8e%e8%af%ad%e4%b9%89%e5%8c%961-2h"></a>
-第1天：HTML 文档结构与语义化（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> 文档基本结构（doctype、html、head、body）与 meta 标签 <code> [HTML]</code> → 📝 任务：新建 index.html，手动写出完整骨架</li>
-<li><input checked="" disabled="" type="checkbox"> 语义化标签（header、nav、main、section、article、aside、footer） <code> [HTML]</code> → 📝 任务：用语义化标签搭建博客文章页</li>
-<li><input checked="" disabled="" type="checkbox"> 块级元素 vs 行内元素 vs 行内块元素 <code> [HTML]</code> → 📝 任务：列出 10 个标签，验证 display 差异</li>
-<li><input checked="" disabled="" type="checkbox"> 练习：语义化搭建博客页面骨架 <code> [HTML]</code> → 📝 任务：仿写你博客 post 页的语义化结构</li>
-</ul>
-<h3 id="第2天html-表单与媒体1-2h">
-<a class="header-anchor" href="#%e7%ac%ac2%e5%a4%a9html-%e8%a1%a8%e5%8d%95%e4%b8%8e%e5%aa%92%e4%bd%931-2h"></a>
-第2天：HTML 表单与媒体（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> 表单元素（input、select、textarea、button）与 label 绑定 <code> [HTML]</code> → 📝 任务：每个 label 用 for 关联对应 input</li>
-<li><input checked="" disabled="" type="checkbox"> input 类型（text、email、number、checkbox、radio、file、date） <code> [HTML]</code> → 📝 任务：每种类型各放一个并测试提交</li>
-<li><input checked="" disabled="" type="checkbox"> 表单验证属性（required、pattern、min/max、maxlength） <code> [HTML]</code> → 📝 任务：邮箱格式校验 + 必填验证</li>
-<li><input disabled="" type="checkbox"> 练习：完整的注册表单页 <code> [HTML]</code> → 📝 任务：用户名 + 邮箱 + 密码确认 + 提交按钮</li>
-</ul>
-<h3 id="第3天css-选择器与盒模型1-2h">
-<a class="header-anchor" href="#%e7%ac%ac3%e5%a4%a9css-%e9%80%89%e6%8b%a9%e5%99%a8%e4%b8%8e%e7%9b%92%e6%a8%a1%e5%9e%8b1-2h"></a>
-第3天：CSS 选择器与盒模型（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> 基础/属性/伪类/伪元素选择器与优先级 <code> [CSS]</code> → 📝 任务：用 5 种选择器给同一元素写样式验证优先级</li>
-<li><input checked="" disabled="" type="checkbox"> 盒模型（content、padding、border、margin）与 box-sizing <code> [CSS]</code> → 📝 任务：DevTools 查看盒子模型，对比 border-box 差异</li>
-<li><input checked="" disabled="" type="checkbox"> 单位（px、em、rem、vw、vh、%）与 BFC 解决 margin 塌陷 <code> [CSS]</code> → 📝 任务：用 overflow:hidden 实现 BFC</li>
-<li><input disabled="" type="checkbox"> 练习：卡片组件样式 <code> [CSS]</code> → 📝 任务：头像 + 标题 + 描述 + 按钮的卡片</li>
-</ul>
-<h3 id="第4天css-定位与-flex-布局1-2h">
-<a class="header-anchor" href="#%e7%ac%ac4%e5%a4%a9css-%e5%ae%9a%e4%bd%8d%e4%b8%8e-flex-%e5%b8%83%e5%b1%801-2h"></a>
-第4天：CSS 定位与 Flex 布局（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> position（static、relative、absolute、fixed、sticky）与 z-index <code> [CSS]</code> → 📝 任务：实现吸顶导航（sticky）+ 悬浮返回按钮（fixed）</li>
-<li><input checked="" disabled="" type="checkbox"> Flex 容器属性（direction、wrap、justify-content、align-items） <code> [CSS]</code> → 📝 任务：Flex 实现水平垂直居中</li>
-<li><input checked="" disabled="" type="checkbox"> Flex 项目属性（grow、shrink、basis、order） <code> [CSS]</code> → 📝 任务：3 列等宽卡片 + 某个项目放大</li>
-<li><input disabled="" type="checkbox"> 练习：导航栏 + 卡片列表 <code> [CSS]</code> → 📝 任务：制作你博客的导航菜单 + 文章卡片流</li>
-</ul>
-<h3 id="第5天grid-与响应式设计1-2h">
-<a class="header-anchor" href="#%e7%ac%ac5%e5%a4%a9grid-%e4%b8%8e%e5%93%8d%e5%ba%94%e5%bc%8f%e8%ae%be%e8%ae%a11-2h"></a>
-第5天：Grid 与响应式设计（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> Grid 容器属性（template-columns/rows、gap、areas） <code> [CSS]</code> → 📝 任务：grid-template-areas 画页面布局</li>
-<li><input checked="" disabled="" type="checkbox"> Grid 项目属性（column/row 范围、area 命名） <code> [CSS]</code> → 📝 任务：实现跨行跨列网格</li>
-<li><input checked="" disabled="" type="checkbox"> 媒体查询 + viewport + rem 移动端适配 <code> [CSS]</code> → 📝 任务：在 3 个断点调整布局</li>
-<li><input disabled="" type="checkbox"> 练习：响应式九宫格 + 圣杯布局 <code> [CSS]</code> → 📝 任务：手机 2 列、桌面 3 列</li>
-</ul>
-<h3 id="第6天css-过渡与动画1-2h">
-<a class="header-anchor" href="#%e7%ac%ac6%e5%a4%a9css-%e8%bf%87%e6%b8%a1%e4%b8%8e%e5%8a%a8%e7%94%bb1-2h"></a>
-第6天：CSS 过渡与动画（1-2h）
-</h3><ul>
-<li><input checked="" disabled="" type="checkbox"> transition 过渡属性（property、duration、timing-function） <code> [CSS]</code> → 📝 任务：按钮 hover 变色 + 宽度过渡</li>
-<li><input checked="" disabled="" type="checkbox"> transform 变换（translate、rotate、scale） <code> [CSS]</code> → 📝 任务：卡片悬停上浮 + 旋转图标</li>
-<li><input checked="" disabled="" type="checkbox"> animation 关键帧动画 <code> [CSS]</code> → 📝 任务：@keyframes 写 loading 转圈</li>
-<li><input disabled="" type="checkbox"> 练习：按钮 hover 动效 + 加载动画 <code> [CSS]</code> → 📝 任务：组合 transition + animation 完整演示</li>
-</ul>
-<h3 id="第7天静态页面综合实战1-2h">
-<a class="header-anchor" href="#%e7%ac%ac7%e5%a4%a9%e9%9d%99%e6%80%81%e9%a1%b5%e9%9d%a2%e7%bb%bc%e5%90%88%e5%ae%9e%e6%88%981-2h"></a>
-第7天：静态页面综合实战（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 用 HTML+CSS 完成一个完整落地页（导航、Hero、卡片、页脚） <code> [HTML]</code> <code> [CSS]</code> → 📝 任务：仿站或自创主题的完整落地页</li>
-<li><input disabled="" type="checkbox"> 响应式适配（桌面/平板/手机三档断点） <code> [CSS]</code> → 📝 任务：三档断点各截图验证</li>
-<li><input disabled="" type="checkbox"> 加入过渡与悬浮动效 <code> [CSS]</code> → 📝 任务：导航/卡片/按钮都加交互反馈</li>
-</ul>
-<h3 id="第8天js-变量类型与运算符1-2h">
-<a class="header-anchor" href="#%e7%ac%ac8%e5%a4%a9js-%e5%8f%98%e9%87%8f%e7%b1%bb%e5%9e%8b%e4%b8%8e%e8%bf%90%e7%ae%97%e7%ac%a61-2h"></a>
-第8天：JS 变量、类型与运算符（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> var/let/const 区别与块级作用域 <code> [JS]</code> → 📝 任务：for 循环中用 var/let 对比效果</li>
-<li><input disabled="" type="checkbox"> 基本类型（string、number、boolean、null、undefined、symbol、bigint）与引用类型 <code> [JS]</code> → 📝 任务：typeof 每种类型各打印一次</li>
-<li><input disabled="" type="checkbox"> 类型转换、== 与 === 区别 <code> [JS]</code> → 📝 任务：列出 5 个 == 与 === 结果不同的例子</li>
-<li><input disabled="" type="checkbox"> 练习：类型判断工具函数 <code> [JS]</code> → 📝 任务：写 isString/isNumber/isArray 通用判断</li>
-</ul>
-<h3 id="第9天js-函数与作用域1-2h">
-<a class="header-anchor" href="#%e7%ac%ac9%e5%a4%a9js-%e5%87%bd%e6%95%b0%e4%b8%8e%e4%bd%9c%e7%94%a8%e5%9f%9f1-2h"></a>
-第9天：JS 函数与作用域（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 函数声明 / 函数表达式 / 箭头函数 <code> [JS]</code> → 📝 任务：3 种写法实现同一个求和函数</li>
-<li><input disabled="" type="checkbox"> 作用域链 与 闭包原理及常见应用 <code> [JS]</code> → 📝 任务：闭包实现计数器 + 防抖函数</li>
-<li><input disabled="" type="checkbox"> this 指向与 call、apply、bind <code> [JS]</code> → 📝 任务：4 种调用方式打印 this 并解释</li>
-<li><input disabled="" type="checkbox"> 练习：实现深浅拷贝 <code> [JS]</code> → 📝 任务：JSON 浅拷贝 + 递归深拷贝（含数组/对象）</li>
-</ul>
-<h3 id="第10天js-数组对象与-es61-2h">
-<a class="header-anchor" href="#%e7%ac%ac10%e5%a4%a9js-%e6%95%b0%e7%bb%84%e5%af%b9%e8%b1%a1%e4%b8%8e-es61-2h"></a>
-第10天：JS 数组、对象与 ES6+（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 数组方法（map、filter、reduce、find、some、every、forEach） <code> [JS]</code> → 📝 任务：用每种方法处理一组商品数据</li>
-<li><input disabled="" type="checkbox"> 解构赋值、展开运算符、模板字符串、可选链 <code> [JS]</code> → 📝 任务：对象/数组解构 + 合并对象</li>
-<li><input disabled="" type="checkbox"> 模块化（export/import） <code> [JS]</code> → 📝 任务：拆分 utils.js 导出工具函数</li>
-<li><input disabled="" type="checkbox"> 练习：用 reduce 实现数组去重/分组 <code> [JS]</code> → 📝 任务：去重 + 按首字母分组</li>
-</ul>
-<h3 id="第11天dom-操作与事件1-2h">
-<a class="header-anchor" href="#%e7%ac%ac11%e5%a4%a9dom-%e6%93%8d%e4%bd%9c%e4%b8%8e%e4%ba%8b%e4%bb%b61-2h"></a>
-第11天：DOM 操作与事件（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 节点查询（querySelector、getElementById、querySelectorAll） <code> [JS]</code> → 📝 任务：3 种方式选中同一元素对比</li>
-<li><input disabled="" type="checkbox"> 节点增删改（createElement、appendChild、remove、classList） <code> [JS]</code> → 📝 任务：动态创建 10 个 li 插入 ul</li>
-<li><input disabled="" type="checkbox"> 事件流（捕获/冒泡）、事件委托、阻止默认行为 <code> [JS]</code> → 📝 任务：事件委托实现列表删除按钮</li>
-<li><input disabled="" type="checkbox"> 练习：JS 动态渲染列表（增删改查） <code> [JS]</code> <code> [HTML]</code> → 📝 任务：输入内容 → 添加 → 点击删除 → 编辑</li>
-</ul>
-<h3 id="第12天异步编程与网络请求1-2h">
-<a class="header-anchor" href="#%e7%ac%ac12%e5%a4%a9%e5%bc%82%e6%ad%a5%e7%bc%96%e7%a8%8b%e4%b8%8e%e7%bd%91%e7%bb%9c%e8%af%b7%e6%b1%821-2h"></a>
-第12天：异步编程与网络请求（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> Promise 基础（resolve、reject、then、catch、finally） <code> [JS]</code> → 📝 任务：模拟 3 秒延时 Promise</li>
-<li><input disabled="" type="checkbox"> async/await 与 try/catch <code> [JS]</code> → 📝 任务：把 Promise 链改写成 async/await</li>
-<li><input disabled="" type="checkbox"> fetch 请求封装 与 Promise.all/race <code> [JS]</code> → 📝 任务：封装 get/post 方法 + 超时控制</li>
-<li><input disabled="" type="checkbox"> 练习：请求接口渲染列表 + loading/错误处理 <code> [JS]</code> <code> [HTML]</code> → 📝 任务：加载状态 + 错误提示 + 重试按钮</li>
-</ul>
-<h3 id="第13天vue3-响应式核心1-2h">
-<a class="header-anchor" href="#%e7%ac%ac13%e5%a4%a9vue3-%e5%93%8d%e5%ba%94%e5%bc%8f%e6%a0%b8%e5%bf%831-2h"></a>
-第13天：Vue3 响应式核心（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> ref 与 reactive 的区别与使用场景 <code> [Vue]</code> → 📝 任务：用 ref 存数字/字符串，reactive 存对象</li>
-<li><input disabled="" type="checkbox"> computed（getter/setter）与 watch（deep、immediate、监听多个源） <code> [Vue]</code> → 📝 任务：computed 总价 + watch 深度监听购物车</li>
-<li><input disabled="" type="checkbox"> Proxy 实现响应式原理（依赖收集、触发更新） <code> [Vue]</code> <code> [JS]</code> → 📝 任务：手写 mini 版 reactive（get/set 拦截）</li>
-<li><input disabled="" type="checkbox"> 练习：响应式购物车数字统计 <code> [Vue]</code> → 📝 任务：加减数量 → 总价自动更新</li>
-</ul>
-<h3 id="第14天vue3-组件基础与生命周期1-2h">
-<a class="header-anchor" href="#%e7%ac%ac14%e5%a4%a9vue3-%e7%bb%84%e4%bb%b6%e5%9f%ba%e7%a1%80%e4%b8%8e%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f1-2h"></a>
-第14天：Vue3 组件基础与生命周期（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 组件注册（局部/全局）与命名规范 <code> [Vue]</code> → 📝 任务：全局注册 Button，局部注册 Card</li>
-<li><input disabled="" type="checkbox"> SFC 单文件组件结构（template / script setup / style） <code> [Vue]</code> <code> [HTML]</code> <code> [JS]</code> → 📝 任务：写一个完整 .vue 组件（含样式）</li>
-<li><input disabled="" type="checkbox"> 组合式 API 生命周期（onMounted、onUpdated、onBeforeUnmount） <code> [Vue]</code> → 📝 任务：打印生命周期执行顺序</li>
-<li><input disabled="" type="checkbox"> 练习：将页面拆分为 Header/List/Footer 组件 <code> [Vue]</code> <code> [HTML]</code> → 📝 任务：把已有页面拆成 3 个组件并引入</li>
-</ul>
-<h3 id="第15天组件通信1-2h">
-<a class="header-anchor" href="#%e7%ac%ac15%e5%a4%a9%e7%bb%84%e4%bb%b6%e9%80%9a%e4%bf%a11-2h"></a>
-第15天：组件通信（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> props 传值（类型校验、默认值、required） <code> [Vue]</code> → 📝 任务：父组件传对象/数组/函数给子组件</li>
-<li><input disabled="" type="checkbox"> emit 自定义事件 与 v-model 语法糖 <code> [Vue]</code> → 📝 任务：子按钮触发父方法 + 自定义 v-model</li>
-<li><input disabled="" type="checkbox"> provide/inject 跨层级通信 <code> [Vue]</code> → 📝 任务：祖组件 provide 主题色，孙组件 inject</li>
-<li><input disabled="" type="checkbox"> 练习：父子 + 兄弟组件通信案例 <code> [Vue]</code> → 📝 任务：A 输入 → B 显示（通过父中转）</li>
-</ul>
-<h3 id="第16天插槽与组件复用1-2h">
-<a class="header-anchor" href="#%e7%ac%ac16%e5%a4%a9%e6%8f%92%e6%a7%bd%e4%b8%8e%e7%bb%84%e4%bb%b6%e5%a4%8d%e7%94%a81-2h"></a>
-第16天：插槽与组件复用（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 默认插槽、具名插槽、作用域插槽 <code> [Vue]</code> <code> [HTML]</code> → 📝 任务：Card 组件支持 header/body/footer 三区</li>
-<li><input disabled="" type="checkbox"> 组件复用设计思路（Card、Tab、Loading 等） <code> [Vue]</code> <code> [CSS]</code> → 📝 任务：封装可配置的 Tab 切换组件</li>
-<li><input disabled="" type="checkbox"> 练习：封装通用 Modal 弹窗组件（带动画、ESC/遮罩关闭、插槽） <code> [Vue]</code> <code> [CSS]</code> <code> [HTML]</code> → 📝 任务：props 控制显示 + 具名插槽 + 动画过渡</li>
-</ul>
-<h3 id="第17天vue-router-路由1-2h">
-<a class="header-anchor" href="#%e7%ac%ac17%e5%a4%a9vue-router-%e8%b7%af%e7%94%b11-2h"></a>
-第17天：Vue Router 路由（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> 路由配置（hash/history 模式）与嵌套路由 <code> [Vue]</code> → 📝 任务：配置 /posts 嵌套 /posts/:id</li>
-<li><input disabled="" type="checkbox"> 动态路由传参（query、params）与 props 接收 <code> [Vue]</code> → 📝 任务：列表页 → 详情页传 id</li>
-<li><input disabled="" type="checkbox"> 导航守卫（全局、路由级、组件内）与路由懒加载 + 404 页面 <code> [Vue]</code> → 📝 任务：未登录跳转 /login + 通配 404</li>
-<li><input disabled="" type="checkbox"> 练习：多页面导航 + 登录鉴权跳转 <code> [Vue]</code> → 📝 任务：3 个页面 + 守卫拦截完整流程</li>
-</ul>
-<h3 id="第18天pinia-状态管理1-2h">
-<a class="header-anchor" href="#%e7%ac%ac18%e5%a4%a9pinia-%e7%8a%b6%e6%80%81%e7%ae%a1%e7%90%861-2h"></a>
-第18天：Pinia 状态管理（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> setup 风格 store 定义（state、getters、actions） <code> [Vue]</code> → 📝 任务：counter store + doubleCount getter</li>
-<li><input disabled="" type="checkbox"> 同步/异步 actions 与组件中使用 <code> [Vue]</code> → 📝 任务：登录 action 模拟请求并存储 token</li>
-<li><input disabled="" type="checkbox"> 持久化（pinia-plugin-persistedstate）与模块化拆分 <code> [Vue]</code> → 📝 任务：刷新页面状态不丢失</li>
-<li><input disabled="" type="checkbox"> 练习：用户登录状态管理 <code> [Vue]</code> → 📝 任务：登录/登出 + 全局 token 共享</li>
-</ul>
-<h3 id="第19天组合式-api-与自定义-hook1-2h">
-<a class="header-anchor" href="#%e7%ac%ac19%e5%a4%a9%e7%bb%84%e5%90%88%e5%bc%8f-api-%e4%b8%8e%e8%87%aa%e5%ae%9a%e4%b9%89-hook1-2h"></a>
-第19天：组合式 API 与自定义 Hook（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> <!-- raw HTML omitted --> 语法糖深入（顶层变量、defineProps/defineEmits） <code> [Vue]</code> → 📝 任务：不用 options API 重写一个组件</li>
-<li><input disabled="" type="checkbox"> 自定义 Hook 设计（useFetch、useCountdown、useTodo） <code> [Vue]</code> <code> [JS]</code> → 📝 任务：写 useCountdown 倒计时 hook</li>
-<li><input disabled="" type="checkbox"> 逻辑复用与代码组织规范 <code> [Vue]</code> <code> [JS]</code> → 📝 任务：按功能拆分 hooks 目录结构</li>
-<li><input disabled="" type="checkbox"> 练习：封装 useFetch + 用户信息加载 <code> [Vue]</code> <code> [JS]</code> → 📝 任务：useFetch 支持 loading/error/data/重试</li>
-</ul>
-<h3 id="第20天综合实战项目1-2h">
-<a class="header-anchor" href="#%e7%ac%ac20%e5%a4%a9%e7%bb%bc%e5%90%88%e5%ae%9e%e6%88%98%e9%a1%b9%e7%9b%ae1-2h"></a>
-第20天：综合实战项目（1-2h）
-</h3><ul>
-<li><input disabled="" type="checkbox"> Todo App：增删改查 + 搜索过滤 + 排序 + 分类 <code> [Vue]</code> <code> [JS]</code> <code> [HTML]</code> <code> [CSS]</code> → 📝 任务：完整 CRUD + 状态筛选 Tab</li>
-<li><input disabled="" type="checkbox"> 组件拆分：TodoList / TodoItem / TodoInput / FilterBar <code> [Vue]</code> → 📝 任务：每个组件独立文件 + props/emit 通信</li>
-<li><input disabled="" type="checkbox"> Vue Router 页面：首页 / 详情 / 关于 + Pinia 状态集成 <code> [Vue]</code> → 📝 任务：TODO 存 store + 路由跳转详情</li>
-<li><input disabled="" type="checkbox"> 弹窗确认删除 + Toast 提示交互 <code> [Vue]</code> <code> [CSS]</code> → 📝 任务：删除前弹窗确认 + 操作反馈</li>
-<li><input disabled="" type="checkbox"> 打包构建 + 部署到 GitHub Pages / Vercel <code> [Vue]</code> → 📝 任务：npm run build 产出 dist 并上线</li>
-</ul>
-<hr>
-        
-        <hr><p>本文2026-08-01首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-01</p>]]>
       </description>
       
     </item>
