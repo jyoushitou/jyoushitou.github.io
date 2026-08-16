@@ -30,7 +30,147 @@
       <description>
         <![CDATA[<h1>20260814 总结</h1><p>作者：D-Sketon（xxx@example.com）</p>
         
-          
+          <h1 id="rust">
+<a class="header-anchor" href="#rust"></a>
+RUST
+</h1><h2 id="泛型">
+<a class="header-anchor" href="#%e6%b3%9b%e5%9e%8b"></a>
+泛型
+</h2><ul>
+<li>c++的模版</li>
+<li>编译器会使用占位符替换</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="err">泛型名称</span><span class="o">&lt;</span><span class="err">泛型类型</span><span class="o">&gt;</span><span class="p">([</span><span class="err">参数</span><span class="p">]){}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>也可用于结构体</li>
+<li>枚举：</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">enum</span> <span class="err">结构体名称</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">名称</span><span class="p">(</span><span class="err">类型</span><span class="p">)</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>方法可以</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">impl</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="err">对象</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="err">方法名</span><span class="p">([</span><span class="err">参数</span><span class="p">])</span>-&gt;<span class="kp">&amp;</span><span class="nc">T</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>会执行单态化</li>
+</ul>
+<h2 id="trait">
+<a class="header-anchor" href="#trait"></a>
+trait
+</h2><ul>
+<li>描述某种类型具有哪些并且可以与其他类型共享的功能</li>
+</ul>
+<h3 id="定义">
+<a class="header-anchor" href="#%e5%ae%9a%e4%b9%89"></a>
+定义
+</h3><ul>
+<li>函数将方法签名放一起</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">trait</span><span class="w"> </span><span class="n">trait名</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="err">函数签名</span><span class="p">;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>根据功能能实现不同的方法</li>
+</ul>
+<h3 id="trait约束">
+<a class="header-anchor" href="#trait%e7%ba%a6%e6%9d%9f"></a>
+trait约束
+</h3><ul>
+<li>无法为外部类型实现外部trait</li>
+<li>要在同意trait</li>
+</ul>
+<h3 id="默认实现">
+<a class="header-anchor" href="#%e9%bb%98%e8%ae%a4%e5%ae%9e%e7%8e%b0"></a>
+默认实现
+</h3><ul>
+<li>直接在trait的签名下使用</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">trait</span><span class="w"> </span><span class="n">trait名称</span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">fn</span> <span class="err">函数名称</span><span class="p">(){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="c1">//实现
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>他还可以调用其他方法</li>
+</ul>
+<h3 id="作为参数">
+<a class="header-anchor" href="#%e4%bd%9c%e4%b8%ba%e5%8f%82%e6%95%b0"></a>
+作为参数
+</h3><ul>
+<li>用impl trait</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="err">函数名</span><span class="p">(</span><span class="err">参数名</span>:<span class="nc">impl</span><span class="w"> </span><span class="n">trait名</span><span class="p">){}</span><span class="w">
+</span></span></span></code></pre></div><ul>
+<li>用trait bound</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="err">函数名</span><span class="o">&lt;</span><span class="n">T</span>:<span class="nc">trait名</span><span class="o">&gt;</span><span class="p">(</span><span class="err">参数名</span>:<span class="nc">T</span><span class="p">){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h4 id="where子句">
+<a class="header-anchor" href="#where%e5%ad%90%e5%8f%a5"></a>
+where子句
+</h4><ul>
+<li>绑定多个bound</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">fn</span> <span class="err">函数名</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span><span class="n">U</span><span class="o">&gt;</span><span class="p">([</span><span class="err">参数</span><span class="p">]){</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">where</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">T</span>:<span class="nc">trait名</span><span class="o">+</span><span class="n">trait名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">U</span>:<span class="nc">trait名</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
+</span></span></span></code></pre></div><h3 id="返回类型">
+<a class="header-anchor" href="#%e8%bf%94%e5%9b%9e%e7%b1%bb%e5%9e%8b"></a>
+返回类型
+</h3><ul>
+<li>必须指定类型</li>
+</ul>
+<hr>
+<h1 id="unity">
+<a class="header-anchor" href="#unity"></a>
+unity
+</h1><h2 id="预设体">
+<a class="header-anchor" href="#%e9%a2%84%e8%ae%be%e4%bd%93"></a>
+预设体
+</h2><ul>
+<li>快速创建一个对象</li>
+</ul>
+<h3 id="创建">
+<a class="header-anchor" href="#%e5%88%9b%e5%bb%ba"></a>
+创建
+</h3><ul>
+<li>直接将对象从hierarchy拖动到assets去保存</li>
+<li>使用的话就反着过来</li>
+</ul>
+<h3 id="修改">
+<a class="header-anchor" href="#%e4%bf%ae%e6%94%b9"></a>
+修改
+</h3><ul>
+<li>和修改对象一样transform</li>
+<li>可以单个对象直接修改了</li>
+</ul>
+<h3 id="删除">
+<a class="header-anchor" href="#%e5%88%a0%e9%99%a4"></a>
+删除
+</h3><ul>
+<li>可以直接删</li>
+<li>然后将场景对象unpack</li>
+</ul>
+<h2 id="资源包导入导出">
+<a class="header-anchor" href="#%e8%b5%84%e6%ba%90%e5%8c%85%e5%af%bc%e5%85%a5%e5%af%bc%e5%87%ba"></a>
+资源包导入导出
+</h2><ul>
+<li>导出直接在assets右键再exporting package</li>
+<li>导入直接在assets右键再import package</li>
+</ul>
+<hr>
+<h1 id="c">
+<a class="header-anchor" href="#c"></a>
+C++
+</h1><h2 id="monitorthreadjoinable">
+<a class="header-anchor" href="#monitorthreadjoinable"></a>
+monitorThread.joinable()
+</h2><p><code>monitorThread.joinable()</code> 是 C++ <code>std::thread</code> 的成员函数：返回 <code>true</code> 表示该线程对象当前关联着一个<strong>实际可等待的线程</strong>；返回 <code>false</code> 表示它是<strong>空线程</strong>、已经 <code>join()</code> 过，或已经 <code>detach()</code> 过。所以 <code>join()</code> / <code>detach()</code> 之前通常要先检查它，否则对不可 joinable 的线程调用会抛 <code>std::system_error</code>。</p>
         
         <hr><p>本文2026-08-14首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-14</p>]]>
       </description>

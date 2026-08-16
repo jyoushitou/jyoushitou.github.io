@@ -159,6 +159,11 @@
     </li>
     <li><a href="#资源包导入导出">资源包导入导出</a></li>
   </ul>
+
+  <ul>
+    <li><a href="#monitorthreadjoinable">monitorThread.joinable()</a></li>
+    <li><a href="#mysql单独线程巡检">MySQL单独线程巡检</a></li>
+  </ul>
 </nav>
 </div></div>
           <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -370,6 +375,41 @@ unity
 <li>导入直接在assets右键再import package</li>
 </ul>
 <hr>
+<h1 id="c">
+<a class="header-anchor" href="#c"></a>
+C++
+</h1><h2 id="monitorthreadjoinable">
+<a class="header-anchor" href="#monitorthreadjoinable"></a>
+monitorThread.joinable()
+</h2><p><code>monitorThread.joinable()</code> 是 C++ <code>std::thread</code> 的成员函数：返回 <code>true</code> 表示该线程对象当前关联着一个<strong>实际可等待的线程</strong>；返回 <code>false</code> 表示它是<strong>空线程</strong>、已经 <code>join()</code> 过，或已经 <code>detach()</code> 过。所以 <code>join()</code> / <code>detach()</code> 之前通常要先检查它，否则对不可 joinable 的线程调用会抛 <code>std::system_error</code>。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">monitorThread</span><span class="p">.</span><span class="n">joinable</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="n">monitorThread</span><span class="p">.</span><span class="n">join</span><span class="p">();</span> <span class="c1">// 安全等待线程结束
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="mysql单独线程巡检">
+<a class="header-anchor" href="#mysql%e5%8d%95%e7%8b%ac%e7%ba%bf%e7%a8%8b%e5%b7%a1%e6%a3%80"></a>
+MySQL单独线程巡检
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl">            <span class="kt">int</span> <span class="n">interval</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">connect_timemax</span> <span class="o">/</span> <span class="mi">3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl">            <span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="n">interval</span><span class="p">));</span>
+</span></span></code></pre></div><p>生成一个<strong>介于 5 到 60 秒之间的等待间隔</strong>，然后让当前线程休眠这么久，常用于重试、轮询或限速：</p>
+<ul>
+<li><code>connect_timemax / 3</code>：把某个超时上限除以 3，得到一个“基准间隔”</li>
+<li><code>std::min(60, ...)</code>：这个间隔<strong>最多 60 秒</strong></li>
+<li><code>std::max(5, ...)</code>：同时<strong>最少 5 秒</strong>
+所以 <code>interval</code> 的取值是：</li>
+<li>如果 <code>connect_timemax / 3 &lt; 5</code>，取 <code>5</code></li>
+<li>如果 <code>connect_timemax / 3 &gt; 60</code>，取 <code>60</code></li>
+<li>否则取 <code>connect_timemax / 3</code> 本身</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="kt">int</span> <span class="n">interval</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">max</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">min</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span> <span class="n">connect_timemax</span> <span class="o">/</span> <span class="mi">3</span><span class="p">));</span>
+</span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">this_thread</span><span class="o">::</span><span class="n">sleep_for</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">seconds</span><span class="p">(</span><span class="n">interval</span><span class="p">));</span>
+</span></span></code></pre></div><p>注意事项：</p>
+<ul>
+<li><code>connect_timemax</code> 必须是整数类型（<code>int</code>/<code>long</code> 等），否则 <code>std::max/min</code> 的模板参数可能推导不一致导致编译错误。</li>
+<li><code>connect_timemax / 3</code> 是整数除法，小数部分会被截断。</li>
+<li><code>sleep_for</code> 在极少数系统错误情况下会抛 <code>std::system_error</code>，但一般可忽略。</li>
+<li>如果你需要“可中断睡眠”（比如收到停止信号立即退出），改用 <code>std::condition_variable::wait_for</code> 更合适。</li>
+</ul>
+<hr>
 </div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
@@ -411,7 +451,7 @@ unity
         >
       </div><div>
         <span class="icon-brush"
-          >&nbsp;66.2k</span
+          >&nbsp;66.6k</span
         >
         &nbsp;|&nbsp;
         <span class="icon-coffee">&nbsp;02:53</span>
@@ -461,6 +501,11 @@ unity
       </ul>
     </li>
     <li><a href="#资源包导入导出">资源包导入导出</a></li>
+  </ul>
+
+  <ul>
+    <li><a href="#monitorthreadjoinable">monitorThread.joinable()</a></li>
+    <li><a href="#mysql单独线程巡检">MySQL单独线程巡检</a></li>
   </ul>
 </nav>
 </div></div>

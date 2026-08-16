@@ -164,6 +164,13 @@ unity
 <li>导入直接在assets右键再import package</li>
 </ul>
 <hr>
+<h1 id="c">
+<a class="header-anchor" href="#c"></a>
+C++
+</h1><h2 id="monitorthreadjoinable">
+<a class="header-anchor" href="#monitorthreadjoinable"></a>
+monitorThread.joinable()
+</h2><p><code>monitorThread.joinable()</code> 是 C++ <code>std::thread</code> 的成员函数：返回 <code>true</code> 表示该线程对象当前关联着一个<strong>实际可等待的线程</strong>；返回 <code>false</code> 表示它是<strong>空线程</strong>、已经 <code>join()</code> 过，或已经 <code>detach()</code> 过。所以 <code>join()</code> / <code>detach()</code> 之前通常要先检查它，否则对不可 joinable 的线程调用会抛 <code>std::system_error</code>。</p>
         
         <hr><p>本文2026-08-14首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-14</p>]]>
       </description>
