@@ -33,7 +33,62 @@
           <h1 id="rust">
 <a class="header-anchor" href="#rust"></a>
 RUST
-</h1>
+</h1><h2 id="生命周期">
+<a class="header-anchor" href="#%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f"></a>
+生命周期
+</h2><ul>
+<li>每个引用有自己的生命周期</li>
+<li>引用保持有效的作用域</li>
+<li>生命周期是隐式，可被推断的</li>
+<li>引用的生命周期可能以不同的方式互相关联，所以要手动标注生命周期</li>
+</ul>
+<h3 id="目的">
+<a class="header-anchor" href="#%e7%9b%ae%e7%9a%84"></a>
+目的
+</h3><ul>
+<li>避免悬垂引用（野指针）</li>
+</ul>
+<h3 id="标注">
+<a class="header-anchor" href="#%e6%a0%87%e6%b3%a8"></a>
+标注
+</h3><ul>
+<li>不改变生命周期长度</li>
+<li>只描述多个引用的关系，不影响生命周期</li>
+<li>&lsquo;开头作为</li>
+<li>写在&amp;后面，用空格隔开引用的类型</li>
+<li>泛型需要声明在&lt;&gt;里</li>
+<li>返回的生命周期为引用的最小的生命周期</li>
+<li>结构体中引用的类型，需要标注生命周期</li>
+</ul>
+<h3 id="声明周期的省略">
+<a class="header-anchor" href="#%e5%a3%b0%e6%98%8e%e5%91%a8%e6%9c%9f%e7%9a%84%e7%9c%81%e7%95%a5"></a>
+声明周期的省略
+</h3><ul>
+<li>自动隐式的标注</li>
+<li>输入输出中，叫输入生命周期/输出生命周期</li>
+<li>有三个规则可以省略：规则1应用输入的生命周期，规则2应用于输出生命周期</li>
+<li>规则1：每个引用类型的参数都有自己的生命周期</li>
+<li>规则2：如果只有一个生命周期参数，那么该生命周期被赋给所有的输出生命周期参数</li>
+<li>规则3：如果有多个输入生命周期参数，但其中一个是&amp;self或&amp;mut self,那么slef的生命周期会被赋给所有的输出生命周期参数</li>
+</ul>
+<h3 id="方法中定义生命周期">
+<a class="header-anchor" href="#%e6%96%b9%e6%b3%95%e4%b8%ad%e5%ae%9a%e4%b9%89%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f"></a>
+方法中定义生命周期
+</h3><ul>
+<li>与struct一样</li>
+<li>生命周期参数与字段，方法的参数和返回值有关</li>
+<li>impl 后面声明</li>
+<li>struct后使用</li>
+<li>遮羞生命周期是struct类型的一部分</li>
+<li>impl方法签名，引用必须绑定与struct字段的引用生命周期，或者引用 是独立的也可以</li>
+</ul>
+<h3 id="静态生命周期">
+<a class="header-anchor" href="#%e9%9d%99%e6%80%81%e7%94%9f%e5%91%bd%e5%91%a8%e6%9c%9f"></a>
+静态生命周期
+</h3><ul>
+<li>&lsquo;static是所有的字面值有的生命周期，指整个程序运行的生命周期</li>
+</ul>
+<hr>
         
         <hr><p>本文2026-08-17首发于<a href='http://localhost:1313/'>My Notes</a>，最后修改于2026-08-17</p>]]>
       </description>
