@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260709总结 | D-Sketon
+  20260819 总结 | D-Sketon
 </title>
-<meta name="description" content="20260709"/><script>
+<meta name="description" content="20260819"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260709总结 | D-Sketon" />
+  <meta property="og:title" content="20260819 总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260709"
+    content="20260819"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-07-09-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-08-19-%E6%80%BB%E7%BB%93/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-07-09T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-07-09T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-08-19T08:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-08-19T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260709总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260819 总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260709总结</h1>
+            <h1 data-aos="slide-up">20260819 总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -137,15 +137,9 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
-    <li><a href="#逐关键字解释">逐关键字解释</a>
+    <li><a href="#webservice">WebService</a>
       <ul>
-        <li><a href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)</a></li>
-        <li><a href="#for-size_t-i--0-i--num_threads-i">for (size_t i = 0; i &lt; num_threads; ++i)</a></li>
-        <li><a href="#workersemplace_back">workers.emplace_back()</a></li>
-        <li><a href="#this">this</a></li>
-        <li><a href="#stdfunctionvoid-task">std::function&lt;void()&gt; task;</a></li>
-        <li><a href="#stdunique_lock-lockthis-queue_mutex">std::unique_lockstd::mutex lock(this-&gt;queue_mutex);</a></li>
+        <li><a href="#统一启动函数">统一启动函数</a></li>
       </ul>
     </li>
   </ul>
@@ -219,126 +213,47 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-07-09 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-07-09</time
+    <time datetime="2026-08-19 08:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-08-19</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-07-09</time
+      >2026-08-19</time
     >
   </span></div>
-</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="q">
-<a class="header-anchor" href="#q"></a>
-Q:
-</h1><ul>
-<li>
-<p>Q1:为什么vcpkg对于g++的支持这么差！</p>
-</li>
-<li>
-<p>Q2:为什么vcpkg装g++的boost总是装不上！</p>
-</li>
-<li>
-<p>Q3:为什么vcpkg装g++的protobuf也是装不上！用不了！</p>
-</li>
-</ul>
-<h1 id="线程池1">
-<a class="header-anchor" href="#%e7%ba%bf%e7%a8%8b%e6%b1%a01"></a>
-线程池1
-</h1><h2 id="类的构造函数源码使用">
-<a class="header-anchor" href="#%e7%b1%bb%e7%9a%84%e6%9e%84%e9%80%a0%e5%87%bd%e6%95%b0%e6%ba%90%e7%a0%81%e4%bd%bf%e7%94%a8"></a>
-类的构造函数源码使用：
-</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">explicit</span> <span class="nf">ThreadPool</span><span class="p">(</span><span class="n">size_t</span> <span class="n">num_threads</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="kr">thread</span><span class="o">::</span><span class="n">hardware_concurrency</span><span class="p">())</span><span class="o">:</span> <span class="n">stop</span><span class="p">(</span><span class="nb">false</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="p">(</span><span class="n">size_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_threads</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">workers</span><span class="p">.</span><span class="n">emplace_back</span><span class="p">([</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="c1">// 每个工作线程的无限循环
-</span></span></span><span class="line"><span class="cl">                <span class="k">for</span> <span class="p">(;;)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                    <span class="n">std</span><span class="o">::</span><span class="n">function</span><span class="o">&lt;</span><span class="kt">void</span><span class="p">()</span><span class="o">&gt;</span> <span class="n">task</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 加锁获取任务
-</span></span></span><span class="line"><span class="cl">                        <span class="n">std</span><span class="o">::</span><span class="n">unique_lock</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">mutex</span><span class="o">&gt;</span> <span class="n">lock</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">queue_mutex</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 等待条件：停止标志 或 任务队列非空
-</span></span></span><span class="line"><span class="cl">                        <span class="k">this</span><span class="o">-&gt;</span><span class="n">condition</span><span class="p">.</span><span class="n">wait</span><span class="p">(</span><span class="n">lock</span><span class="p">,</span> <span class="p">[</span><span class="k">this</span><span class="p">]</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                            <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">||</span> <span class="o">!</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                        <span class="p">});</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 如果停止且没有任务，退出线程
-</span></span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">stop</span> <span class="o">&amp;&amp;</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span>
-</span></span><span class="line"><span class="cl">                            <span class="k">return</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">                        
-</span></span><span class="line"><span class="cl">                        <span class="c1">// 取出一个任务
-</span></span></span><span class="line"><span class="cl">                        <span class="n">task</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">front</span><span class="p">());</span>
-</span></span><span class="line"><span class="cl">                        <span class="k">this</span><span class="o">-&gt;</span><span class="n">tasks</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
-</span></span><span class="line"><span class="cl">                    
-</span></span><span class="line"><span class="cl">                    <span class="c1">// 执行任务（在锁外执行，避免阻塞其他线程）
-</span></span></span><span class="line"><span class="cl">                    <span class="n">task</span><span class="p">();</span>
-</span></span><span class="line"><span class="cl">                <span class="p">}</span>
-</span></span><span class="line"><span class="cl">            <span class="p">});</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span></code></pre></div><h2 id="逐关键字解释">
-<a class="header-anchor" href="#%e9%80%90%e5%85%b3%e9%94%ae%e5%ad%97%e8%a7%a3%e9%87%8a"></a>
-逐关键字解释
-</h2><h3 id="explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">
-<a class="header-anchor" href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse"></a>
-explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)
-</h3><h4 id="explicit">
-<a class="header-anchor" href="#explicit"></a>
-explicit:
-</h4><ul>
-<li>作用：防止隐式类型转换和防止拷贝初始化。</li>
-<li>例如，ThreadPool pool = 4; 会编译错误，而必须写成 ThreadPool pool(4);。这可以避免一些意外的类型转换错误</li>
-</ul>
-<h4 id="stdthreadhardware_concurrency">
-<a class="header-anchor" href="#stdthreadhardware_concurrency"></a>
-std::thread::hardware_concurrency()
-</h4><ul>
-<li>获取可以并发的核心数</li>
-<li>PS：可以改成任意的合法数字此种写法默认全部线程创建</li>
-</ul>
-<h4 id="stopfalse">
-<a class="header-anchor" href="#stopfalse"></a>
-stop(false)
-</h4><ul>
-<li>初始化 stop 标志为 false，表示线程池刚开始运行时，所有线程都应该继续工作。</li>
-</ul>
-<h3 id="for-size_t-i--0-i--num_threads-i">
-<a class="header-anchor" href="#for-size_t-i--0-i--num_threads-i"></a>
-for (size_t i = 0; i &lt; num_threads; ++i)
-</h3><ul>
-<li>创建与可以并发的核心数一样的工作线程</li>
-</ul>
-<h3 id="workersemplace_back">
-<a class="header-anchor" href="#workersemplace_back"></a>
-workers.emplace_back()
-</h3><ul>
-<li>workers(为类里存放工作线程的集合)</li>
-<li>emplace_back()此方法为在可以接受构造对象所需的参数</li>
-<li>PS:对比push_back()方法，不接受传参构造，只存放构造完成的参数</li>
-</ul>
-<h3 id="this">
-<a class="header-anchor" href="#this"></a>
-<a href="">this</a>
-</h3><ul>
-<li>匿名函数构造</li>
-<li>作用：为每个创建的线程进行无限循环</li>
-</ul>
-<h3 id="stdfunctionvoid-task">
-<a class="header-anchor" href="#stdfunctionvoid-task"></a>
-std::function&lt;void()&gt; task;
-</h3><ul>
-<li>嵌套于for循环</li>
-<li>每次循环都创建一个新的 task 对象，循环结束时，task 被销毁，下次循环重新创建</li>
-<li>作用：</li>
-<li>1、实现每个线程的重复利用</li>
-<li>2、将传入的任务打包成函数</li>
-</ul>
-<h3 id="stdunique_lock-lockthis-queue_mutex">
-<a class="header-anchor" href="#stdunique_lock-lockthis-queue_mutex"></a>
-std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
-</h3><ul>
-<li>为该线程加锁</li>
-</ul>
+</div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="cpp">
+<a class="header-anchor" href="#cpp"></a>
+cpp
+</h1><h2 id="webservice">
+<a class="header-anchor" href="#webservice"></a>
+WebService
+</h2><h3 id="统一启动函数">
+<a class="header-anchor" href="#%e7%bb%9f%e4%b8%80%e5%90%af%e5%8a%a8%e5%87%bd%e6%95%b0"></a>
+统一启动函数
+</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="c1">// 1. 注册停止回调
+</span></span></span><span class="line"><span class="cl"><span class="n">Utils</span><span class="o">::</span><span class="n">Exit</span><span class="o">::</span><span class="n">RegisterStopCallback</span><span class="p">([]()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 清理本服务资源（Stop、Join、清空等）
+</span></span></span><span class="line"><span class="cl">    <span class="k">if</span> <span class="p">(</span><span class="n">g_server</span><span class="p">)</span> <span class="n">g_server</span><span class="o">-&gt;</span><span class="n">Stop</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ShutDownMySQL</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="p">});</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 2. 注册统一信号处理
+</span></span></span><span class="line"><span class="cl"><span class="n">std</span><span class="o">::</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">Utils</span><span class="o">::</span><span class="n">Exit</span><span class="o">::</span><span class="n">Onsignal</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#ifdef _WIN32
+</span></span></span><span class="line"><span class="cl"><span class="n">SetConsoleCtrlHandler</span><span class="p">(</span><span class="n">Utils</span><span class="o">::</span><span class="n">Exit</span><span class="o">::</span><span class="n">ConsoleCtrlHandler</span><span class="p">,</span> <span class="n">TRUE</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="cp">#endif
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 3. 服务主循环
+</span></span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">Utils</span><span class="o">::</span><span class="n">Exit</span><span class="o">::</span><span class="n">running</span><span class="p">.</span><span class="n">load</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ... 处理消息，收到&#34;close&#34;时：
+</span></span></span><span class="line"><span class="cl">    <span class="c1">// Utils::Exit::RequestExit(); break;
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 4. 主线程等待退出事件（阻塞，不占CPU）
+</span></span></span><span class="line"><span class="cl"><span class="n">Utils</span><span class="o">::</span><span class="n">Exit</span><span class="o">::</span><span class="n">WaitForExit</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 5. 退出后的残留清理（幂等，可重复）
+</span></span></span><span class="line"><span class="cl"><span class="n">g_server</span><span class="p">.</span><span class="n">reset</span><span class="p">();</span>
+</span></span></code></pre></div><hr>
 </div>
     <footer class="article-footer"><ul class="article-category-list"></ul>
 <ul class="article-tag-list" itemprop="keywords"></ul>
@@ -350,27 +265,15 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260708总结"
+              alt="20260818 总结"
               class="lazyload"
             /><a
-          href="/post/2026-07-08-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260708总结"
-          title="前一篇:20260708总结"
+          href="/post/2026-08-18-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260818 总结"
+          title="前一篇:20260818 总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260708总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260710总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-07-10-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260710总结"
-          title="后一篇:20260710总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260710总结</h3>
+        <h3 class="article-nav-title">20260818 总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -421,15 +324,9 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#类的构造函数源码使用">类的构造函数源码使用：</a></li>
-    <li><a href="#逐关键字解释">逐关键字解释</a>
+    <li><a href="#webservice">WebService</a>
       <ul>
-        <li><a href="#explicit-threadpoolsize_t-num_threads--stdthreadhardware_concurrency-stopfalse">explicit ThreadPool(size_t num_threads = std::thread::hardware_concurrency()): stop(false)</a></li>
-        <li><a href="#for-size_t-i--0-i--num_threads-i">for (size_t i = 0; i &lt; num_threads; ++i)</a></li>
-        <li><a href="#workersemplace_back">workers.emplace_back()</a></li>
-        <li><a href="#this">this</a></li>
-        <li><a href="#stdfunctionvoid-task">std::function&lt;void()&gt; task;</a></li>
-        <li><a href="#stdunique_lock-lockthis-queue_mutex">std::unique_lockstd::mutex lock(this-&gt;queue_mutex);</a></li>
+        <li><a href="#统一启动函数">统一启动函数</a></li>
       </ul>
     </li>
   </ul>
@@ -537,9 +434,9 @@ std::unique_lock<a href="#ZgotmplZ">std::mutex</a> lock(this-&gt;queue_mutex);
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260709总结",
-          url: "http:\/\/localhost:1313\/post\/2026-07-09-%E6%80%BB%E7%BB%93\/",
-          description: "20260709",
+          title: "20260819 总结",
+          url: "http:\/\/localhost:1313\/post\/2026-08-19-%E6%80%BB%E7%BB%93\/",
+          description: "20260819",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
