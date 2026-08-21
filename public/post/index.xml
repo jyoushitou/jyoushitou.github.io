@@ -51,7 +51,7 @@ js
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-js" data-lang="js"><span class="line"><span class="cl"><span class="nx">sayHi</span><span class="p">();</span> <span class="c1">// 正常输出
 </span></span></span><span class="line"><span class="cl"><span class="kd">function</span> <span class="nx">sayHi</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">&#39;Hi&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">&#34;Hi&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><h3 id="2-函数表达式">
 <a class="header-anchor" href="#2-%e5%87%bd%e6%95%b0%e8%a1%a8%e8%be%be%e5%bc%8f"></a>
