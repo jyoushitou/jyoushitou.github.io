@@ -8,9 +8,9 @@
   name="viewport"
   content="width=device-width, initial-scale=1, shrink-to-fit=no"
 /><title>
-  20260811 总结 | D-Sketon
+  20260822 总结 | D-Sketon
 </title>
-<meta name="description" content="20260811"/><script>
+<meta name="description" content="20260822"/><script>
   window.siteConfig = JSON.parse("{\"anchor_icon\":null,\"base\":\"http://localhost:1313/\",\"clipboard\":{\"copyright\":{\"count\":50,\"enable\":false,\"license_type\":\"by-nc-sa\"},\"fail\":{\"en\":\"Copy failed (ﾟ⊿ﾟ)ﾂ\",\"ja\":\"コピー失敗 (ﾟ⊿ﾟ)ﾂ\",\"pt-br\":\"Falha ao copiar (ﾟ⊿ﾟ)ﾂ\",\"zh-cn\":\"复制失败 (ﾟ⊿ﾟ)ﾂ\",\"zh-tw\":\"複製失敗 (ﾟ⊿ﾟ)ﾂ\"},\"success\":{\"en\":\"Copy successfully (*^▽^*)\",\"ja\":\"コピー成功 (*^▽^*)\",\"pt-br\":\"Copiado com sucesso (*^▽^*)\",\"zh-cn\":\"复制成功 (*^▽^*)\",\"zh-tw\":\"複製成功 (*^▽^*)\"}},\"code_block\":{\"expand\":true},\"icon_font\":\"4552607_4k4bc36ef96\",\"outdate\":{\"daysago\":180,\"enable\":false,\"message\":{\"en\":\"This article was last updated on {time}. Please note that the content may no longer be applicable.\",\"ja\":\"この記事は最終更新日：{time}。記載内容が現在有効でない可能性がありますのでご注意ください。\",\"pt-br\":\"Este artigo foi atualizado pela última vez em {time}. Observe que o conteúdo pode não ser mais aplicável.\",\"zh-cn\":\"本文最后更新于 {time}，请注意文中内容可能已不适用。\",\"zh-tw\":\"本文最後更新於 {time}，請注意文中內容可能已不適用。\"}}}");
   
 </script>
@@ -33,20 +33,20 @@
     type="font/woff2"
     crossorigin="anonymous"
   /><link rel="stylesheet" href="/css/loader.css" /><meta property="og:type" content="website" />
-  <meta property="og:title" content="20260811 总结 | D-Sketon" />
+  <meta property="og:title" content="20260822 总结 | D-Sketon" />
   <meta
     property="og:description"
-    content="20260811"
+    content="20260822"
   />
-  <meta property="og:url" content="http://localhost:1313/post/2026-08-11-%E6%80%BB%E7%BB%93/" />
+  <meta property="og:url" content="http://localhost:1313/post/2026-08-22-%E6%80%BB%E7%BB%93/" />
   <meta
     property="og:site_name"
     content="My Notes"
   />
   <meta property="og:image" content="http://localhost:1313/images/banner.webp" />
   <meta property="article:author" content="D-Sketon" />
-  <meta property="article:published_time" content="2026-08-11T08:00:00&#43;08:00" />
-  <meta property="article:modified_time" content="2026-08-11T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
+  <meta property="article:published_time" content="2026-08-22T08:00:00&#43;08:00" />
+  <meta property="article:modified_time" content="2026-08-22T21:00:00&#43;08:00" /><meta name="twitter:card" content="summary" /><meta name="twitter:image" content="http://localhost:1313/images/banner.webp" />
 <link rel="shortcut icon" href="/favicon.ico"><link rel="stylesheet" href="/css/main.css" /><link
     rel="preload"
     as="style"
@@ -121,9 +121,9 @@
       </a><a id="main-nav-toggle" class="nav-icon" aria-label="Toggle navigation" role="button"></a>
   </nav>
   <nav id="sub-nav" aria-label="Secondary navigation"></nav></div>
-<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260811 总结"><div id="header-outer">
+<header id="header" aria-label="Site header"><picture></picture><img  fetchpriority="high" src="/images/banner.webp" alt="20260822 总结"><div id="header-outer">
     <div id="header-title"><span id="logo">
-            <h1 data-aos="slide-up">20260811 总结</h1>
+            <h1 data-aos="slide-up">20260822 总结</h1>
           </span><h2 id="subtitle-wrap" data-aos="slide-down"></h2></div>
   </div>
 </header><div id="content"
@@ -137,24 +137,25 @@
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#package">package</a>
+    <li><a href="#tokioioasyncreadext-asyncwriteext">tokio::io::{AsyncReadExt, AsyncWriteExt}</a>
       <ul>
-        <li><a href="#代码组织">代码组织</a></li>
-        <li><a href="#crate">crate</a></li>
-        <li><a href="#moudle">moudle</a></li>
-        <li><a href="#路径">路径</a></li>
-        <li><a href="#super">super</a></li>
-        <li><a href="#use关键字">use关键字</a></li>
-        <li><a href="#使用外部包">使用外部包</a></li>
-        <li><a href="#通配符">*(通配符)</a></li>
-        <li><a href="#如何拆分">如何拆分</a></li>
+        <li><a href="#提供的方法">提供的方法</a></li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#inspector">inspector</a></li>
-    <li><a href="#console">Console</a></li>
+    <li><a href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec">pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec)&gt;</a>
+      <ul>
+        <li><a href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec-1">pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec)&gt;</a></li>
+        <li><a href="#let-mut-head--0u8-head_length">let mut head = [0u8; HEAD_LENGTH];</a></li>
+        <li><a href="#streamread_exactmut-headawait">stream.read_exact(&amp;mut head).await?;</a></li>
+        <li><a href="#let-msg_id--u64from_be_byteshead0head_id_lengthtry_intounwrap">let msg_id = u64::from_be_bytes(head[0..HEAD_ID_LENGTH].try_into().unwrap());</a></li>
+        <li><a href="#let-msg_len--u32from_be_byteshead0head_len_lengthtry_intounwrap-as-usize">let msg_len = u32::from_be_bytes(head[0..HEAD_LEN_LENGTH].try_into().unwrap()) as usize;</a></li>
+        <li><a href="#if-msg_len--max_length--msg_len--0">if msg_len &gt; MAX_LENGTH || msg_len == 0</a></li>
+      </ul>
+    </li>
+    <li><a href="#pub-async-fn-write_framestreammut-tcpstreammsg_idu64bodyu8-stdioresult">pub async fn write_frame(stream:&amp;mut TcpStream,msg_id:u64,body:&amp;[u8])-&gt;std::io::Result</a></li>
+    <li><a href="#format">format!</a></li>
+    <li><a href="#local">Local</a></li>
+    <li><a href="#openoptionsnewcreatetrueappendtrueopenaddr">OpenOptions::new().create(true).append(true).open(addr)</a></li>
   </ul>
 </nav>
 </div></div>
@@ -226,167 +227,168 @@
     class="article-date-link icon-calendar"
     data-aos="zoom-in"
   >
-    <time datetime="2026-08-11 08:00:00 &#43;0800 CST" itemprop="datePublished"
-      >2026-08-11</time
+    <time datetime="2026-08-22 08:00:00 &#43;0800 CST" itemprop="datePublished"
+      >2026-08-22</time
     >
     <time style="display: none;" id="post-update-time"
-      >2026-08-11</time
+      >2026-08-22</time
     >
   </span></div>
 </div><div class="hr-line"></div><div class="e-content article-entry" itemprop="articleBody"><h1 id="rust">
 <a class="header-anchor" href="#rust"></a>
 RUST
-</h1><h2 id="package">
-<a class="header-anchor" href="#package"></a>
-package
+</h1><ul>
+<li>接下来将从自己的个人项目学习</li>
+</ul>
+<h2 id="tokioioasyncreadext-asyncwriteext">
+<a class="header-anchor" href="#tokioioasyncreadext-asyncwriteext"></a>
+tokio::io::{AsyncReadExt, AsyncWriteExt}
 </h2><ul>
-<li>包含一个Cargo.toml</li>
-<li>有0-1个library crate</li>
-<li>包含任意数量的binary crate</li>
-<li>至少包含一个crate</li>
+<li>扩展的异步读写方法</li>
 </ul>
-<h3 id="代码组织">
-<a class="header-anchor" href="#%e4%bb%a3%e7%a0%81%e7%bb%84%e7%bb%87"></a>
-代码组织
+<h3 id="提供的方法">
+<a class="header-anchor" href="#%e6%8f%90%e4%be%9b%e7%9a%84%e6%96%b9%e6%b3%95"></a>
+提供的方法
 </h3><ul>
-<li>主要包括：</li>
-<li>哪些细节可以暴露，哪些细节是私有的</li>
-<li>作用域哪些名称有效</li>
-<li>package:cargop的特性，让你构建，测试，共享crate</li>
-<li>crate：模块数，产生宇哥library或者可执行文件</li>
-<li>module：控制组织，作用域，私有路径</li>
-<li>path：为struct、function、module命名</li>
+<li>.read()：从异步流中读取一些字节到 <code>buf</code>，返回实际读到的字节数。这个方法<strong>不保证一次读满缓冲区</strong>，可能只读一部分；返回 <code>0</code> 表示对端关闭/到达 EOF。</li>
+<li>.write()：向异步流写入一些字节，返回实际写入的字节数。同样<strong>不保证一次写完整个缓冲区</strong>，可能出现短写。</li>
+<li>write()和read()是单次操作</li>
+<li>.read_to_end()：一直读到 EOF，把所有读到的字节追加进 <code>buf</code>，返回总共读到的字节数。适合读完整文件或完整响应体。</li>
+<li>.write_all()：把 <code>buf</code> 里的内容<strong>全部写完</strong>，内部会循环调用 <code>write</code> 直到写满，或者遇到错误。适合一次性发送完整数据。
+这几个方法都是从 <code>AsyncReadExt</code> / <code>AsyncWriteExt</code> 导入后，才能在 <code>TcpStream</code>、<code>File</code>、<code>DuplexStream</code> 等类型上调用的。</li>
 </ul>
-<h3 id="crate">
-<a class="header-anchor" href="#crate"></a>
-crate
+<h2 id="pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec">
+<a class="header-anchor" href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec"></a>
+pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec<!-- raw HTML omitted -->)&gt;
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec&lt;u8&gt;)&gt; {
+</span></span><span class="line"><span class="cl">    let mut head = [0u8; HEAD_LENGTH];
+</span></span><span class="line"><span class="cl">    stream.read_exact(&amp;mut head).await?;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    let msg_id = u64::from_be_bytes(head[0..8].try_into().unwrap());
+</span></span><span class="line"><span class="cl">    let msg_len = u32::from_be_bytes(head[8..12].try_into().unwrap()) as usize;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    if msg_len &gt; MAX_LENGTH || msg_len == 0 {
+</span></span><span class="line"><span class="cl">        return Err(std::io::Error::new(
+</span></span><span class="line"><span class="cl">            std::io::ErrorKind::InvalidData,
+</span></span><span class="line"><span class="cl">            format!(&#34;非法消息长度: {}&#34;, msg_len),
+</span></span><span class="line"><span class="cl">        ));
+</span></span><span class="line"><span class="cl">    }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    let mut body = vec![0u8; msg_len];
+</span></span><span class="line"><span class="cl">    stream.read_exact(&amp;mut body).await?;
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    Ok((msg_id, body))
+</span></span><span class="line"><span class="cl">}
+</span></span></code></pre></div><h3 id="pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec-1">
+<a class="header-anchor" href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec-1"></a>
+pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec<!-- raw HTML omitted -->)&gt;
 </h3><ul>
-<li>将相关的组合到一个作用域内</li>
+<li>pub：公开函数</li>
+<li>assync fn ：异步函数，调用要<code>await</code>，返回的是<code>Future</code></li>
+<li><code>stream: &amp;mut TcpStream</code>：参数是一个对 <code>TcpStream</code> 的可变引用。异步操作可能需要读取并推进流内部状态，所以需要 <code>&amp;mut</code>。</li>
+<li><code>-&gt; std::io::Result&lt;...&gt;</code>：返回 <code>Result</code>，错误类型是 <code>std::io::Error</code>，用 <code>?</code> 可以直接向上传播 I/O 错误</li>
+<li><code>(u64, Vec&lt;u8&gt;)</code>返回的元组</li>
+<li>元组的中的u64是督导的有效数据</li>
+<li>Vec<!-- raw HTML omitted -->读到的数据内容</li>
 </ul>
-<h4 id="类型">
-<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b"></a>
-类型
-</h4><ul>
-<li>library</li>
-<li>binary</li>
-</ul>
-<h4 id="类型-1">
-<a class="header-anchor" href="#%e7%b1%bb%e5%9e%8b-1"></a>
-类型
-</h4><ul>
-<li>crate root</li>
-<li>默认为main.rs(可执行文件)/lib.rs(二进值文件)</li>
-</ul>
-<h3 id="moudle">
-<a class="header-anchor" href="#moudle"></a>
-moudle
+<h3 id="let-mut-head--0u8-head_length">
+<a class="header-anchor" href="#let-mut-head--0u8-head_length"></a>
+let mut head = [0u8; HEAD_LENGTH];
 </h3><ul>
-<li>代码分组</li>
-<li>增加可读性</li>
-<li>控制私有性</li>
+<li>就是HEAD_LENGTH去用0填充，初始化的消息的头数组</li>
 </ul>
-<h4 id="建立">
-<a class="header-anchor" href="#%e5%bb%ba%e7%ab%8b"></a>
-建立
-</h4><ul>
-<li>mod关键字</li>
-<li>可嵌套</li>
-<li>可包含其他项定义</li>
+<h3 id="streamread_exactmut-headawait">
+<a class="header-anchor" href="#streamread_exactmut-headawait"></a>
+stream.read_exact(&amp;mut head).await?;
+</h3><ul>
+<li><code>stream</code>一个异步流，用来获取数据的</li>
+<li><code>read_exact</code>：<code>AsyncReadExt</code>的trait的扩展方法，保证<code>head.len()</code>读满才返回，就是asio库的async_read()</li>
+<li>&amp;mut head：将head定义为缓冲区</li>
+<li><code>await</code>等待异步曹组哦完成</li>
+<li><code>?</code>发生I/O错误，立刻返回<code>Err(...)</code>，如果中途遇到EOF（对端关闭）导致读不满会返回</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">mod</span> <span class="nn">ftan</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">mod</span> <span class="nn">sss</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">fn</span> <span class="nf">asdasds</span><span class="p">(){}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="k">mod</span> <span class="nn">sss</span><span class="p">{</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="k">fn</span> <span class="nf">asdasds</span><span class="p">(){}</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="p">}</span><span class="w">
+<h3 id="let-msg_id--u64from_be_byteshead0head_id_lengthtry_intounwrap">
+<a class="header-anchor" href="#let-msg_id--u64from_be_byteshead0head_id_lengthtry_intounwrap"></a>
+let msg_id = u64::from_be_bytes(head[0..HEAD_ID_LENGTH].try_into().unwrap());
+</h3><ul>
+<li>取得缓冲区的前8字节即ID</li>
+</ul>
+<h3 id="let-msg_len--u32from_be_byteshead0head_len_lengthtry_intounwrap-as-usize">
+<a class="header-anchor" href="#let-msg_len--u32from_be_byteshead0head_len_lengthtry_intounwrap-as-usize"></a>
+let msg_len = u32::from_be_bytes(head[0..HEAD_LEN_LENGTH].try_into().unwrap()) as usize;
+</h3><ul>
+<li>取得缓冲区的前8-12字节即消息长度</li>
+<li>try_into()把获得的切片转成<code>[u8;8]</code>的样式，再用<code>u64::from_be_bytes</code> 按大端序解释成 <code>u64</code></li>
+</ul>
+<h3 id="if-msg_len--max_length--msg_len--0">
+<a class="header-anchor" href="#if-msg_len--max_length--msg_len--0"></a>
+if msg_len &gt; MAX_LENGTH || msg_len == 0
+</h3><ul>
+<li>判断消息合法性</li>
+<li>不合法返回（消息长度非法）</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">if</span><span class="w"> </span><span class="n">msg_len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="no">MAX_LENGTH</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">msg_len</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="k">return</span><span class="w"> </span><span class="nb">Err</span><span class="p">(</span><span class="n">std</span>::<span class="n">io</span>::<span class="n">Error</span>::<span class="n">new</span><span class="p">(</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="n">std</span>::<span class="n">io</span>::<span class="n">ErrorKind</span>::<span class="n">InvalidData</span><span class="p">,</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="fm">format!</span><span class="p">(</span><span class="s">&#34;消息长度非法，</span><span class="si">{}</span><span class="s">&#34;</span><span class="p">,</span><span class="w"> </span><span class="n">msg_len</span><span class="p">),</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">));</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h3 id="路径">
-<a class="header-anchor" href="#%e8%b7%af%e5%be%84"></a>
-路径
-</h3><ul>
-<li>和其他语言的命名空间比较像</li>
-<li>绝对路径</li>
-<li>相对路径</li>
-<li>也用::去引用</li>
+</span></span></span></code></pre></div><h4 id="ps">
+<a class="header-anchor" href="#ps"></a>
+PS:
+</h4><h5 id="大端序和小端序">
+<a class="header-anchor" href="#%e5%a4%a7%e7%ab%af%e5%ba%8f%e5%92%8c%e5%b0%8f%e7%ab%af%e5%ba%8f"></a>
+大端序和小端序
+</h5><ul>
+<li>就是阅读顺序？大段正常读，小端按组倒着读</li>
 </ul>
-<h4 id="私有边界">
-<a class="header-anchor" href="#%e7%a7%81%e6%9c%89%e8%be%b9%e7%95%8c"></a>
-私有边界
-</h4><ul>
-<li>默认所有的条目默认私有</li>
+<h5 id="mut-t">
+<a class="header-anchor" href="#mut-t"></a>
+&amp;mut T
+</h5><ul>
+<li>和C一样取地址创建引用，但是加了mut才允许修改</li>
+<li>但是他无法做指证运算，与地址有关</li>
 </ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">fn</span> <span class="nf">saldk</span><span class="p">(){}</span><span class="w">
+<h2 id="pub-async-fn-write_framestreammut-tcpstreammsg_idu64bodyu8-stdioresult">
+<a class="header-anchor" href="#pub-async-fn-write_framestreammut-tcpstreammsg_idu64bodyu8-stdioresult"></a>
+pub async fn write_frame(stream:&amp;mut TcpStream,msg_id:u64,body:&amp;[u8])-&gt;std::io::Result
+</h2><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">pub</span><span class="w"> </span><span class="k">async</span><span class="w"> </span><span class="k">fn</span> <span class="nf">write_frame</span><span class="p">(</span><span class="n">stream</span>: <span class="kp">&amp;</span><span class="nc">mut</span><span class="w"> </span><span class="n">TcpStream</span><span class="p">,</span><span class="w"> </span><span class="n">msg_id</span>: <span class="kt">u64</span><span class="p">,</span><span class="w"> </span><span class="n">body</span>: <span class="kp">&amp;</span><span class="p">[</span><span class="kt">u8</span><span class="p">])</span><span class="w"> </span>-&gt; <span class="nc">std</span>::<span class="n">io</span>::<span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="k">mut</span><span class="w"> </span><span class="n">buf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">Vec</span>::<span class="n">with_capacity</span><span class="p">(</span><span class="no">HEAD_LENGTH</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">body</span><span class="p">.</span><span class="n">len</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">buf</span><span class="p">.</span><span class="n">extend_from_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg_id</span><span class="p">.</span><span class="n">to_be_bytes</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">buf</span><span class="p">.</span><span class="n">extend_from_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="p">(</span><span class="n">body</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="kt">u32</span><span class="p">).</span><span class="n">to_be_bytes</span><span class="p">());</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">buf</span><span class="p">.</span><span class="n">extend_from_slice</span><span class="p">(</span><span class="n">body</span><span class="p">);</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="n">stream</span><span class="p">.</span><span class="n">write_all</span><span class="p">(</span><span class="o">&amp;</span><span class="n">buf</span><span class="p">).</span><span class="k">await</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="p">}</span><span class="w">
 </span></span></span></code></pre></div><ul>
-<li>以上实现了一个公有的模块</li>
+<li>把一帧的数据写进通讯里</li>
+<li>Vec::with_capacity<code>，返回的是 </code>Vec<!-- raw HTML omitted -->`即缓存的数据</li>
+<li><code>msg_id.to_be_bytes()</code> 把 <code>u64</code> 转成 8 字节大端序，<code>extend_from_slice</code> 放进 <code>buf</code>；</li>
+<li><code>extend_from_slice</code>会直接追加到末尾，也可以使用g<code>unsafe</code>要自己保证内存安全。</li>
+<li><code>body.len() as u32</code> 把长度压成 4 字节，同样按大端序写入；</li>
+<li>再把真正的 <code>body</code> 追加进去；</li>
+<li><code>stream.write_all(&amp;buf).await</code> 一次性把整个帧写到 TCP 流中，<code>await</code> 等异步写入完成。</li>
+<li>返回值是 <code>std::io::Result&lt;()&gt;</code>：成功返回 <code>Ok(())</code>，失败返回 <code>Err(std::io::Error)</code>。内部 <code>stream.write_all(&amp;buf).await</code> 的返回值正是 `Result&lt;()&gt;</li>
 </ul>
-<h3 id="super">
-<a class="header-anchor" href="#super"></a>
-super
-</h3><ul>
-<li>上级目录使用super模块</li>
-</ul>
-<h3 id="use关键字">
-<a class="header-anchor" href="#use%e5%85%b3%e9%94%ae%e5%ad%97"></a>
-use关键字
-</h3><ul>
-<li>可以用use将路径引用到当前路径</li>
-</ul>
-<h4 id="as">
-<a class="header-anchor" href="#as"></a>
-as
-</h4><ul>
-<li>可以将路径重命名</li>
-</ul>
-<h4 id="use重新导入作用域">
-<a class="header-anchor" href="#use%e9%87%8d%e6%96%b0%e5%af%bc%e5%85%a5%e4%bd%9c%e7%94%a8%e5%9f%9f"></a>
-use重新导入作用域
-</h4><ul>
-<li>pub use去重新导入，外部也可以使用</li>
-</ul>
-<h3 id="使用外部包">
-<a class="header-anchor" href="#%e4%bd%bf%e7%94%a8%e5%a4%96%e9%83%a8%e5%8c%85"></a>
-使用外部包
-</h3><ul>
-<li>在cargo.toml里加入</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="p">[</span><span class="n">dependencies</span><span class="p">]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="n">package_name</span><span class="o">=</span><span class="s">&#34;package_version&#34;</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>标准库也会作为外部包，外部条件仍然要引入</li>
-<li>使用嵌套路径，可以清理繁琐包引用</li>
-</ul>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">use</span><span class="w"> </span><span class="err">相同路径</span>::<span class="p">{</span><span class="err">不同的路径</span><span class="p">}</span><span class="w">
-</span></span></span></code></pre></div><h3 id="通配符">
-<a class="header-anchor" href="#%e9%80%9a%e9%85%8d%e7%ac%a6"></a>
-*(通配符)
-</h3><ul>
-<li>将所有的模块导入</li>
-</ul>
-<h3 id="如何拆分">
-<a class="header-anchor" href="#%e5%a6%82%e4%bd%95%e6%8b%86%e5%88%86"></a>
-如何拆分
-</h3><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-rust" data-lang="rust"><span class="line"><span class="cl"><span class="k">mod</span> <span class="nn">mod_name</span><span class="p">{}</span><span class="w">
-</span></span></span></code></pre></div><ul>
-<li>就可以导入文件了</li>
-</ul>
-<hr>
-<h1 id="unity">
-<a class="header-anchor" href="#unity"></a>
-unity
-</h1><h2 id="inspector">
-<a class="header-anchor" href="#inspector"></a>
-inspector
+<h2 id="format">
+<a class="header-anchor" href="#format"></a>
+format!
 </h2><ul>
-<li>选中则显示游戏对象关联的脚本信息</li>
-<li>信息下面是脚本（组件）-类</li>
-<li>用面向对象的方式去做角色设置</li>
+<li>标准化的宏，返回String类型，常用来拼接字符串</li>
 </ul>
-<h2 id="console">
-<a class="header-anchor" href="#console"></a>
-Console
+<h2 id="local">
+<a class="header-anchor" href="#local"></a>
+Local
 </h2><ul>
-<li>有打印信息才可以快捷打开</li>
+<li>Local::now().format(&quot;%Y-%m-%d&quot;).to_string();获取到当前日期</li>
+</ul>
+<h2 id="openoptionsnewcreatetrueappendtrueopenaddr">
+<a class="header-anchor" href="#openoptionsnewcreatetrueappendtrueopenaddr"></a>
+OpenOptions::new().create(true).append(true).open(addr)
+</h2><ul>
+<li>以“不存在则创建、以追加模式打开”的方式打开 <code>addr</code> 指向的文件，返回 <code>io::Result&lt;File&gt;</code></li>
 </ul>
 <hr>
 </div>
@@ -400,27 +402,15 @@ Console
   ><div class="article-nav-link-wrap left"><img
               data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
               data-sizes="auto"
-              alt="20260810 总结"
+              alt="20260820 总结"
               class="lazyload"
             /><a
-          href="/post/2026-08-10-%E6%80%BB%E7%BB%93/"
-          aria-label="前一篇:20260810 总结"
-          title="前一篇:20260810 总结"
+          href="/post/2026-08-20-%E6%80%BB%E7%BB%93/"
+          aria-label="前一篇:20260820 总结"
+          title="前一篇:20260820 总结"
         ></a>
         <div class="article-nav-caption">前一篇</div>
-        <h3 class="article-nav-title">20260810 总结</h3>
-      </div><div class="article-nav-link-wrap right"><img
-              data-src="https://d-sketon.top/img/_backwebp/bg1.webp"
-              data-sizes="auto"
-              alt="20260812 总结"
-              class="lazyload"
-            /><a
-          href="/post/2026-08-12-%E6%80%BB%E7%BB%93/"
-          aria-label="后一篇:20260812 总结"
-          title="后一篇:20260812 总结"
-        ></a>
-        <div class="article-nav-caption">后一篇</div>
-        <h3 class="article-nav-title">20260812 总结</h3>
+        <h3 class="article-nav-title">20260820 总结</h3>
       </div></nav></article></section>
         </div><footer id="footer" aria-label="Site footer">
   <div style="width: 100%; overflow: hidden">
@@ -471,24 +461,25 @@ Console
 <div class="sidebar-toc-wrapper toc-div-class">
   <nav id="TableOfContents">
   <ul>
-    <li><a href="#package">package</a>
+    <li><a href="#tokioioasyncreadext-asyncwriteext">tokio::io::{AsyncReadExt, AsyncWriteExt}</a>
       <ul>
-        <li><a href="#代码组织">代码组织</a></li>
-        <li><a href="#crate">crate</a></li>
-        <li><a href="#moudle">moudle</a></li>
-        <li><a href="#路径">路径</a></li>
-        <li><a href="#super">super</a></li>
-        <li><a href="#use关键字">use关键字</a></li>
-        <li><a href="#使用外部包">使用外部包</a></li>
-        <li><a href="#通配符">*(通配符)</a></li>
-        <li><a href="#如何拆分">如何拆分</a></li>
+        <li><a href="#提供的方法">提供的方法</a></li>
       </ul>
     </li>
-  </ul>
-
-  <ul>
-    <li><a href="#inspector">inspector</a></li>
-    <li><a href="#console">Console</a></li>
+    <li><a href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec">pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec)&gt;</a>
+      <ul>
+        <li><a href="#pub-async-fn-read_framestream-mut-tcpstream---stdioresultu64-vec-1">pub async fn read_frame(stream: &amp;mut TcpStream) -&gt; std::io::Result&lt;(u64, Vec)&gt;</a></li>
+        <li><a href="#let-mut-head--0u8-head_length">let mut head = [0u8; HEAD_LENGTH];</a></li>
+        <li><a href="#streamread_exactmut-headawait">stream.read_exact(&amp;mut head).await?;</a></li>
+        <li><a href="#let-msg_id--u64from_be_byteshead0head_id_lengthtry_intounwrap">let msg_id = u64::from_be_bytes(head[0..HEAD_ID_LENGTH].try_into().unwrap());</a></li>
+        <li><a href="#let-msg_len--u32from_be_byteshead0head_len_lengthtry_intounwrap-as-usize">let msg_len = u32::from_be_bytes(head[0..HEAD_LEN_LENGTH].try_into().unwrap()) as usize;</a></li>
+        <li><a href="#if-msg_len--max_length--msg_len--0">if msg_len &gt; MAX_LENGTH || msg_len == 0</a></li>
+      </ul>
+    </li>
+    <li><a href="#pub-async-fn-write_framestreammut-tcpstreammsg_idu64bodyu8-stdioresult">pub async fn write_frame(stream:&amp;mut TcpStream,msg_id:u64,body:&amp;[u8])-&gt;std::io::Result</a></li>
+    <li><a href="#format">format!</a></li>
+    <li><a href="#local">Local</a></li>
+    <li><a href="#openoptionsnewcreatetrueappendtrueopenaddr">OpenOptions::new().create(true).append(true).open(addr)</a></li>
   </ul>
 </nav>
 </div></div>
@@ -594,9 +585,9 @@ Console
   <div><script data-pjax>
         window.REIMU_POST = {
           author: "D-Sketon",
-          title: "20260811 总结",
-          url: "http:\/\/localhost:1313\/post\/2026-08-11-%E6%80%BB%E7%BB%93\/",
-          description: "20260811",
+          title: "20260822 总结",
+          url: "http:\/\/localhost:1313\/post\/2026-08-22-%E6%80%BB%E7%BB%93\/",
+          description: "20260822",
           cover: "http:\/\/localhost:1313\/images\/banner.webp",
         };
       </script><script src="/js/insert_highlight.js" data-pjax ></script><script src="/js/tabs.js" data-pjax defer></script><script type="module" data-pjax>const PhotoSwipeLightbox = (await safeImport("https:\/\/npm.webcache.cn\/photoswipe@5.4.4\/dist\/photoswipe-lightbox.esm.min.js", "sha384-DiL6M\/gG\u002bwmTxmCRZyD1zee6lIhawn5TGvED0FOh7fXcN9B0aZ9dexSF\/N6lrZi\/")).default;const initPswp = (gallery, children) => {
